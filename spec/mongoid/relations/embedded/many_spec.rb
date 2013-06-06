@@ -1752,6 +1752,25 @@ describe Mongoid::Relations::Embedded::Many do
             expect(owner.pet.vet_visits.first).to be_persisted
           end
         end
+
+        context "when updating an attribute" do
+
+          before do
+            address_one.update_attributes(address_type: "st.")
+          end
+
+          let!(:deleted) do
+            person.addresses.send(method)
+          end
+
+          it "deletes all the documents in memory" do
+            expect(person.addresses.count).to eq(0)
+          end
+
+          it "deletes all the documents on the db" do
+            expect(person.reload.addresses.count).to eq(0)
+          end
+        end
       end
 
       context "when the documents empty" do

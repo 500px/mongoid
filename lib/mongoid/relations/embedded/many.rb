@@ -460,10 +460,15 @@ module Mongoid
         # @param [ true, false ] destroy If true then destroy, else delete.
         #
         # @return [ Integer ] The number of documents removed.
-        def remove_all(conditions = {}, method = :delete)
-          criteria = where(conditions || {})
-          removed = criteria.size
-          batch_remove(criteria, method)
+        def remove_all(conditions = nil, method = :delete)
+          if conditions && !conditions.empty?
+            criteria = where(conditions)
+            removed = criteria.size
+            batch_remove(criteria, method)
+          else
+            removed = target.size
+            batch_clear(target.dup, method)
+          end
           removed
         end
 

@@ -34,13 +34,13 @@ module Mongoid
         # @return [ Array ] The empty array.
         #
         # @since 3.0.0
-        def batch_clear(docs)
-          pre_process_batch_remove(docs, :delete)
+        def batch_clear(docs, method = :delete)
+          pre_process_batch_remove(docs, method)
           unless docs.empty?
             collection.find(selector).update(
               positionally(selector, "$unset" => { path => true })
             )
-            post_process_batch_remove(docs, :delete)
+            post_process_batch_remove(docs, method)
           end
           _unscoped.clear
         end
