@@ -25,21 +25,21 @@ describe Mongoid::Atomic::Paths::Embedded::Many do
   describe "#delete_modifier" do
 
     it "returns $pull" do
-      expect(many.delete_modifier).to eq("$pull")
+      many.delete_modifier.should eq("$pull")
     end
   end
 
   describe "#document" do
 
     it "returns the document" do
-      expect(many.document).to eq(address)
+      many.document.should eq(address)
     end
   end
 
   describe "#insert_modifier" do
 
     it "returns $push" do
-      expect(many.insert_modifier).to eq("$push")
+      many.insert_modifier.should eq("$push")
     end
   end
 
@@ -48,7 +48,7 @@ describe Mongoid::Atomic::Paths::Embedded::Many do
     context "when the document is embedded one level" do
 
       it "returns the name of the relation" do
-        expect(many.path).to eq("addresses")
+        many.path.should eq("addresses")
       end
     end
 
@@ -67,7 +67,7 @@ describe Mongoid::Atomic::Paths::Embedded::Many do
       end
 
       it "returns the nested path to the relation" do
-        expect(many.path).to eq("addresses.locations")
+        many.path.should eq("addresses.locations")
       end
     end
   end
@@ -85,12 +85,12 @@ describe Mongoid::Atomic::Paths::Embedded::Many do
           person.phones << phone
         end
         it "return the name of the store_as in relation" do
-          expect(many.position).to eq("mobile_phones")
+          many.position.should eq("mobile_phones")
         end
       end
 
       it "returns the name of the relation" do
-        expect(many.position).to eq("addresses")
+        many.position.should eq("addresses")
       end
     end
 
@@ -111,7 +111,48 @@ describe Mongoid::Atomic::Paths::Embedded::Many do
       end
 
       it "returns the nested position to the relation" do
-        expect(many.position).to eq("addresses.0.locations.0")
+        many.position.should eq("addresses.0.locations.0")
+      end
+    end
+  end
+
+  describe "#selector" do
+
+    context "when the document is embedded one level" do
+
+      it "returns the the hash with parent selector" do
+        many.selector.should eq(
+          { "_id" => person._id, "addresses._id" => address._id }
+        )
+      end
+    end
+
+    context "when the document is embedded multiple levels" do
+
+      let(:location) do
+        Location.new(name: "home")
+      end
+
+      before do
+        address.locations << location
+        address.new_record = false
+        address.post_persist
+        location.new_record = false
+        location.post_persist
+      end
+
+      let(:many) do
+        described_class.new(location)
+      end
+
+      it "returns the hash with all parent selectors" do
+        many.selector.should eq(
+          {
+            "_id" => person._id,
+            "addresses._id" => address._id,
+            "addresses.0.locations._id" => location._id
+          }
+        )
       end
     end
   end

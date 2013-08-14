@@ -11,7 +11,7 @@ describe Mongoid::Document do
   end
 
   it "does not respond to _destroy" do
-    expect(person).to_not respond_to(:_destroy)
+    person.should_not respond_to(:_destroy)
   end
 
   describe ".included" do
@@ -44,25 +44,25 @@ describe Mongoid::Document do
 
     context "when Document has been included in a model" do
       it ".models should include that model" do
-        expect(models).to include(klass)
+        models.should include(klass)
       end
     end
 
     context "before Document has been included" do
       it ".models should *not* include that model" do
-        expect(models).to_not include(new_klass)
+        models.should_not include(new_klass)
       end
     end
 
     context "after Document has been included" do
       it ".models should include that model" do
-        expect(models).to include(new_model)
+        models.should include(new_model)
       end
     end
 
     context "after Document has been included multiple times" do
       it ".models should include that model just once" do
-        expect(models.count(twice_a_new_model)).to be_eql(1)
+        models.count(twice_a_new_model).should be_eql(1)
       end
     end
   end
@@ -76,11 +76,11 @@ describe Mongoid::Document do
       end
 
       it "includes the root" do
-        expect(types).to include("Person")
+        types.should include("Person")
       end
 
       it "includes the subclasses" do
-        expect(types).to include("Doctor")
+        types.should include("Doctor")
       end
     end
 
@@ -91,7 +91,7 @@ describe Mongoid::Document do
       end
 
       it "returns the document" do
-        expect(types).to eq([ "Address" ])
+        types.should eq([ "Address" ])
       end
     end
 
@@ -106,7 +106,7 @@ describe Mongoid::Document do
       end
 
       it "should clear descendants' cache" do
-        expect(Person._types).to include(descendant.to_s)
+        Person._types.should include(descendant.to_s)
       end
     end
   end
@@ -118,7 +118,7 @@ describe Mongoid::Document do
     end
 
     it "returns the attributes with indifferent access" do
-      expect(person[:title]).to eq("Sir")
+      person[:title].should eq("Sir")
     end
   end
 
@@ -131,7 +131,7 @@ describe Mongoid::Document do
     context "when the document is new" do
 
       it "has a new key name" do
-        expect(document.cache_key).to eq("dokuments/new")
+        document.cache_key.should eq("dokuments/new")
       end
     end
 
@@ -148,7 +148,7 @@ describe Mongoid::Document do
         end
 
         it "has the id and updated_at key name" do
-          expect(document.cache_key).to eq("dokuments/#{document.id}-#{updated_at}")
+          document.cache_key.should eq("dokuments/#{document.id}-#{updated_at}")
         end
       end
 
@@ -159,35 +159,23 @@ describe Mongoid::Document do
         end
 
         it "has the id key name" do
-          expect(document.cache_key).to eq("dokuments/#{document.id}")
+          document.cache_key.should eq("dokuments/#{document.id}")
         end
       end
-    end
 
-    context "when model dont have Timestamps" do
+      context "without updated_at, without Timestamps" do
+        let(:artist) do
+          Artist.new
+        end
+        before do
+          artist.save
+        end
 
-      let(:artist) do
-        Artist.create!
+        it "should have the id key name" do
+          artist.cache_key.should eq("artists/#{artist.id}")
+        end
       end
 
-      it "should have the id key name" do
-        expect(artist.cache_key).to eq("artists/#{artist.id}")
-      end
-    end
-
-    context "when model has Short Timestamps" do
-
-      let(:agent) do
-        ShortAgent.create!
-      end
-
-      let!(:updated_at) do
-        agent.updated_at.utc.to_s(:number)
-      end
-
-      it "has the id and updated_at key name" do
-        expect(agent.cache_key).to eq("short_agents/#{agent.id}-#{updated_at}")
-      end
     end
   end
 
@@ -198,7 +186,7 @@ describe Mongoid::Document do
     end
 
     it "returns a [doc.class, doc.id] array" do
-      expect(person.identity).to eq([person.class, person.id])
+      person.identity.should eq([person.class, person.id])
     end
   end
 
@@ -209,7 +197,7 @@ describe Mongoid::Document do
     end
 
     it "returns the identity hash" do
-      expect(person.hash).to eq(person.identity.hash)
+      person.hash.should eq(person.identity.hash)
     end
   end
 
@@ -220,40 +208,15 @@ describe Mongoid::Document do
     end
 
     it "sets persisted to false" do
-      expect(person).to_not be_persisted
+      person.should_not be_persisted
     end
 
     it "creates an id for the document" do
-      expect(person.id).to be_a(Moped::BSON::ObjectId)
+      person.id.should be_a(Moped::BSON::ObjectId)
     end
 
     it "sets the attributes" do
-      expect(person.title).to eq("Sir")
-    end
-
-    context "when the model has a default scope" do
-
-      context "when the default scope is settable" do
-
-        let(:sound) do
-          Sound.new
-        end
-
-        it "sets the default scoping on the model" do
-          expect(sound).to be_active
-        end
-      end
-
-      context "when the default scope is not settable" do
-
-        let(:audio) do
-          Audio.new
-        end
-
-        it "does not set the default scoping" do
-          expect(audio.likes).to be_nil
-        end
-      end
+      person.title.should eq("Sir")
     end
 
     context "when accessing a relation from an overridden setter" do
@@ -263,11 +226,11 @@ describe Mongoid::Document do
       end
 
       it "allows access to the relation" do
-        expect(doctor.users.first).to be_a(User)
+        doctor.users.first.should be_a(User)
       end
 
       it "properly allows super calls" do
-        expect(doctor.specialty).to eq("surgery")
+        doctor.specialty.should eq("surgery")
       end
     end
 
@@ -286,7 +249,7 @@ describe Mongoid::Document do
         end
 
         it "runs the callbacks" do
-          expect(person.title).to eq("Madam")
+          person.title.should eq("Madam")
         end
       end
 
@@ -307,7 +270,7 @@ describe Mongoid::Document do
         end
 
         it "runs the callbacks" do
-          expect(person.game.name).to eq("Ms. Pacman")
+          person.game.name.should eq("Ms. Pacman")
         end
       end
 
@@ -328,7 +291,7 @@ describe Mongoid::Document do
         end
 
         it "runs the callbacks" do
-          expect(person.title).to eq("Madam")
+          person.title.should eq("Madam")
         end
       end
     end
@@ -336,7 +299,7 @@ describe Mongoid::Document do
     context "when defaults are defined" do
 
       it "sets the default values" do
-        expect(person.age).to eq(100)
+        person.age.should eq(100)
       end
     end
 
@@ -349,7 +312,7 @@ describe Mongoid::Document do
       end
 
       it "yields to the block" do
-        expect(person.title).to eq("King")
+        person.title.should eq("King")
       end
     end
   end
@@ -369,7 +332,7 @@ describe Mongoid::Document do
       end
 
       it "yields to the block" do
-        expect(document.likes).to eq(1000)
+        document.likes.should eq(1000)
       end
     end
 
@@ -392,15 +355,15 @@ describe Mongoid::Document do
       end
 
       it "sets the attributes" do
-        expect(person.title).to eq("Sir")
+        person.title.should eq("Sir")
       end
 
       it "sets persisted to true" do
-        expect(person).to be_persisted
+        person.should be_persisted
       end
 
       it "puts the document in the identity map" do
-        expect(Mongoid::IdentityMap.get(Person, id)).to eq(person)
+        Mongoid::IdentityMap.get(Person, id).should eq(person)
       end
     end
 
@@ -411,7 +374,7 @@ describe Mongoid::Document do
       end
 
       it "creates a new document" do
-        expect(person).to be_a(Person)
+        person.should be_a(Person)
       end
     end
   end
@@ -423,7 +386,7 @@ describe Mongoid::Document do
     end
 
     it "returns the class model name" do
-      expect(person.model_name).to eq("Person")
+      person.model_name.should eq("Person")
     end
   end
 
@@ -434,7 +397,7 @@ describe Mongoid::Document do
     end
 
     it "returns the internal attributes" do
-      expect(person.raw_attributes["title"]).to eq("Sir")
+      person.raw_attributes["title"].should eq("Sir")
     end
   end
 
@@ -449,7 +412,7 @@ describe Mongoid::Document do
     end
 
     it "returns the document in an array" do
-      expect(people).to eq([ person ])
+      people.should eq([ person ])
     end
   end
 
@@ -472,15 +435,15 @@ describe Mongoid::Document do
     end
 
     it "includes embeds one attributes" do
-      expect(person.as_document).to have_key("name")
+      person.as_document.should have_key("name")
     end
 
     it "includes embeds many attributes" do
-      expect(person.as_document).to have_key("addresses")
+      person.as_document.should have_key("addresses")
     end
 
     it "includes second level embeds many attributes" do
-      expect(person.as_document["addresses"].first).to have_key("locations")
+      person.as_document["addresses"].first.should have_key("locations")
     end
 
     context "with relation define store_as option in embeded_many" do
@@ -490,11 +453,11 @@ describe Mongoid::Document do
       end
 
       it 'includes the store_as key association' do
-        expect(person.as_document).to have_key("mobile_phones")
+        person.as_document.should have_key("mobile_phones")
       end
 
       it 'should not include the key of association' do
-        expect(person.as_document).to_not have_key("phones")
+        person.as_document.should_not have_key("phones")
       end
     end
 
@@ -506,7 +469,7 @@ describe Mongoid::Document do
       end
 
       it "does not include the document in the hash" do
-        expect(person.as_document["addresses"]).to be_empty
+        person.as_document["addresses"].should be_empty
       end
     end
 
@@ -520,7 +483,7 @@ describe Mongoid::Document do
       end
 
       it "does not include the document in the hash" do
-        expect(person.as_document).to_not have_key("name")
+        person.as_document.should_not have_key("name")
       end
     end
   end
@@ -534,7 +497,7 @@ describe Mongoid::Document do
       end
 
       it "returns nil" do
-        expect(person.to_key).to be_nil
+        person.to_key.should be_nil
       end
     end
 
@@ -545,7 +508,7 @@ describe Mongoid::Document do
       end
 
       it "returns the id in an array" do
-        expect(person.to_key).to eq([ person.id ])
+        person.to_key.should eq([ person.id ])
       end
     end
 
@@ -558,7 +521,7 @@ describe Mongoid::Document do
       end
 
       it "returns the id in an array" do
-        expect(person.to_key).to eq([ person.id ])
+        person.to_key.should eq([ person.id ])
       end
     end
   end
@@ -572,7 +535,7 @@ describe Mongoid::Document do
       end
 
       it "returns nil" do
-        expect(person.to_param).to be_nil
+        person.to_param.should be_nil
       end
     end
 
@@ -583,7 +546,7 @@ describe Mongoid::Document do
       end
 
       it "returns the id as a string" do
-        expect(person.to_param).to eq(person.id.to_s)
+        person.to_param.should eq(person.id.to_s)
       end
     end
   end
@@ -597,7 +560,7 @@ describe Mongoid::Document do
     context "when attributes are not frozen" do
 
       it "return false" do
-        expect(person).to_not be_frozen
+        person.should_not be_frozen
         expect {
           person.title = "something"
         }.to_not raise_error
@@ -610,7 +573,7 @@ describe Mongoid::Document do
       end
 
       it "return true" do
-        expect(person).to be_frozen
+        person.should be_frozen
       end
     end
   end
@@ -624,7 +587,7 @@ describe Mongoid::Document do
     context "when not frozen" do
 
       it "freezes attributes" do
-        expect(person.freeze).to eq(person)
+        person.freeze.should eq(person)
         expect { person.title = "something" }.to raise_error
       end
     end
@@ -647,7 +610,7 @@ describe Mongoid::Document do
   describe ".logger" do
 
     it "returns the mongoid logger" do
-      expect(Person.logger).to eq(Mongoid.logger)
+      Person.logger.should eq(Mongoid.logger)
     end
   end
 
@@ -658,7 +621,7 @@ describe Mongoid::Document do
     end
 
     it "returns the mongoid logger" do
-      expect(person.send(:logger)).to eq(Mongoid.logger)
+      person.send(:logger).should eq(Mongoid.logger)
     end
   end
 
@@ -669,7 +632,7 @@ describe Mongoid::Document do
     end
 
     it "resets to the global scope" do
-      expect(movie.global_set).to be_a(::Set)
+      movie.global_set.should be_a(::Set)
     end
   end
   context "when a model name conflicts with a mongoid internal" do
@@ -679,7 +642,7 @@ describe Mongoid::Document do
     end
 
     it "allows the model name" do
-      expect(scheduler.strategy).to be_a(Strategy)
+      scheduler.strategy.should be_a(Strategy)
     end
   end
 
@@ -689,7 +652,7 @@ describe Mongoid::Document do
 
       it "sets the defaults before yielding" do
         Person.new do |person|
-          expect(person.age).to eq(100)
+          person.age.should eq(100)
         end
       end
     end
@@ -710,11 +673,11 @@ describe Mongoid::Document do
     end
 
     it "persists the correct type" do
-      expect(person.reload.bson_id).to be_a(Moped::BSON::ObjectId)
+      person.reload.bson_id.should be_a(Moped::BSON::ObjectId)
     end
 
     it "has the correct value" do
-      expect(person.bson_id).to eq(bson_id)
+      person.bson_id.should eq(bson_id)
     end
   end
 
@@ -729,7 +692,7 @@ describe Mongoid::Document do
     end
 
     it "converts them to nil" do
-      expect(post.person_id).to be_nil
+      post.person_id.should be_nil
     end
   end
 
@@ -779,15 +742,15 @@ describe Mongoid::Document do
         end
 
         it "copies attributes" do
-          expect(person.title).to eq('Sir')
+          person.title.should eq('Sir')
         end
 
         it "keeps the same object id" do
-          expect(person.id).to eq(manager.id)
+          person.id.should eq(manager.id)
         end
 
         it "sets the class type" do
-          expect(person._type).to eq("Person")
+          person._type.should eq("Person")
         end
 
         it "raises an error when inappropriate class is provided" do
@@ -810,11 +773,11 @@ describe Mongoid::Document do
           end
 
           it "copies the embedded documents" do
-            expect(person.appointments.first).to eq(appointment)
+            person.appointments.first.should eq(appointment)
           end
 
           it "returns new instances" do
-            expect(person.appointments.first).to_not equal(appointment)
+            person.appointments.first.should_not equal(appointment)
           end
         end
 
@@ -831,11 +794,11 @@ describe Mongoid::Document do
             end
 
             it "copies the embedded documents" do
-              expect(person.addresses.first).to eq(address)
+              person.addresses.first.should eq(address)
             end
 
             it "returns new instances" do
-              expect(person.addresses.first).to_not equal(address)
+              person.addresses.first.should_not equal(address)
             end
           end
 
@@ -858,11 +821,11 @@ describe Mongoid::Document do
             end
 
             it "copies the embedded documents" do
-              expect(person.addresses.first).to eq(address)
+              person.addresses.first.should eq(address)
             end
 
             it "copies the embedded documents only once" do
-              expect(person.reload.addresses.length).to eq(1)
+              person.reload.addresses.length.should eq(1)
             end
           end
         end
@@ -879,7 +842,7 @@ describe Mongoid::Document do
         end
 
         it "copies the localize attribute" do
-          expect(person.desc).to eq("description")
+          person.desc.should eq("description")
         end
       end
 
@@ -890,7 +853,7 @@ describe Mongoid::Document do
         end
 
         it "copies the state" do
-          expect(person).to be_a_new_record
+          person.should be_a_new_record
         end
       end
 
@@ -905,7 +868,7 @@ describe Mongoid::Document do
         end
 
         it "copies the state" do
-          expect(person).to be_persisted
+          person.should be_persisted
         end
       end
 
@@ -920,7 +883,7 @@ describe Mongoid::Document do
         end
 
         it "copies the state" do
-          expect(person).to be_destroyed
+          person.should be_destroyed
         end
       end
 
@@ -936,11 +899,11 @@ describe Mongoid::Document do
         end
 
         it "copies over the dirty changes" do
-          expect(person.changes["ssn"]).to eq([ nil, "123-22-1234" ])
+          person.changes["ssn"].should eq([ nil, "123-22-1234" ])
         end
 
         it "adds the _type change" do
-          expect(person.changes["_type"]).to eq([ "Manager", "Person" ])
+          person.changes["_type"].should eq([ "Manager", "Person" ])
         end
       end
 
@@ -956,7 +919,7 @@ describe Mongoid::Document do
         end
 
         it "copies the errors" do
-          expect(person.errors).to include(:ssn)
+          person.errors.should include(:ssn)
         end
       end
     end
@@ -974,15 +937,15 @@ describe Mongoid::Document do
         end
 
         it "copies attributes" do
-          expect(manager.title).to eq('Sir')
+          manager.title.should eq('Sir')
         end
 
         it "keeps the same object id" do
-          expect(manager.id).to eq(person.id)
+          manager.id.should eq(person.id)
         end
 
         it "sets the class type" do
-          expect(manager._type).to eq("Manager")
+          manager._type.should eq("Manager")
         end
 
         it "raises an error when inappropriate class is provided" do
@@ -1003,11 +966,11 @@ describe Mongoid::Document do
         end
 
         it "copies the embedded documents" do
-          expect(manager.addresses.first).to eq(address)
+          manager.addresses.first.should eq(address)
         end
 
         it "returns new instances" do
-          expect(manager.addresses.first).to_not equal(address)
+          manager.addresses.first.should_not equal(address)
         end
       end
 
@@ -1018,7 +981,7 @@ describe Mongoid::Document do
         end
 
         it "copies the state" do
-          expect(manager).to be_a_new_record
+          manager.should be_a_new_record
         end
       end
 
@@ -1033,7 +996,7 @@ describe Mongoid::Document do
         end
 
         it "copies the state" do
-          expect(manager).to be_persisted
+          manager.should be_persisted
         end
 
         context "when downcasted document is saved" do
@@ -1043,19 +1006,19 @@ describe Mongoid::Document do
           end
 
           it "keeps the type" do
-            expect(manager).to be_an_instance_of(Manager)
+            manager.should be_an_instance_of(Manager)
           end
 
           it "copies over the dirty changes" do
-            expect(manager.changes["ssn"]).to eq(person.changes["ssn"])
+            manager.changes["ssn"].should eq(person.changes["ssn"])
           end
 
           it "can by queried by the parent class" do
-            expect(Person.find(manager.id)).to be_an_instance_of(Manager)
+            Person.find(manager.id).should be_an_instance_of(Manager)
           end
 
           it "can by queried by the main class" do
-            expect(Manager.find(manager.id)).to be_an_instance_of(Manager)
+            Manager.find(manager.id).should be_an_instance_of(Manager)
           end
         end
       end
@@ -1071,7 +1034,7 @@ describe Mongoid::Document do
         end
 
         it "copies the state" do
-          expect(manager).to be_destroyed
+          manager.should be_destroyed
         end
       end
 
@@ -1087,11 +1050,11 @@ describe Mongoid::Document do
         end
 
         it "copies over the dirty changes" do
-          expect(manager.changes["ssn"]).to eq([ nil, "123-22-1234" ])
+          manager.changes["ssn"].should eq([ nil, "123-22-1234" ])
         end
 
         it "adds the _type change" do
-          expect(manager.changes["_type"]).to eq([ "Person", "Manager" ])
+          manager.changes["_type"].should eq([ "Person", "Manager" ])
         end
       end
 
@@ -1107,26 +1070,8 @@ describe Mongoid::Document do
         end
 
         it "copies the errors" do
-          expect(manager.errors).to include(:ssn)
+          manager.errors.should include(:ssn)
         end
-        
-      end
-      
-      context "when the subclass validates attributes not present on the parent class" do
-        
-        before do
-          Manager.validates_inclusion_of(:level, in: [1, 2])
-        end
-        
-        let(:manager) do
-          person.becomes(Manager)
-        end
-        
-        it "validates the instance of the subclass" do
-          manager.level = 3
-          expect(manager.valid?).to be_false
-        end
-        
       end
 
       context "when the subclass has defaults" do
@@ -1136,7 +1081,7 @@ describe Mongoid::Document do
         end
 
         it "applies default attributes" do
-          expect(manager.level).to eq(1)
+          manager.level.should eq(1)
         end
       end
     end
@@ -1191,13 +1136,13 @@ describe Mongoid::Document do
         end
 
         it "stores the parent object" do
-          expect(cache.fetch("key") { person }).to eq(person)
-          expect(cache.fetch("key")).to eq(person)
+          cache.fetch("key") { person }.should eq(person)
+          cache.fetch("key").should eq(person)
         end
 
         it "stores the embedded object" do
-          expect(cache.fetch("key") { account }).to eq(account)
-          expect(cache.fetch("key")).to eq(account)
+          cache.fetch("key") { account }.should eq(account)
+          cache.fetch("key").should eq(account)
         end
       end
     end

@@ -1,6 +1,5 @@
 class Name
   include Mongoid::Document
-  include Mongoid::Attributes::Dynamic
 
   field :_id, type: String, default: ->{
     "#{first_name}-#{last_name}"
@@ -9,7 +8,6 @@ class Name
   field :first_name, type: String
   field :last_name, type: String
   field :parent_title, type: String
-  field :middle, type: String
 
   embeds_many :translations, validate: false
   embeds_one :language, as: :translatable, validate: false

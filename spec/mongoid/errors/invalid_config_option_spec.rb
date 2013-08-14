@@ -9,19 +9,19 @@ describe Mongoid::Errors::InvalidConfigOption do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Invalid configuration option: bad_option."
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "A invalid configuration option was provided in your mongoid.yml,"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Remove the invalid option or fix the typo."
       )
     end

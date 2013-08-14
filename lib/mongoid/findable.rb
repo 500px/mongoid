@@ -33,7 +33,6 @@ module Mongoid
       :min,
       :pluck,
       :sum,
-      :text_search,
       :update,
       :update_all, to: :with_default_scope
 

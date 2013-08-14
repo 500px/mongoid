@@ -101,6 +101,7 @@ module Mongoid
     def post_persist
       reset_persisted_children
       move_changes
+      Threaded.clear_options!
     end
 
     # Get the previous changes on the document.

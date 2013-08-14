@@ -15,7 +15,7 @@ describe Mongoid::Extensions::DateTime do
       end
 
       pending "does not drop the precision" do
-        expect(mongoized.to_f.to_s).to match(/\.123/)
+        mongoized.to_f.to_s.should match(/\.123/)
       end
     end
 
@@ -43,7 +43,7 @@ describe Mongoid::Extensions::DateTime do
       end
 
       it "returns the date as a local time" do
-        expect(mongoized).to eq(expected)
+        mongoized.should eq(expected)
       end
     end
 
@@ -71,7 +71,7 @@ describe Mongoid::Extensions::DateTime do
       end
 
       it "returns the date as a utc time" do
-        expect(mongoized).to eq(expected)
+        mongoized.should eq(expected)
       end
     end
   end
@@ -87,11 +87,11 @@ describe Mongoid::Extensions::DateTime do
     end
 
     it "converts to a datetime" do
-      expect(date_time).to be_kind_of(DateTime)
+      date_time.should be_kind_of(DateTime)
     end
 
     it "does not change the time" do
-      expect(DateTime.demongoize(time)).to eq(time)
+      DateTime.demongoize(time).should eq(time)
     end
 
     context "when using utc" do
@@ -119,7 +119,7 @@ describe Mongoid::Extensions::DateTime do
         end
 
         it "does not return the time with time zone applied" do
-          expect(user.last_login).to eq(date)
+          user.last_login.should eq(date)
         end
       end
     end
@@ -134,7 +134,7 @@ describe Mongoid::Extensions::DateTime do
       end
 
       it "returns epoch" do
-        expect(DateTime.mongoize("time")).to eq(epoch)
+        DateTime.mongoize("time").should eq(epoch)
       end
     end
   end
@@ -148,7 +148,7 @@ describe Mongoid::Extensions::DateTime do
     context "when the string is an invalid time" do
 
       it "returns the date time as a time" do
-        expect(date_time.mongoize).to be_a(Time)
+        date_time.mongoize.should be_a(Time)
       end
     end
   end

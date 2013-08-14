@@ -9,7 +9,7 @@ describe Mongoid::Extensions::Regexp do
     end
 
     it "returns the provided value" do
-      expect(value).to eq(/[^abc]/)
+      value.should eq(/[^abc]/)
     end
   end
 
@@ -22,7 +22,7 @@ describe Mongoid::Extensions::Regexp do
       end
 
       it "returns the provided value" do
-        expect(value).to eq(/[^abc]/)
+        value.should eq(/[^abc]/)
       end
     end
 
@@ -33,7 +33,7 @@ describe Mongoid::Extensions::Regexp do
       end
 
       it "returns the provided value as a regex" do
-        expect(value).to eq(/[^abc]/)
+        value.should eq(/[^abc]/)
       end
     end
   end
@@ -41,7 +41,7 @@ describe Mongoid::Extensions::Regexp do
   describe "#mongoize" do
 
     it "returns self" do
-      expect(/[^abc]/.mongoize).to eq(/[^abc]/)
+      /[^abc]/.mongoize.should eq(/[^abc]/)
     end
   end
 end

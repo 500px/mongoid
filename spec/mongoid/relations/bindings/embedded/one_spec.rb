@@ -27,11 +27,11 @@ describe Mongoid::Relations::Bindings::Embedded::One do
       end
 
       it "parentizes the documents" do
-        expect(target._parent).to eq(person)
+        target._parent.should eq(person)
       end
 
       it "sets the inverse relation" do
-        expect(target.namable).to eq(person)
+        target.namable.should eq(person)
       end
     end
 
@@ -62,7 +62,7 @@ describe Mongoid::Relations::Bindings::Embedded::One do
       end
 
       it "removes the inverse relation" do
-        expect(target.namable).to be_nil
+        target.namable.should be_nil
       end
     end
 

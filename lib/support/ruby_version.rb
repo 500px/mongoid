@@ -2,7 +2,7 @@
 # squarm for answers
 def raise_version_error(message)
   puts message
-  Rails.logger.info(message) if defined?(Rails) && Rails.logger
+  Rails.logger.info(message) if defined?(Rails)
   raise
 end
 
@@ -19,7 +19,7 @@ end
 if invalid_version?
   message = %{
 Mongoid requires MRI version 1.9.3+ or JRuby 1.6.0+ running in 1.9 mode.
-Your current Ruby version is defined as #{RUBY_VERSION}. Please see:
+You're current Ruby version is defined as #{RUBY_VERSION}. Please see:
 http://mongoid.org/en/mongoid/docs/tips.html#ruby for details.
   }
   raise_version_error(message)

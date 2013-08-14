@@ -28,7 +28,7 @@ describe Mongoid::Extensions::Date do
       end
 
       it "returns the date as a local time" do
-        expect(mongoized).to eq(expected)
+        mongoized.should eq(expected)
       end
     end
 
@@ -56,7 +56,7 @@ describe Mongoid::Extensions::Date do
       end
 
       it "returns the date as a local time" do
-        expect(mongoized).to eq(expected)
+        mongoized.should eq(expected)
       end
     end
   end
@@ -72,11 +72,11 @@ describe Mongoid::Extensions::Date do
     end
 
     it "keeps the date" do
-      expect(Date.demongoize(time)).to eq(expected)
+      Date.demongoize(time).should eq(expected)
     end
 
     it "converts to a date" do
-      expect(Date.demongoize(time)).to be_a(Date)
+      Date.demongoize(time).should be_a(Date)
     end
   end
 
@@ -97,7 +97,7 @@ describe Mongoid::Extensions::Date do
       end
 
       it "returns the time" do
-        expect(evolved).to eq(expected)
+        evolved.should eq(expected)
       end
     end
 
@@ -118,7 +118,7 @@ describe Mongoid::Extensions::Date do
         end
 
         it "returns the string as a time" do
-          expect(evolved).to eq(expected)
+          evolved.should eq(expected)
         end
       end
 
@@ -129,7 +129,7 @@ describe Mongoid::Extensions::Date do
         end
 
         it "returns nil" do
-          expect(evolved).to be_nil
+          evolved.should be_nil
         end
       end
 
@@ -140,7 +140,7 @@ describe Mongoid::Extensions::Date do
         end
 
         it "returns epoch" do
-          expect(Date.mongoize("time")).to eq(epoch)
+          Date.mongoize("time").should eq(epoch)
         end
       end
     end
@@ -164,7 +164,7 @@ describe Mongoid::Extensions::Date do
       end
 
       it "returns the float as a time" do
-        expect(evolved).to eq(Time.utc(expected.year, expected.month, expected.day))
+        evolved.should eq(Time.utc(expected.year, expected.month, expected.day))
       end
     end
 
@@ -187,7 +187,7 @@ describe Mongoid::Extensions::Date do
       end
 
       it "returns the integer as a time" do
-        expect(evolved).to eq(Time.utc(expected.year, expected.month, expected.day))
+        evolved.should eq(Time.utc(expected.year, expected.month, expected.day))
       end
     end
 
@@ -206,14 +206,14 @@ describe Mongoid::Extensions::Date do
       end
 
       it "returns the array as a time" do
-        expect(evolved).to eq(time)
+        evolved.should eq(time)
       end
     end
 
     context "when provided nil" do
 
       it "returns nil" do
-        expect(Date.mongoize(nil)).to be_nil
+        Date.mongoize(nil).should be_nil
       end
     end
   end
@@ -229,7 +229,7 @@ describe Mongoid::Extensions::Date do
     end
 
     it "returns the date as a time at midnight" do
-      expect(date.mongoize).to eq(time)
+      date.mongoize.should eq(time)
     end
   end
 end

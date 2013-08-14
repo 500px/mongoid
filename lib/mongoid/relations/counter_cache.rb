@@ -40,7 +40,9 @@ module Mongoid
         #
         # @since 3.1.0
         def update_counters(id, counters)
-          where(:_id => id).inc(counters)
+          counters.map do |key, value|
+            where(:_id => id).inc(key, value)
+          end
         end
 
         # Increment the counter name from the entries that match the

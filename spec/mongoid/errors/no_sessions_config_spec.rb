@@ -9,19 +9,19 @@ describe Mongoid::Errors::NoSessionsConfig do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "No sessions configuration provided."
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Mongoid's configuration requires that you provide details"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Double check your mongoid.yml to make sure that you have"
       )
     end

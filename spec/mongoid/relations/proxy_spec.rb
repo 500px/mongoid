@@ -27,7 +27,7 @@ describe Mongoid::Relations::Proxy do
     end
 
     it "extends the proxied object" do
-      expect(person).to be_a(Testable)
+      person.should be_a(Testable)
     end
 
     context "when extending from the relation definition" do
@@ -41,7 +41,7 @@ describe Mongoid::Relations::Proxy do
       end
 
       it "extends the proxy" do
-        expect(found).to eq(address)
+        found.should eq(address)
       end
     end
   end

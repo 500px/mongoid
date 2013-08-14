@@ -18,9 +18,6 @@ module Mongoid
     # including destructive, modification, and optional methods.
     delegate(*(Mongo.public_instance_methods(false) - [ :skip, :limit ]), to: :context)
 
-    # This gets blank and empty included.
-    delegate(*Queryable.public_instance_methods(false), to: :context)
-
     # Get the context in which criteria queries should execute. This is either
     # in memory (for embedded documents) or mongo (for root level documents.)
     #

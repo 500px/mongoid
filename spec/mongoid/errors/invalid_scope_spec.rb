@@ -9,19 +9,19 @@ describe Mongoid::Errors::InvalidScope do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Defining a scope of value {} on Band is not allowed."
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Scopes in Mongoid must be either criteria objects or procs that wrap"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Change the scope to be a criteria or proc wrapped critera."
       )
     end

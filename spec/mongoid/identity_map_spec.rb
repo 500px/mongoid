@@ -25,11 +25,11 @@ describe Mongoid::IdentityMap do
     end
 
     it "empties the identity map" do
-      expect(identity_map).to be_empty
+      identity_map.should be_empty
     end
 
     it "returns an empty hash" do
-      expect(clear).to eq({})
+      clear.should eq({})
     end
   end
 
@@ -44,7 +44,7 @@ describe Mongoid::IdentityMap do
     end
 
     it "returns an empty hash" do
-      expect(clear).to eq({})
+      clear.should eq({})
     end
   end
 
@@ -68,7 +68,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns the matching person" do
-            expect(get).to eq(person)
+            get.should eq(person)
           end
         end
 
@@ -79,7 +79,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns nil" do
-            expect(get).to be_nil
+            get.should be_nil
           end
         end
       end
@@ -97,7 +97,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns the matching documents" do
-            expect(get).to eq([ person ])
+            get.should eq([ person ])
           end
         end
 
@@ -112,7 +112,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns nil" do
-            expect(get).to be_nil
+            get.should be_nil
           end
         end
       end
@@ -134,17 +134,17 @@ describe Mongoid::IdentityMap do
 
           it "returns the matching document by class" do
             get = identity_map.get(Firefox, document.id)
-            expect(get).to eq(document)
+            get.should eq(document)
           end
 
           it "returns the matching document by superclass" do
             get = identity_map.get(Browser, document.id)
-            expect(get).to eq(document)
+            get.should eq(document)
           end
 
           it "returns the matching document by class" do
             get = identity_map.get(Canvas, document.id)
-            expect(get).to eq(document)
+            get.should eq(document)
           end
         end
 
@@ -155,7 +155,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns nil" do
-            expect(get).to be_nil
+            get.should be_nil
           end
         end
       end
@@ -181,7 +181,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns the matching document" do
-            expect(get).to eq(animal)
+            get.should eq(animal)
           end
         end
 
@@ -192,7 +192,7 @@ describe Mongoid::IdentityMap do
           end
 
           it "returns nil" do
-            expect(get).to be_nil
+            get.should be_nil
           end
         end
       end
@@ -216,7 +216,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "returns the matching document" do
-        expect(get).to eq(document)
+        get.should eq(document)
       end
     end
 
@@ -227,7 +227,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "returns nil" do
-        expect(get).to be_nil
+        get.should be_nil
       end
     end
 
@@ -246,7 +246,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "returns nil" do
-        expect(get).to be_nil
+        get.should be_nil
       end
     end
   end
@@ -279,7 +279,7 @@ describe Mongoid::IdentityMap do
         end
 
         it "returns the matching documents" do
-          expect(documents).to eq([ post_one, post_two ])
+          documents.should eq([ post_one, post_two ])
         end
       end
 
@@ -290,7 +290,7 @@ describe Mongoid::IdentityMap do
         end
 
         it "returns nil" do
-          expect(documents).to be_nil
+          documents.should be_nil
         end
       end
     end
@@ -315,11 +315,11 @@ describe Mongoid::IdentityMap do
         end
 
         it "deletes the document from the map" do
-          expect(identity_map.get(Person, document.id)).to be_nil
+          identity_map.get(Person, document.id).should be_nil
         end
 
         it "returns the document" do
-          expect(removed).to eq(document)
+          removed.should eq(document)
         end
       end
 
@@ -334,7 +334,7 @@ describe Mongoid::IdentityMap do
         end
 
         it "returns nil" do
-          expect(removed).to be_nil
+          removed.should be_nil
         end
       end
     end
@@ -346,7 +346,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "returns nil" do
-        expect(removed).to be_nil
+        removed.should be_nil
       end
     end
   end
@@ -366,11 +366,11 @@ describe Mongoid::IdentityMap do
         end
 
         it "puts the object in the identity map" do
-          expect(identity_map.get(Person, document.id)).to eq(document)
+          identity_map.get(Person, document.id).should eq(document)
         end
 
         it "returns the document" do
-          expect(set).to eq(document)
+          set.should eq(document)
         end
       end
 
@@ -393,11 +393,11 @@ describe Mongoid::IdentityMap do
         end
 
         it "does not put the object in the identity map" do
-          expect(identity_map).to be_empty
+          identity_map.should be_empty
         end
 
         it "returns nil" do
-          expect(set).to be_nil
+          set.should be_nil
         end
       end
     end
@@ -415,11 +415,11 @@ describe Mongoid::IdentityMap do
       end
 
       it "does not put the object in the identity map" do
-        expect(identity_map.get(nil, nil)).to be_nil
+        identity_map.get(nil, nil).should be_nil
       end
 
       it "returns nil" do
-        expect(set).to be_nil
+        set.should be_nil
       end
     end
 
@@ -430,11 +430,11 @@ describe Mongoid::IdentityMap do
       end
 
       it "places nothing in the map" do
-        expect(identity_map).to be_empty
+        identity_map.should be_empty
       end
 
       it "returns nil" do
-        expect(set).to be_nil
+        set.should be_nil
       end
     end
   end
@@ -465,7 +465,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "puts the documents in the map" do
-        expect(documents).to eq({
+        documents.should eq({
           post_one.id => post_one, post_two.id => post_two
         })
       end
@@ -493,7 +493,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "puts the documents in the map" do
-        expect(document).to eq(post_one)
+        document.should eq(post_one)
       end
     end
   end
@@ -511,11 +511,11 @@ describe Mongoid::IdentityMap do
       end
 
       it "puts the object in the identity map" do
-        expect(described_class.get(Person, document.id)).to eq(document)
+        described_class.get(Person, document.id).should eq(document)
       end
 
       it "returns the document" do
-        expect(set).to eq(document)
+        set.should eq(document)
       end
     end
 
@@ -526,7 +526,7 @@ describe Mongoid::IdentityMap do
       end
 
       it "returns nil" do
-        expect(set).to be_nil
+        set.should be_nil
       end
     end
   end
@@ -536,7 +536,7 @@ describe Mongoid::IdentityMap do
     Hash.public_instance_methods(false).each do |method|
 
       it "can access #{method} at the class level" do
-        expect(described_class).to respond_to(method)
+        described_class.should respond_to(method)
       end
     end
   end
@@ -552,7 +552,7 @@ describe Mongoid::IdentityMap do
       let(:fiber) do
         Fiber.new do
           described_class.set(document)
-          expect(described_class.get(Person, document.id)).to eq(document)
+          described_class.get(Person, document.id).should eq(document)
         end
       end
 

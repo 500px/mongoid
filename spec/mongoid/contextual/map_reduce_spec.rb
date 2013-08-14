@@ -52,7 +52,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the db command" do
-      expect(map_reduce.command).to eq(base_command)
+      map_reduce.command.should eq(base_command)
     end
 
     context "with sort" do
@@ -61,7 +61,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "returns the db command with a sort option" do
-        expect(map_reduce.command).to eq(base_command.merge(sort: {'name' => -1}))
+        map_reduce.command.should eq(base_command.merge(sort: {'name' => -1}))
       end
     end
 
@@ -71,7 +71,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "returns the db command with a limit option" do
-        expect(map_reduce.command).to eq(base_command.merge(limit: 10))
+        map_reduce.command.should eq(base_command.merge(limit: 10))
       end
     end
   end
@@ -91,7 +91,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the map/reduce counts" do
-      expect(counts).to eq({
+      counts.should eq({
         "input" => 2,
         "emit" => 2,
         "reduce" => 0,
@@ -117,7 +117,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "iterates over the results" do
-        expect(results.entries).to eq([
+        results.entries.should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }},
           { "_id" => "Tool", "value" => { "likes" => 100 }}
         ])
@@ -131,7 +131,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "iterates over the results" do
-        expect(results.entries).to eq([
+        results.entries.should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }},
           { "_id" => "Tool", "value" => { "likes" => 100 }}
         ])
@@ -158,7 +158,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "does not raise an error" do
-        expect(results.entries).to be_empty
+        results.entries.should be_empty
       end
     end
   end
@@ -178,7 +178,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the emitted counts" do
-      expect(emitted).to eq(2)
+      emitted.should eq(2)
     end
   end
 
@@ -199,7 +199,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "returns false" do
-        expect(results).to_not be_empty
+        results.should_not be_empty
       end
     end
 
@@ -214,7 +214,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "returns true" do
-        expect(results).to be_empty
+        results.should be_empty
       end
     end
   end
@@ -234,7 +234,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "sets the finalize command" do
-      expect(finalized.command[:finalize]).to eq("testing")
+      finalized.command[:finalize].should eq("testing")
     end
   end
 
@@ -253,7 +253,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the input counts" do
-      expect(input).to eq(2)
+      input.should eq(2)
     end
   end
 
@@ -272,7 +272,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "adds the jsMode flag to the command" do
-      expect(results.command[:jsMode]).to be_true
+      results.command[:jsMode].should be_true
     end
   end
 
@@ -293,7 +293,7 @@ describe Mongoid::Contextual::MapReduce do
       end
 
       it "sets the out command" do
-        expect(out.command[:out]).to eq(inline: 1)
+        out.command[:out].should eq(inline: 1)
       end
     end
 
@@ -306,7 +306,7 @@ describe Mongoid::Contextual::MapReduce do
         end
 
         it "sets the out command value to a string" do
-          expect(out.command[:out]).to eq(replace: "test")
+          out.command[:out].should eq(replace: "test")
         end
       end
     end
@@ -327,7 +327,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the output counts" do
-      expect(output).to eq(2)
+      output.should eq(2)
     end
   end
 
@@ -346,7 +346,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the reduce counts" do
-      expect(reduced).to eq(0)
+      reduced.should eq(0)
     end
   end
 
@@ -373,7 +373,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "adds the variables to the global js scope" do
-      expect(results.first["value"]["global"]).to eq(5)
+      results.first["value"]["global"].should eq(5)
     end
   end
 
@@ -392,7 +392,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns the execution time" do
-      expect(time).to_not be_nil
+      time.should_not be_nil
     end
   end
 
@@ -411,7 +411,7 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns a hash" do
-      expect(execution_results).to be_a_kind_of Hash
+      execution_results.should be_a_kind_of Hash
     end
   end
 
@@ -434,31 +434,31 @@ describe Mongoid::Contextual::MapReduce do
     end
 
     it "returns a string" do
-      expect(inspection).to be_a_kind_of String
+      inspection.should be_a_kind_of String
     end
 
     it "includes the criteria selector" do
-      expect(inspection).to include("selector:")
+      inspection.should include("selector:")
     end
 
     it "includes the class" do
-      expect(inspection).to include("class:")
+      inspection.should include("class:")
     end
 
     it "includes the map function" do
-      expect(inspection).to include("map:")
+      inspection.should include("map:")
     end
 
     it "includes the reduce function" do
-      expect(inspection).to include("reduce:")
+      inspection.should include("reduce:")
     end
 
     it "includes the finalize function" do
-      expect(inspection).to include("finalize:")
+      inspection.should include("finalize:")
     end
 
     it "includes the out option" do
-      expect(inspection).to include("out:")
+      inspection.should include("out:")
     end
   end
 end

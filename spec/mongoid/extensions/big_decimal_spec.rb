@@ -11,14 +11,14 @@ describe Mongoid::Extensions::BigDecimal do
     context "when the the value is a string" do
 
       it "returns a big decimal" do
-        expect(BigDecimal.demongoize(number.to_s)).to eq(number)
+        BigDecimal.demongoize(number.to_s).should eq(number)
       end
     end
 
     context "when the value is nil" do
 
       it "returns nil" do
-        expect(BigDecimal.demongoize(nil)).to be_nil
+        BigDecimal.demongoize(nil).should be_nil
       end
     end
 
@@ -29,7 +29,7 @@ describe Mongoid::Extensions::BigDecimal do
       end
 
       it "returns a float" do
-        expect(BigDecimal.demongoize(float)).to eq(float)
+        BigDecimal.demongoize(float).should eq(float)
       end
     end
 
@@ -40,7 +40,7 @@ describe Mongoid::Extensions::BigDecimal do
       end
 
       it "returns an integer" do
-        expect(BigDecimal.demongoize(integer)).to eq(integer)
+        BigDecimal.demongoize(integer).should eq(integer)
       end
     end
 
@@ -55,11 +55,11 @@ describe Mongoid::Extensions::BigDecimal do
       end
 
       it "returns a big decimal" do
-        expect(demongoized).to be_a(BigDecimal)
+        demongoized.should be_a(BigDecimal)
       end
 
       it "is a NaN big decimal" do
-        expect(demongoized).to be_nan
+        demongoized.should be_nan
       end
     end
   end
@@ -69,28 +69,28 @@ describe Mongoid::Extensions::BigDecimal do
     context "when the value is a big decimal" do
 
       it "returns a string" do
-        expect(BigDecimal.mongoize(number)).to eq(number.to_s)
+        BigDecimal.mongoize(number).should eq(number.to_s)
       end
     end
 
     context "when the value is nil" do
 
       it "returns nil" do
-        expect(BigDecimal.mongoize(nil)).to be_nil
+        BigDecimal.mongoize(nil).should be_nil
       end
     end
 
     context "when the value is an integer" do
 
       it "returns a string" do
-        expect(BigDecimal.mongoize(123456)).to eq("123456")
+        BigDecimal.mongoize(123456).should eq("123456")
       end
     end
 
     context "when the value is a float" do
 
       it "returns a string" do
-        expect(BigDecimal.mongoize(123456.789)).to eq("123456.789")
+        BigDecimal.mongoize(123456.789).should eq("123456.789")
       end
     end
   end
@@ -98,7 +98,7 @@ describe Mongoid::Extensions::BigDecimal do
   describe "#mongoize" do
 
     it "returns a string" do
-      expect(number.mongoize).to eq(number.to_s)
+      number.mongoize.should eq(number.to_s)
     end
   end
 end

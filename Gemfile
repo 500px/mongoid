@@ -3,12 +3,14 @@ gemspec
 
 gem "rake"
 
-group :test do
-  gem "rspec", "~> 2.13"
+git "git://github.com/rails/rails.git" do
+  gem "activemodel"
+end
 
-  if ENV["CI"]
-    gem "coveralls", require: false
-  else
+group :test do
+  gem "rspec", "~> 2.12"
+
+  unless ENV["CI"]
     gem "guard"
     gem "guard-rspec"
     gem "rb-fsevent"

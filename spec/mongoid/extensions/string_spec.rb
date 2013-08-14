@@ -7,7 +7,7 @@ describe Mongoid::Extensions::String do
     context "when the string is blank" do
 
       it "returns the empty string" do
-        expect("".__evolve_object_id__).to be_empty
+        "".__evolve_object_id__.should be_empty
       end
     end
 
@@ -18,7 +18,7 @@ describe Mongoid::Extensions::String do
       end
 
       it "returns the object id" do
-        expect(object_id.to_s.__evolve_object_id__).to eq(object_id)
+        object_id.to_s.__evolve_object_id__.should eq(object_id)
       end
     end
 
@@ -29,7 +29,7 @@ describe Mongoid::Extensions::String do
       end
 
       it "returns the string" do
-        expect(string.__evolve_object_id__).to eq(string)
+        string.__evolve_object_id__.should eq(string)
       end
     end
   end
@@ -39,7 +39,7 @@ describe Mongoid::Extensions::String do
     context "when the string is blank" do
 
       it "returns nil" do
-        expect("".__mongoize_object_id__).to be_nil
+        "".__mongoize_object_id__.should be_nil
       end
     end
 
@@ -50,7 +50,7 @@ describe Mongoid::Extensions::String do
       end
 
       it "returns the object id" do
-        expect(object_id.to_s.__mongoize_object_id__).to eq(object_id)
+        object_id.to_s.__mongoize_object_id__.should eq(object_id)
       end
     end
 
@@ -61,7 +61,7 @@ describe Mongoid::Extensions::String do
       end
 
       it "returns the string" do
-        expect(string.__mongoize_object_id__).to eq(string)
+        string.__mongoize_object_id__.should eq(string)
       end
     end
   end
@@ -90,11 +90,11 @@ describe Mongoid::Extensions::String do
         end
 
         it "converts to a time" do
-          expect(time).to eq(Time.configured.parse(string))
+          time.should eq(Time.configured.parse(string))
         end
 
         it "converts to the as time zone" do
-          expect(time.zone).to eq("JST")
+          time.zone.should eq("JST")
         end
       end
 
@@ -134,7 +134,7 @@ describe Mongoid::Extensions::String do
         end
 
         it "converts to a time" do
-          expect(time).to eq(Time.parse(string))
+          time.should eq(Time.parse(string))
         end
       end
 
@@ -164,14 +164,14 @@ describe Mongoid::Extensions::String do
       end
 
       it "returns an underscored tableized name" do
-        expect(Medical::Patient.name.collectionize).to eq("medical_patients")
+        Medical::Patient.name.collectionize.should eq("medical_patients")
       end
     end
 
     context "when class is not namespaced" do
 
       it "returns an underscored tableized name" do
-        expect(MixedDrink.name.collectionize).to eq("mixed_drinks")
+        MixedDrink.name.collectionize.should eq("mixed_drinks")
       end
     end
   end
@@ -181,14 +181,14 @@ describe Mongoid::Extensions::String do
     context "when the object is not a string" do
 
       it "returns the string" do
-        expect(String.demongoize(:test)).to eq("test")
+        String.demongoize(:test).should eq("test")
       end
     end
 
     context "when the object is nil" do
 
       it "returns nil" do
-        expect(String.demongoize(nil)).to be_nil
+        String.demongoize(nil).should be_nil
       end
     end
   end
@@ -198,28 +198,28 @@ describe Mongoid::Extensions::String do
     context "when the string is id" do
 
       it "returns true" do
-        expect("id").to be_mongoid_id
+        "id".should be_mongoid_id
       end
     end
 
     context "when the string is _id" do
 
       it "returns true" do
-        expect("_id").to be_mongoid_id
+        "_id".should be_mongoid_id
       end
     end
 
     context "when the string contains id" do
 
       it "returns false" do
-        expect("identity").to_not be_mongoid_id
+        "identity".should_not be_mongoid_id
       end
     end
 
     context "when the string contains _id" do
 
       it "returns false" do
-        expect("something_id").to_not be_mongoid_id
+        "something_id".should_not be_mongoid_id
       end
     end
   end
@@ -229,14 +229,14 @@ describe Mongoid::Extensions::String do
     context "when the object is not a string" do
 
       it "returns the string" do
-        expect(String.mongoize(:test)).to eq("test")
+        String.mongoize(:test).should eq("test")
       end
     end
 
     context "when the object is nil" do
 
       it "returns nil" do
-        expect(String.mongoize(nil)).to be_nil
+        String.mongoize(nil).should be_nil
       end
     end
   end
@@ -244,7 +244,7 @@ describe Mongoid::Extensions::String do
   describe "#mongoize" do
 
     it "returns self" do
-      expect("test".mongoize).to eq("test")
+      "test".mongoize.should eq("test")
     end
   end
 
@@ -253,21 +253,21 @@ describe Mongoid::Extensions::String do
     context "when string is a reader" do
 
       it "returns self" do
-        expect("attribute".reader).to eq("attribute")
+        "attribute".reader.should eq("attribute")
       end
     end
 
     context "when string is a writer" do
 
       it "returns the reader" do
-        expect("attribute=".reader).to eq("attribute")
+        "attribute=".reader.should eq("attribute")
       end
     end
 
     context "when the string is before_type_cast" do
 
       it "returns the reader" do
-        expect("attribute_before_type_cast".reader).to eq("attribute")
+        "attribute_before_type_cast".reader.should eq("attribute")
       end
     end
   end
@@ -277,28 +277,28 @@ describe Mongoid::Extensions::String do
     context "when the string is an integer" do
 
       it "returns true" do
-        expect("1234").to be_numeric
+        "1234".should be_numeric
       end
     end
 
     context "when string is a float" do
 
       it "returns true" do
-        expect("1234.123").to be_numeric
+        "1234.123".should be_numeric
       end
     end
 
     context "when the string is has exponents" do
 
       it "returns true" do
-        expect("1234.123123E4").to be_numeric
+        "1234.123123E4".should be_numeric
       end
     end
 
     context "when the string is non numeric" do
 
       it "returns false" do
-        expect("blah").to_not be_numeric
+        "blah".should_not be_numeric
       end
     end
   end
@@ -308,15 +308,26 @@ describe Mongoid::Extensions::String do
     context "when string is address" do
 
       it "returns address" do
-        expect("address".singularize).to eq("address")
+        "address".singularize.should eq("address")
       end
     end
 
     context "when string is address_profiles" do
 
       it "returns address_profile" do
-        expect("address_profiles".singularize).to eq("address_profile")
+        "address_profiles".singularize.should eq("address_profile")
       end
+    end
+  end
+
+  describe "#to_a" do
+
+    let(:value) do
+      "Disintegration is the best album ever!"
+    end
+
+    it "returns an array with the string in it" do
+      value.to_a.should eq([ value ])
     end
   end
 
@@ -325,14 +336,14 @@ describe Mongoid::Extensions::String do
     context "when string is a reader" do
 
       it "returns false" do
-        expect("attribute".writer?).to be_false
+        "attribute".writer?.should be_false
       end
     end
 
     context "when string is a writer" do
 
       it "returns true" do
-        expect("attribute=".writer?).to be_true
+        "attribute=".writer?.should be_true
       end
     end
   end
@@ -342,14 +353,14 @@ describe Mongoid::Extensions::String do
     context "when string is a reader" do
 
       it "returns false" do
-        expect("attribute".before_type_cast?).to be_false
+        "attribute".before_type_cast?.should be_false
       end
     end
 
     context "when string is before_type_cast" do
 
       it "returns true" do
-        expect("attribute_before_type_cast".before_type_cast?).to be_true
+        "attribute_before_type_cast".before_type_cast?.should be_true
       end
     end
   end

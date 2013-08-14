@@ -36,7 +36,7 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "does not raise an error" do
-        expect(user.role).to eq(role)
+        user.role.should eq(role)
       end
     end
 
@@ -62,23 +62,23 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the target of the relation" do
-          expect(person.game.target).to eq(game)
+          person.game.target.should eq(game)
         end
 
         it "sets the foreign key on the relation" do
-          expect(game.person_id).to eq(person.id)
+          game.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(game.person).to eq(person)
+          game.person.should eq(person)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(game.person).to eql(person)
+          game.person.should eql(person)
         end
 
         it "does not save the target" do
-          expect(game).to_not be_persisted
+          game.should_not be_persisted
         end
       end
 
@@ -97,23 +97,23 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the target of the relation" do
-          expect(person.game.target).to eq(game)
+          person.game.target.should eq(game)
         end
 
         it "sets the foreign key of the relation" do
-          expect(game.person_id).to eq(person.id)
+          game.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(game.person).to eq(person)
+          game.person.should eq(person)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(game.person).to eql(person)
+          game.person.should eql(person)
         end
 
         it "saves the target" do
-          expect(game).to be_persisted
+          game.should be_persisted
         end
 
         context "when reloading the parent" do
@@ -152,23 +152,23 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the target of the relation" do
-          expect(person.cat.target).to eq(cat)
+          person.cat.target.should eq(cat)
         end
 
         it "sets the foreign key of the relation" do
-          expect(cat.person_id).to eq(person.username)
+          cat.person_id.should eq(person.username)
         end
 
         it "sets the base on the inverse relation" do
-          expect(cat.person).to eq(person)
+          cat.person.should eq(person)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(cat.person).to eql(person)
+          cat.person.should eql(person)
         end
 
         it "saves the target" do
-          expect(cat).to be_persisted
+          cat.should be_persisted
         end
       end
     end
@@ -190,23 +190,23 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the target of the relation" do
-          expect(bar.rating.target).to eq(rating)
+          bar.rating.target.should eq(rating)
         end
 
         it "sets the foreign key on the relation" do
-          expect(rating.ratable_id).to eq(bar.id)
+          rating.ratable_id.should eq(bar.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(rating.ratable).to eq(bar)
+          rating.ratable.should eq(bar)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(rating.ratable).to eql(bar)
+          rating.ratable.should eql(bar)
         end
 
         it "does not save the target" do
-          expect(rating).to_not be_persisted
+          rating.should_not be_persisted
         end
       end
 
@@ -225,23 +225,23 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the target of the relation" do
-          expect(bar.rating.target).to eq(rating)
+          bar.rating.target.should eq(rating)
         end
 
         it "sets the foreign key of the relation" do
-          expect(rating.ratable_id).to eq(bar.id)
+          rating.ratable_id.should eq(bar.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(rating.ratable).to eq(bar)
+          rating.ratable.should eq(bar)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(rating.ratable).to eql(bar)
+          rating.ratable.should eql(bar)
         end
 
         it "saves the target" do
-          expect(rating).to be_persisted
+          rating.should be_persisted
         end
       end
 
@@ -262,27 +262,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.game).to eq(new_game)
+            person.game.should eq(new_game)
           end
 
           it "removes the old foreign key reference" do
-            expect(game.person_id).to be_nil
+            game.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(game.person).to be_nil
+            game.person.should be_nil
           end
 
           it "destroys the old child" do
-            expect(game).to be_destroyed
+            game.should be_destroyed
           end
 
           it "leaves the old child unpersisted" do
-            expect(game.persisted?).to be_false
+            game.persisted?.should be_false
           end
 
           it "leaves the new child persisted" do
-            expect(new_game.persisted?).to be_true
+            new_game.persisted?.should be_true
           end
         end
 
@@ -293,27 +293,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.game).to eq(new_game)
+            person.game.should eq(new_game)
           end
 
           it "removes the old foreign key reference" do
-            expect(game.person_id).to be_nil
+            game.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(game.person).to be_nil
+            game.person.should be_nil
           end
 
           it "does not destroy the old child" do
-            expect(game).to_not be_destroyed
+            game.should_not be_destroyed
           end
 
           it "leaves the old child persisted" do
-            expect(game.persisted?).to be_true
+            game.persisted?.should be_true
           end
 
           it "leaves the new child unpersisted" do
-            expect(new_game.persisted?).to be_false
+            new_game.persisted?.should be_false
           end
         end
       end
@@ -335,27 +335,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.game).to eq(new_game)
+            person.game.should eq(new_game)
           end
 
           it "removes the old foreign key reference" do
-            expect(game.person_id).to be_nil
+            game.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(game.person).to be_nil
+            game.person.should be_nil
           end
 
           it "destroys the old child" do
-            expect(game).to be_destroyed
+            game.should be_destroyed
           end
 
           it "leaves the old child unpersisted" do
-            expect(game.persisted?).to be_false
+            game.persisted?.should be_false
           end
 
           it "leaves the new child persisted" do
-            expect(new_game.persisted?).to be_true
+            new_game.persisted?.should be_true
           end
         end
 
@@ -366,27 +366,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.game).to eq(new_game)
+            person.game.should eq(new_game)
           end
 
           it "removes the old foreign key reference" do
-            expect(game.person_id).to be_nil
+            game.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(game.person).to be_nil
+            game.person.should be_nil
           end
 
           it "does not destroy the old child" do
-            expect(game).to_not be_destroyed
+            game.should_not be_destroyed
           end
 
           it "leaves the old child unpersisted" do
-            expect(game.persisted?).to be_false
+            game.persisted?.should be_false
           end
 
           it "leaves the new child unpersisted" do
-            expect(new_game.persisted?).to be_false
+            new_game.persisted?.should be_false
           end
         end
       end
@@ -408,27 +408,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.cat).to eq(new_cat)
+            person.cat.should eq(new_cat)
           end
 
           it "removes the old foreign key reference" do
-            expect(cat.person_id).to be_nil
+            cat.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(cat.person).to be_nil
+            cat.person.should be_nil
           end
 
           it "does not destroy the old child" do
-            expect(cat).to_not be_destroyed
+            cat.should_not be_destroyed
           end
 
           it "leaves the old child persisted" do
-            expect(cat.persisted?).to be_true
+            cat.persisted?.should be_true
           end
 
           it "leaves the new child persisted" do
-            expect(new_cat.persisted?).to be_true
+            new_cat.persisted?.should be_true
           end
         end
 
@@ -439,27 +439,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.cat).to eq(new_cat)
+            person.cat.should eq(new_cat)
           end
 
           it "removes the old foreign key reference" do
-            expect(cat.person_id).to be_nil
+            cat.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(cat.person).to be_nil
+            cat.person.should be_nil
           end
 
           it "does not destroy the old child" do
-            expect(cat).to_not be_destroyed
+            cat.should_not be_destroyed
           end
 
           it "leaves the old child persisted" do
-            expect(cat.persisted?).to be_true
+            cat.persisted?.should be_true
           end
 
           it "leaves the new child unpersisted" do
-            expect(new_cat.persisted?).to be_false
+            new_cat.persisted?.should be_false
           end
         end
       end
@@ -481,27 +481,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.cat).to eq(new_cat)
+            person.cat.should eq(new_cat)
           end
 
           it "removes the old foreign key reference" do
-            expect(cat.person_id).to be_nil
+            cat.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(cat.person).to be_nil
+            cat.person.should be_nil
           end
 
           it "does not destroy the old child" do
-            expect(cat).to_not be_destroyed
+            cat.should_not be_destroyed
           end
 
           it "leaves the old child unpersisted" do
-            expect(cat.persisted?).to be_false
+            cat.persisted?.should be_false
           end
 
           it "leaves the new child persisted" do
-            expect(new_cat.persisted?).to be_true
+            new_cat.persisted?.should be_true
           end
         end
 
@@ -512,27 +512,27 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.cat).to eq(new_cat)
+            person.cat.should eq(new_cat)
           end
 
           it "removes the old foreign key reference" do
-            expect(cat.person_id).to be_nil
+            cat.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(cat.person).to be_nil
+            cat.person.should be_nil
           end
 
           it "does not destroy the old child" do
-            expect(cat).to_not be_destroyed
+            cat.should_not be_destroyed
           end
 
           it "leaves the old child unpersisted" do
-            expect(cat.persisted?).to be_false
+            cat.persisted?.should be_false
           end
 
           it "leaves the new child unpersisted" do
-            expect(new_cat.persisted?).to be_false
+            new_cat.persisted?.should be_false
           end
         end
       end
@@ -558,19 +558,19 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.game).to eq(new_game)
+            person.game.should eq(new_game)
           end
 
           it "removes the old foreign key reference" do
-            expect(game.person_id).to be_nil
+            game.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(game.person).to be_nil
+            game.person.should be_nil
           end
 
           it "destroys the old child" do
-            expect(game).to be_destroyed
+            game.should be_destroyed
           end
         end
 
@@ -589,19 +589,19 @@ describe Mongoid::Relations::Referenced::One do
           end
 
           it "sets the new relation on the parent" do
-            expect(person.account).to eq(new_account)
+            person.account.should eq(new_account)
           end
 
           it "removes the old foreign key reference" do
-            expect(account.person_id).to be_nil
+            account.person_id.should be_nil
           end
 
           it "removes the reference to the parent" do
-            expect(account.person).to be_nil
+            account.person.should be_nil
           end
 
           it "nullifies the old child" do
-            expect(account).to_not be_destroyed
+            account.should_not be_destroyed
           end
         end
       end
@@ -628,15 +628,15 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the relation to nil" do
-          expect(person.game).to be_nil
+          person.game.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(game.person).to be_nil
+          game.person.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(game.person_id).to be_nil
+          game.person_id.should be_nil
         end
       end
 
@@ -656,19 +656,19 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the relation to nil" do
-          expect(person.game).to be_nil
+          person.game.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(game.person).to be_nil
+          game.person.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(game.person_id).to be_nil
+          game.person_id.should be_nil
         end
 
         it "deletes the target from the database" do
-          expect(game).to be_destroyed
+          game.should be_destroyed
         end
       end
     end
@@ -691,15 +691,15 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the relation to nil" do
-          expect(bar.rating).to be_nil
+          bar.rating.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(rating.ratable).to be_nil
+          rating.ratable.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(rating.ratable_id).to be_nil
+          rating.ratable_id.should be_nil
         end
       end
 
@@ -719,19 +719,19 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the relation to nil" do
-          expect(bar.rating).to be_nil
+          bar.rating.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(rating.ratable).to be_nil
+          rating.ratable.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(rating.ratable_id).to be_nil
+          rating.ratable_id.should be_nil
         end
 
         it "applies the appropriate dependent option" do
-          expect(rating).to_not be_destroyed
+          rating.should_not be_destroyed
         end
       end
     end
@@ -765,19 +765,19 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "returns a new document" do
-          expect(game.score).to eq(50)
+          game.score.should eq(50)
         end
 
         it "sets the foreign key on the document" do
-          expect(game.person_id).to eq(person.id)
+          game.person_id.should eq(person.id)
         end
 
         it "sets the inverse relation" do
-          expect(game.person).to eq(person)
+          game.person.should eq(person)
         end
 
         it "does not save the built document" do
-          expect(game).to_not be_persisted
+          game.should_not be_persisted
         end
       end
 
@@ -792,15 +792,15 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the foreign key on the document" do
-          expect(game.person_id).to eq(person.id)
+          game.person_id.should eq(person.id)
         end
 
         it "sets the inverse relation" do
-          expect(game.person).to eq(person)
+          game.person.should eq(person)
         end
 
         it "does not save the built document" do
-          expect(game).to_not be_persisted
+          game.should_not be_persisted
         end
       end
 
@@ -815,15 +815,15 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "sets the foreign key on the document" do
-          expect(game.person_id).to eq(person.id)
+          game.person_id.should eq(person.id)
         end
 
         it "sets the inverse relation" do
-          expect(game.person).to eq(person)
+          game.person.should eq(person)
         end
 
         it "does not save the built document" do
-          expect(game).to_not be_persisted
+          game.should_not be_persisted
         end
       end
     end
@@ -841,19 +841,19 @@ describe Mongoid::Relations::Referenced::One do
         end
 
         it "returns a new document" do
-          expect(rating.value).to eq(5)
+          rating.value.should eq(5)
         end
 
         it "sets the foreign key on the document" do
-          expect(rating.ratable_id).to eq(bar.id)
+          rating.ratable_id.should eq(bar.id)
         end
 
         it "sets the inverse relation" do
-          expect(rating.ratable).to eq(bar)
+          rating.ratable.should eq(bar)
         end
 
         it "does not save the built document" do
-          expect(rating).to_not be_persisted
+          rating.should_not be_persisted
         end
       end
     end
@@ -874,9 +874,8 @@ describe Mongoid::Relations::Referenced::One do
     end
 
     it "returns the embedded in builder" do
-      expect(
-        described_class.builder(nil, metadata, document)
-      ).to be_a_kind_of(builder_klass)
+      described_class.builder(nil, metadata, document).should
+        be_a_kind_of(builder_klass)
     end
   end
 
@@ -906,19 +905,19 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "returns a new document" do
-        expect(game.score).to eq(50)
+        game.score.should eq(50)
       end
 
       it "sets the foreign key on the document" do
-        expect(game.person_id).to eq(person.id)
+        game.person_id.should eq(person.id)
       end
 
       it "sets the inverse relation" do
-        expect(game.person).to eq(person)
+        game.person.should eq(person)
       end
 
       it "saves the document" do
-        expect(game).to be_persisted
+        game.should be_persisted
       end
     end
 
@@ -933,15 +932,15 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "sets the foreign key on the document" do
-        expect(game.person_id).to eq(person.id)
+        game.person_id.should eq(person.id)
       end
 
       it "sets the inverse relation" do
-        expect(game.person).to eq(person)
+        game.person.should eq(person)
       end
 
       it "saves the document" do
-        expect(game).to be_persisted
+        game.should be_persisted
       end
     end
 
@@ -956,15 +955,15 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "sets the foreign key on the document" do
-        expect(game.person_id).to eq(person.id)
+        game.person_id.should eq(person.id)
       end
 
       it "sets the inverse relation" do
-        expect(game.person).to eq(person)
+        game.person.should eq(person)
       end
 
       it "saves the document" do
-        expect(game).to be_persisted
+        game.should be_persisted
       end
     end
 
@@ -979,19 +978,19 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "returns a new document" do
-        expect(rating.value).to eq(5)
+        rating.value.should eq(5)
       end
 
       it "sets the foreign key on the document" do
-        expect(rating.ratable_id).to eq(bar.id)
+        rating.ratable_id.should eq(bar.id)
       end
 
       it "sets the inverse relation" do
-        expect(rating.ratable).to eq(bar)
+        rating.ratable.should eq(bar)
       end
 
       it "saves the document" do
-        expect(rating).to be_persisted
+        rating.should be_persisted
       end
     end
   end
@@ -1013,10 +1012,11 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "includes the type in the criteria" do
-        expect(criteria.selector).to eq(
+        criteria.selector.should eq(
           {
             "ratable_id"    => id,
-            "ratable_type"  => "Book"
+            "ratable_type"  => "Book",
+            "ratable_field" => { "$in" => [ :rating, nil ] }
           }
         )
       end
@@ -1033,7 +1033,7 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "does not include the type in the criteria" do
-        expect(criteria.selector).to eq({ "person_id" => id })
+        criteria.selector.should eq({ "person_id" => id })
       end
     end
   end
@@ -1071,7 +1071,7 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "puts the documents in the identity map" do
-        expect(map).to eq(game)
+        map.should eq(game)
       end
     end
 
@@ -1106,7 +1106,7 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "puts the documents in the identity map" do
-        expect(map).to eq(book_rating)
+        map.should eq(book_rating)
       end
     end
   end
@@ -1114,21 +1114,21 @@ describe Mongoid::Relations::Referenced::One do
   describe ".embedded?" do
 
     it "returns false" do
-      expect(described_class).to_not be_embedded
+      described_class.should_not be_embedded
     end
   end
 
   describe ".foreign_key_suffix" do
 
     it "returns _id" do
-      expect(described_class.foreign_key_suffix).to eq("_id")
+      described_class.foreign_key_suffix.should eq("_id")
     end
   end
 
   describe ".macro" do
 
     it "returns has_one" do
-      expect(described_class.macro).to eq(:has_one)
+      described_class.macro.should eq(:has_one)
     end
   end
 
@@ -1149,11 +1149,11 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "removes the foreign key from the target" do
-        expect(game.person_id).to be_nil
+        game.person_id.should be_nil
       end
 
       it "removes the reference from the target" do
-        expect(game.person).to be_nil
+        game.person.should be_nil
       end
     end
 
@@ -1172,11 +1172,11 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "removes the foreign key from the target" do
-        expect(game_reloaded.person_id).to be_nil
+        game_reloaded.person_id.should be_nil
       end
 
       it "removes the reference from the target" do
-        expect(game_reloaded.person).to be_nil
+        game_reloaded.person.should be_nil
       end
     end
   end
@@ -1200,7 +1200,7 @@ describe Mongoid::Relations::Referenced::One do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(document.respond_to?(method)).to be_true
+          document.respond_to?(method).should be_true
         end
       end
     end
@@ -1209,14 +1209,14 @@ describe Mongoid::Relations::Referenced::One do
   describe ".stores_foreign_key?" do
 
     it "returns false" do
-      expect(described_class.stores_foreign_key?).to be_false
+      described_class.stores_foreign_key?.should be_false
     end
   end
 
   describe ".valid_options" do
 
     it "returns the valid options" do
-      expect(described_class.valid_options).to eq(
+      described_class.valid_options.should eq(
         [ :as, :autobuild, :autosave, :dependent, :foreign_key, :primary_key ]
       )
     end
@@ -1225,7 +1225,7 @@ describe Mongoid::Relations::Referenced::One do
   describe ".validation_default" do
 
     it "returns true" do
-      expect(described_class.validation_default).to be_true
+      described_class.validation_default.should be_true
     end
   end
 
@@ -1259,11 +1259,11 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "reloads the document from the database" do
-        expect(reloaded.name).to eq("Diablo 2")
+        reloaded.name.should eq("Diablo 2")
       end
 
       it "sets a new document instance" do
-        expect(reloaded).to_not equal(game_one)
+        reloaded.should_not equal(game_one)
       end
     end
 
@@ -1278,11 +1278,11 @@ describe Mongoid::Relations::Referenced::One do
       end
 
       it "reloads the new document from the database" do
-        expect(reloaded.name).to eq("Starcraft 2")
+        reloaded.name.should eq("Starcraft 2")
       end
 
       it "sets a new document instance" do
-        expect(reloaded).to_not equal(game_one)
+        reloaded.should_not equal(game_one)
       end
     end
   end

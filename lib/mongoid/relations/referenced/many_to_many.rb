@@ -29,7 +29,7 @@ module Mongoid
           return concat(docs) if docs.size > 1
           if doc = docs.first
             append(doc)
-            base.add_to_set(foreign_key => doc.id)
+            base.add_to_set(foreign_key, doc.id)
             if child_persistable?(doc)
               doc.save
             end
@@ -65,7 +65,7 @@ module Mongoid
             end
           end
           if persistable? || _creating?
-            base.push(foreign_key => ids.keys)
+            base.push_all(foreign_key, ids.keys)
           end
           persist_delayed(docs, inserts)
           self
@@ -114,7 +114,7 @@ module Mongoid
         def delete(document)
           doc = super
           if doc && persistable?
-            base.pull(foreign_key => doc.id)
+            base.pull(foreign_key, doc.id)
             target._unloaded = criteria
             unsynced(base, foreign_key)
           end
@@ -134,10 +134,13 @@ module Mongoid
             execute_callback :before_remove, doc
           end
           unless metadata.forced_nil_inverse?
-            criteria.pull(inverse_foreign_key => base.id)
+            criteria.pull(inverse_foreign_key, base.id)
           end
           if persistable?
-            base.set(foreign_key => base.send(foreign_key).clear)
+            base.set(
+              foreign_key,
+              base.send(foreign_key).clear
+            )
           end
           after_remove_error = nil
           many_to_many = target.clear do |doc|

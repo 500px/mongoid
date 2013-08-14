@@ -471,9 +471,8 @@ module Mongoid
       def create_translations_getter(name, meth)
         generated_methods.module_eval do
           re_define_method("#{meth}_translations") do
-            (attributes[name] ||= {}).with_indifferent_access
+            attributes[name] ||= {}
           end
-          alias_method :"#{meth}_t", :"#{meth}_translations"
         end
       end
 
@@ -498,7 +497,6 @@ module Mongoid
             end
             attributes[name] = value
           end
-          alias_method :"#{meth}_t=", :"#{meth}_translations="
         end
       end
 

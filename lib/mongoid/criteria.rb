@@ -1,9 +1,9 @@
 # encoding: utf-8
-require "mongoid/criteria/findable"
-require "mongoid/criteria/inspectable"
-require "mongoid/criteria/marshalable"
-require "mongoid/criteria/modifiable"
-require "mongoid/criteria/scopable"
+require "mongoid/criterion/inspection"
+require "mongoid/criterion/findable"
+require "mongoid/criterion/marshalable"
+require "mongoid/criterion/modifiable"
+require "mongoid/criterion/scoping"
 
 module Mongoid
 
@@ -17,17 +17,11 @@ module Mongoid
     include Enumerable
     include Contextual
     include Origin::Queryable
-    include Findable
-    include Inspectable
-    include Marshalable
-    include Modifiable
-    include Scopable
-
-    # Static array used to check with method missing - we only need to ever
-    # instantiate once.
-    #
-    # @since 4.0.0
-    CHECK = []
+    include Criterion::Inspection
+    include Criterion::Findable
+    include Criterion::Marshalable
+    include Criterion::Modifiable
+    include Criterion::Scoping
 
     attr_accessor :embedded, :klass
 
@@ -328,7 +322,7 @@ module Mongoid
     #
     # @return [ true, false ] If the criteria responds to the method.
     def respond_to?(name, include_private = false)
-      super || klass.respond_to?(name) || CHECK.respond_to?(name, include_private)
+      super || klass.respond_to?(name) || entries.respond_to?(name, include_private)
     end
 
     alias :to_ary :to_a
@@ -512,10 +506,8 @@ module Mongoid
         klass.send(:with_scope, self) do
           klass.send(name, *args, &block)
         end
-      elsif CHECK.respond_to?(name)
-        return entries.send(name, *args, &block)
       else
-        super
+        return entries.send(name, *args, &block)
       end
     end
 

@@ -21,7 +21,7 @@ describe Mongoid::Relations::Cascading::Delete do
         end
 
         it "deletes the relation" do
-          expect(home).to be_destroyed
+          home.should be_destroyed
         end
 
         it "persists the deletion" do
@@ -38,7 +38,7 @@ describe Mongoid::Relations::Cascading::Delete do
         end
 
         it "deletes the base document" do
-          expect(person).to be_destroyed
+          person.should be_destroyed
         end
       end
     end
@@ -65,23 +65,23 @@ describe Mongoid::Relations::Cascading::Delete do
         end
 
         it "deletes the first document" do
-          expect(post_one).to be_destroyed
+          post_one.should be_destroyed
         end
 
         it "deletes the second document" do
-          expect(post_two).to be_destroyed
+          post_two.should be_destroyed
         end
 
         it "unbinds the first document" do
-          expect(post_one.person).to be_nil
+          post_one.person.should be_nil
         end
 
         it "unbinds the second document" do
-          expect(post_two.person).to be_nil
+          post_two.person.should be_nil
         end
 
         it "removes the documents from the relation" do
-          expect(person.posts).to be_empty
+          person.posts.should be_empty
         end
 
         it "persists the first deletion" do

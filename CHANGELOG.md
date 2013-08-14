@@ -9,120 +9,6 @@ For instructions on upgrading to newer versions, visit
 
 * Mongoid now requires Active Model 4 or higher.
 
-* `Document#set` now accepts multiple attributes in the form of a hash,
-  instead of the previous `(field, value)` args. Field aliases and typecasting
-  are also now supported in this operation.
-
-        document.set(name: "Photek", likes: 10000)
-
-* `Document#rename` now accepts multiple attributes in the form of a hash,
-  instead of the previous `(field, value)` args. Field aliases are supported.
-
-        document.rename(first_name: "fn", last_name: "ln")
-
-* `Document#inc` now accepts multiple attributes in the form of a hash, instead
-  of previously only being able to increment one value at a time. Aliases and
-  serialization is supported.
-
-        document.inc(score: 10, place: -1, lives: -10)
-
-* `Document#pop` now accepts multiple attributes in the form of a hash, instead
-  of previously only being able to pop one value at a time. Aliases and
-  serialization is supported.
-
-        document.pop(names: 1, aliases: -1)
-
-* `Document#bit` now accepts multiple attributes in the form of a hash, instead
-  of previously only being able to apply one set of operations at a time.
-  Aliases and serialization are supported.
-
-        document.bit(age: { and: 13 }, score: { or: 13 })
-
-* `Document#pull` now accepts multiple attributes in the form of a hash, instead
-  of previously only being able to pull one value at a time. Aliases and
-  serialization is supported.
-
-        document.pull(names: "James", aliases: "007")
-
-* `Document#pull_all` now accepts multiple attributes in the form of a hash,
-  instead of previously only being able to pull one value at a time. Aliases and
-  serialization is supported.
-
-        document.pull_all(names: ["James", "Bond"], aliases: ["007"])
-
-* `Document#push_all` has been removed since it was deprecated in MongoDB 2.4.
-  Use `Document.push` instead.
-
-* `Document#push` now accepts multiple attributes in the form of a hash, and
-  can handle the pushing of single values or multiple values to the field via
-  $push with $each. Aliases and serialization is supported.
-
-        document.push(names: "James", aliases: [ "007", "Jim" ])
-
-* `Document#add_to_set` now accepts multiple attributes in the form of a hash,
-  and now aliases and serialization are supported.
-
-        document.add_to_set(names: "James", aliases: "007")
-
-* Criteria atomic operations API is now changed to match the changes in the
-  single document atomic API, for example:
-
-        Band.where(name: "Depeche Mode").inc(likes: 10, followers: 20)
-
-* \#3138 `update_attributes` can now be accessed simply by calling `update`.
-
-* \#3083 A new rake task: `rake mongoid:remove_undefined_indexes` has been added to
-  remove indexes from the database that are not explicitly defined in the models.
-  (Aidan Feldman)
-
-* \#3029 The `relation_field` field that is added for a single use case with polymorphic
-  relations has been removed. So where the following would work before:
-
-        class Eye
-          include Mongoid::Document
-          belongs_to :eyeable, polymorphic: true
-        end
-
-        class Face
-          include Mongoid::Document
-          has_one :left_eye, class_name: "Eye", as: :eyeable
-          has_one :right_eye, class_name: "Eye", as: :eyeable
-        end
-
-      This would now need to be modeled as (with the appropriate migration):
-
-        class Eye
-          include Mongoid::Document
-          belongs_to :left_socket, class_name: "Face", inverse_of: :left_eye
-          belongs_to :right_socket, class_name: "Face", inverse_of: :right_eye
-        end
-
-        class Face
-          include Mongoid::Document
-          has_one :left_eye, class_name: "Eye", inverse_of: :left_socket
-          has_one :right_eye, class_name: "Eye", inverse_of: :right_socket
-        end
-
-* \#3075 `update_attribute` now properly calls the setter method instead of
-  using `write_attribute`.
-
-* \#3060 Allow atomically blocks to allow multiple calls of the same type.
-  (Brian Norton)
-
-* \#3037 Model indexes are no longer stored in an `index_options` hash on the
-  model class. Instead, an array named `index_specifications` now exists on the
-  class which contains a list of `Indexable::Specification` objects. This is so
-  we could properly handle the case of indexes with the same keys but different
-  order.
-
-* \#2991 The `timeless` feature has been removed, due to the fact with the current
-  overall design of Mongoid it would never be thread safe when accessed from the
-  class level, and has too many edge cases. Active Record's implementation of this
-  feature also suffers the same faults.
-
-* \#2956 Caching on queries now only happens when `cache` is specifically
-  called. (Arthur Neves)
-
 * \#2898 Dirty attribute methods now properly handle field aliases.
   (Niels Ganser)
 
@@ -137,162 +23,21 @@ For instructions on upgrading to newer versions, visit
 * \#2603 Return values from setters are now always the set value, regardless
   of calling the setter or using send.
 
-* \#2563 The `allow_dynamic_fields` configuration option has been removed as
-  dynamic fields are now allowed on a per-model level. In order to allow a
-  model to use dynamic fields, simply include the module in each.
-  (Josh Martin)
-
-        class Band
-          include Mongoid::Document
-          include Mongoid::Attributes::Dynamic
-        end
-
-* \#2497 Calling `to_json` no longer tampers with the return value from the
-  driver, and proper returns `{ "$oid" : object_id.to_s }` instead of just
-  the string representation previously.
-
 * \#2433 `Mongoid::Paranoia` has been removed.
 
 * \#2432 `Mongoid::Versioning` has been removed.
 
-* \#2218 Creating or instantiating documents that have default scopes will now
-  apply the default scope to the document, if the scope is not complex.
-
 * \#2200 Mass assignment security now mirrors Rails 4's behavior.
-
-* `delete_all` and `destroy_all` no longer take a `:conditions` hash but
-  just the raw attributes.
-
-* \#1344 Atomic updates can now be executed in an `atomically` block, which will
-  delay any atomic updates on the document the block was called on until the
-  block is complete.
-
-    Update calls can be executed as normal in the block:
-
-        document.atomically do
-          document.inc(likes: 10)
-          document.bit(members: { and: 10 })
-          document.set(name: "Photek")
-        end
-
-    The document is also yielded to the block:
-
-        document.atomically do |doc|
-          doc.inc(likes: 10)
-          doc.bit(members: { and: 10 })
-          doc.set(name: "Photek")
-        end
-
-    The atomic commands are have a fluid interface:
-
-        document.atomically do |doc|
-          doc.inc(likes: 10).bit(members: { and: 10 }).set(name: "Photek")
-        end
-
-    If the fluid interface is leveraged without the `atomically` block, the
-    operations will persist in individual calls. For example, the following
-    would hit the database 3 times without the block provided:
-
-        doc.inc(likes: 10).bit(members: { and: 10 }).set(name: "Photek")
-
-    The block is only good for 1 document at a time, so embedded and root
-    document updates cannot be mixed at this time.
 
 ### New Features
 
-* \#3002 Reloading the Rails console will also now clear Mongoid's identity map.
-
-* \#2938 A configuration option `duplicate_fields_exception` has been added that
-  when set to `true` will raise an exception when defining a field that will
-  override an existing method. (Arthur Neves)
-
-* \#2924 MongoDB 2.4 beta text search now has a DSL provided by Mongoid. Like
-  other queries, text searches are lazy evaluated, and available off the class
-  or criteria level.
-
-    Note that any 3rd party gem that provides a `text_search` method will now no
-    longer work with Mongoid, and will need to change its syntax. Examples:
-
-        Band.text_search("mode").project(name: 1).each do |doc|
-          # ...
-        end
-
-        Band.limit(10).text_search("phase").language("latin")
-        Band.where(:likes.gt => 1000).text_search("lucy")
-
 * \#2855 Multiple extensions can now be supplied to relations. (Daniel Libanori)
-
-### Resolved Issues
-
-* \#3116 Relations instance variables are now all prefixed with `_`.
-
-* \#3093 Only flatten 1 level when atomically pushing arrays.
-
-* \#3063 `Document#becomes` now properly sets base object on errors.
-  (Adam Ross Cohen)
-
-* \#2903 Removed unused string `to_a` extension.
-
-## 3.1.5
-
-### Resolved Issues
-
-* \#3081 Criteria's `method_missing` now checks if an array responds to the provided
-  method before calling entries in order to not hit the database if a `NoMethodError`
-  was to get raised.
-
-* \#3068 Fixed spec runs on non standard MongoDB ports if `MONGOID_SPEC_PORT` is
-  set.
-
-* \#3047 Ensure `blank?` and `empty?` don't fall through method missing on criteria.
-
-## 3.1.4
-
-### Resolved Issues
-
-* \#3044 Ensure enumerable targets match arrays in case statements.
-
-* \#3034 `first_or_create` on criterion now properly passes the block to create
-  instead of calling after the document was created.
-
-* \#3021 Removed `mongoid.yml` warning from initializer, this is now handled by
-  the session configuration options.
-
-* \#3018 Uniqueness validator now properly serializes values in its check.
-  (Jerry Clinesmith)
-
-* \#3011 Fixed aliased field support for uniqueness validation. (Johnny Shields)
-
-* \#3008 Fixed subclasses not being able to inherit scopes properly when scope
-  is added post class load. (Mike Dillon)
-
-* \#2991 `Document.timeless` now properly scopes to the instance and not thread.
-
-* \#2980 Dynamic fields now properly handle in place editing of hashes and
-  arrays. (Matthew Widmann)
-
-* \#2979 `pluck` no longer modifies the context in place. (Brian Goff)
-
-* \#2970 Fixed counter cache to properly use the name of the relation if available
-  then the inverse class name second if not.
-
-* \#2959 Nested attributes will now respect `autosave: false` if defined on the
-  relation.
-
-* \#2944 Fixed uniqueness validation for localized fields when case insensitive
-  is true. (Vladimir Zhukov)
 
 ## 3.1.3
 
 ### Resolved Issues
 
 * Dont duplicate embedded documents when saving after calling becomes method.
-  (Arthur Neves)
-
-* \#2961 Reloading a mongoid.yml configuration now properly clears previously
-  configured sessions.
-
-* \#2937 Counts can now take a `true` argument to factor in skip and limit.
   (Arthur Neves)
 
 * \#2921 Don't use type in identity map selection if inheritance is not

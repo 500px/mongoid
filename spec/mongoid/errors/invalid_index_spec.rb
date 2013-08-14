@@ -9,19 +9,19 @@ describe Mongoid::Errors::InvalidIndex do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Invalid index specification on Band:"
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Indexes in Mongoid are defined as a hash of field name and direction"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Ensure that the index conforms to the correct syntax"
       )
     end

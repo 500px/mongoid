@@ -27,7 +27,7 @@ describe Mongoid::Relations::Builders::Embedded::One do
       end
 
       it "returns nil" do
-        expect(document).to be_nil
+        document.should be_nil
       end
     end
 
@@ -46,7 +46,7 @@ describe Mongoid::Relations::Builders::Embedded::One do
       end
 
       it "returns the document" do
-        expect(document).to eq(object)
+        document.should eq(object)
       end
     end
 
@@ -65,11 +65,11 @@ describe Mongoid::Relations::Builders::Embedded::One do
       end
 
       it "creates the correct type of document" do
-        expect(document).to be_a_kind_of(Name)
+        document.should be_a_kind_of(Name)
       end
 
       it "sets the object on the document" do
-        expect(document.first_name).to eq("Corbin")
+        document.first_name.should eq("Corbin")
       end
     end
 
@@ -88,11 +88,11 @@ describe Mongoid::Relations::Builders::Embedded::One do
       end
 
       it "creates the correct type of document" do
-        expect(document).to be_a_kind_of(PdfWriter)
+        document.should be_a_kind_of(PdfWriter)
       end
 
       it "sets the object on the document" do
-        expect(document.speed).to eq(100)
+        document.speed.should eq(100)
       end
     end
   end

@@ -14,12 +14,12 @@ module Rails
     # @since 2.1.0
     def create_indexes
       ::Mongoid.models.each do |model|
-        next if model.index_specifications.empty?
+        next if model.index_options.empty?
         unless model.embedded?
           model.create_indexes
           logger.info("MONGOID: Created indexes on #{model}:")
-          model.index_specifications.each do |spec|
-            logger.info("MONGOID: Index: #{spec.key}, Options: #{spec.options}")
+          model.index_options.each_pair do |index, options|
+            logger.info("MONGOID: Index: #{index}, Options: #{options}")
           end
           model
         else
@@ -27,55 +27,6 @@ module Rails
           nil
         end
       end.compact
-    end
-
-    # Return the list of indexes by model that exist in the database but aren't
-    # specified on the models.
-    #
-    # @example Return the list of unused indexes.
-    #   Rails::Mongoid.undefined_indexes
-    #
-    # @return Hash{Class => Array(Hash)} The list of undefined indexes by model.
-    def undefined_indexes
-      undefined_by_model = {}
-
-      ::Mongoid.models.each do |model|
-        unless model.embedded?
-          model.collection.indexes.each do |index|
-            # ignore default index
-            unless index['name'] == '_id_'
-              key = index['key'].symbolize_keys
-              spec = model.index_specification(key)
-              unless spec
-                # index not specified
-                undefined_by_model[model] ||= []
-                undefined_by_model[model] << index
-              end
-            end
-          end
-        end
-      end
-
-      undefined_by_model
-    end
-
-    # Remove indexes that exist in the database but aren't specified on the
-    # models.
-    #
-    # @example Remove undefined indexes.
-    #   Rails::Mongoid.drop_undefined_indexes
-    #
-    # @return [ Hash{Class => Array(Hash)}] The list of indexes that were removed by model.
-    #
-    # @since 4.0.0
-    def remove_undefined_indexes
-      undefined_indexes.each do |model, indexes|
-        indexes.each do |index|
-          key = index['key'].symbolize_keys
-          model.collection.indexes.drop(key)
-          logger.info("MONGOID: Removing index: #{index['name']} on #{model}.")
-        end
-      end
     end
 
     # Remove indexes for each model given the provided globs and the class is

@@ -7,14 +7,14 @@ describe Mongoid::Boolean do
     context "when provided true" do
 
       it "returns true" do
-        expect(described_class.demongoize(true)).to eq(true)
+        described_class.demongoize(true).should eq(true)
       end
     end
 
     context "when provided false" do
 
       it "returns false" do
-        expect(described_class.demongoize(false)).to eq(false)
+        described_class.demongoize(false).should eq(false)
       end
     end
   end
@@ -26,14 +26,14 @@ describe Mongoid::Boolean do
       context "when provided true" do
 
         it "returns true" do
-          expect(described_class.mongoize(true)).to eq(true)
+          described_class.mongoize(true).should eq(true)
         end
       end
 
       context "when provided false" do
 
         it "returns false" do
-          expect(described_class.mongoize(false)).to eq(false)
+          described_class.mongoize(false).should eq(false)
         end
       end
     end
@@ -43,84 +43,84 @@ describe Mongoid::Boolean do
       context "when provided true" do
 
         it "returns true" do
-          expect(described_class.mongoize("true")).to eq(true)
+          described_class.mongoize("true").should eq(true)
         end
       end
 
       context "when provided t" do
 
         it "returns true" do
-          expect(described_class.mongoize("t")).to eq(true)
+          described_class.mongoize("t").should eq(true)
         end
       end
 
       context "when provided 1" do
 
         it "returns true" do
-          expect(described_class.mongoize("1")).to eq(true)
+          described_class.mongoize("1").should eq(true)
         end
       end
 
       context "when provided 1.0" do
 
         it "returns true" do
-          expect(described_class.mongoize("1.0")).to eq(true)
+          described_class.mongoize("1.0").should eq(true)
         end
       end
 
       context "when provided yes" do
 
         it "returns true" do
-          expect(described_class.mongoize("yes")).to eq(true)
+          described_class.mongoize("yes").should eq(true)
         end
       end
 
       context "when provided y" do
 
         it "returns true" do
-          expect(described_class.mongoize("y")).to eq(true)
+          described_class.mongoize("y").should eq(true)
         end
       end
 
       context "when provided false" do
 
         it "returns false" do
-          expect(described_class.mongoize("false")).to eq(false)
+          described_class.mongoize("false").should eq(false)
         end
       end
 
       context "when provided f" do
 
         it "returns false" do
-          expect(described_class.mongoize("f")).to eq(false)
+          described_class.mongoize("f").should eq(false)
         end
       end
 
       context "when provided 0" do
 
         it "returns false" do
-          expect(described_class.mongoize("0")).to eq(false)
+          described_class.mongoize("0").should eq(false)
         end
       end
 
       context "when provided 0.0" do
 
         it "returns false" do
-          expect(described_class.mongoize("0.0")).to eq(false)
+          described_class.mongoize("0.0").should eq(false)
         end
       end
 
       context "when provided no" do
 
         it "returns false" do
-          expect(described_class.mongoize("no")).to eq(false)
+          described_class.mongoize("no").should eq(false)
         end
       end
 
       context "when provided n" do
 
         it "returns false" do
-          expect(described_class.mongoize("n")).to eq(false)
+          described_class.mongoize("n").should eq(false)
         end
       end
     end
@@ -129,7 +129,7 @@ describe Mongoid::Boolean do
   describe "#mongoize" do
 
     it "returns self" do
-      expect(true.mongoize).to eq(true)
+      true.mongoize.should eq(true)
     end
   end
 end

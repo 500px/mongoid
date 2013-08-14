@@ -36,7 +36,7 @@ describe Mongoid::UnitOfWork do
         end
 
         it "clears the identity map" do
-          expect(identity_map).to be_empty
+          identity_map.should be_empty
         end
       end
 
@@ -56,7 +56,7 @@ describe Mongoid::UnitOfWork do
         end
 
         it "clears the identity map" do
-          expect(identity_map).to be_empty
+          identity_map.should be_empty
         end
       end
     end
@@ -76,7 +76,7 @@ describe Mongoid::UnitOfWork do
 
       it "disables the identity map on the current thread" do
         Mongoid.unit_of_work(disable: :current) do
-          expect(Mongoid).to_not be_using_identity_map
+          Mongoid.should_not be_using_identity_map
         end
       end
     end
@@ -99,7 +99,7 @@ describe Mongoid::UnitOfWork do
       it "disables the identity map on all threads" do
         Mongoid.unit_of_work(disable: :all) do
           Thread.list.each do |thread|
-            expect(thread[:"[mongoid]:identity-map-enabled"]).to be_false
+            thread[:"[mongoid]:identity-map-enabled"].should be_false
           end
         end
       end
@@ -120,7 +120,7 @@ describe Mongoid::UnitOfWork do
         it "does not clear the map in the inner block" do
           Mongoid.unit_of_work do
             Mongoid.unit_of_work(disable: :current) do
-              expect(Mongoid::IdentityMap[:people][person.id]).to eq(person)
+              Mongoid::IdentityMap[:people][person.id].should eq(person)
             end
           end
         end
@@ -130,7 +130,7 @@ describe Mongoid::UnitOfWork do
             Mongoid.unit_of_work(disable: :current) do
             end
           end
-          expect(Mongoid::IdentityMap.get(Person, person.id)).to be_nil
+          Mongoid::IdentityMap.get(Person, person.id).should be_nil
         end
       end
     end
@@ -155,7 +155,7 @@ describe Mongoid::UnitOfWork do
         end
 
         it "returns false" do
-          expect(Mongoid).to_not be_using_identity_map
+          Mongoid.should_not be_using_identity_map
         end
       end
 
@@ -166,7 +166,7 @@ describe Mongoid::UnitOfWork do
         end
 
         it "returns true" do
-          expect(Mongoid).to be_using_identity_map
+          Mongoid.should be_using_identity_map
         end
       end
 
@@ -177,7 +177,7 @@ describe Mongoid::UnitOfWork do
         end
 
         it "returns true" do
-          expect(Mongoid).to be_using_identity_map
+          Mongoid.should be_using_identity_map
         end
       end
     end
@@ -189,7 +189,7 @@ describe Mongoid::UnitOfWork do
       end
 
       it "returns false" do
-        expect(Mongoid).to_not be_using_identity_map
+        Mongoid.should_not be_using_identity_map
       end
     end
   end

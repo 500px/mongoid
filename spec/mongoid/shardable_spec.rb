@@ -11,11 +11,11 @@ describe Mongoid::Shardable do
     end
 
     it "adds an shard_key_fields accessor" do
-      expect(klass).to respond_to(:shard_key_fields)
+      klass.should respond_to(:shard_key_fields)
     end
 
     it "defaults shard_key_fields to an empty array" do
-      expect(klass.shard_key_fields).to be_empty
+      klass.shard_key_fields.should be_empty
     end
   end
 
@@ -32,7 +32,7 @@ describe Mongoid::Shardable do
     end
 
     it "specifies a shard key on the collection" do
-      expect(klass.shard_key_fields).to eq([:name])
+      klass.shard_key_fields.should eq([:name])
     end
   end
 
@@ -55,7 +55,7 @@ describe Mongoid::Shardable do
     end
 
     it "returns a hash of shard key names and values" do
-      expect(object.shard_key_selector).to eq({ "name" => "Jo" })
+      object.shard_key_selector.should eq({ "name" => "Jo" })
     end
   end
 end

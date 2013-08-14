@@ -9,7 +9,7 @@ describe Moped::BSON::Binary do
     end
 
     it "returns the binary" do
-      expect(binary.mongoize).to eq(binary)
+      binary.mongoize.should eq(binary)
     end
   end
 
@@ -24,7 +24,7 @@ describe Moped::BSON::Binary do
     end
 
     it "returns the binary" do
-      expect(demongoized).to eq(binary)
+      demongoized.should eq(binary)
     end
   end
 
@@ -39,7 +39,7 @@ describe Moped::BSON::Binary do
     end
 
     it "returns the binary" do
-      expect(evolved).to eq(binary)
+      evolved.should eq(binary)
     end
   end
 
@@ -54,7 +54,7 @@ describe Moped::BSON::Binary do
     end
 
     it "returns the binary" do
-      expect(mongoized).to eq(binary)
+      mongoized.should eq(binary)
     end
   end
 end

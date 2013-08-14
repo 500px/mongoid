@@ -33,7 +33,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
           end
 
           it "returns the avg of the provided field" do
-            expect(avg).to eq(750)
+            avg.should eq(750)
           end
         end
 
@@ -62,7 +62,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
           end
 
           it "returns the avg of the provided field" do
-            expect(avg).to eq(7.5)
+            avg.should eq(7.5)
           end
         end
       end
@@ -86,7 +86,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns nil" do
-          expect(avg).to be_nil
+          avg.should be_nil
         end
       end
     end
@@ -121,7 +121,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns the max of the provided field" do
-          expect(max).to eq(1000)
+          max.should eq(1000)
         end
 
         context "when no documents match" do
@@ -139,7 +139,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
           end
 
           it "returns nil" do
-            expect(max).to be_nil
+            max.should be_nil
           end
         end
       end
@@ -153,7 +153,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns the document with the max value for the field" do
-          expect(max).to eq(depeche)
+          max.should eq(depeche)
         end
       end
     end
@@ -188,7 +188,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns the min of the provided field" do
-          expect(min).to eq(500)
+          min.should eq(500)
         end
 
         context "when no documents match" do
@@ -206,7 +206,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
           end
 
           it "returns nil" do
-            expect(min).to be_nil
+            min.should be_nil
           end
         end
       end
@@ -220,7 +220,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns the document with the min value for the field" do
-          expect(min).to eq(tool)
+          min.should eq(tool)
         end
       end
     end
@@ -255,7 +255,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns the sum of the provided field" do
-          expect(sum).to eq(1500)
+          sum.should eq(1500)
         end
 
         context "when no documents match" do
@@ -273,7 +273,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
           end
 
           it "returns zero" do
-            expect(sum).to eq(0)
+            sum.should eq(0)
           end
         end
       end
@@ -285,7 +285,7 @@ describe Mongoid::Contextual::Aggregable::Memory do
         end
 
         it "returns the sum for the provided block" do
-          expect(sum).to eq(1500)
+          sum.should eq(1500)
         end
       end
     end

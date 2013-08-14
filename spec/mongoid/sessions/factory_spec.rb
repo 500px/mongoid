@@ -30,11 +30,11 @@ describe Mongoid::Sessions::Factory do
           end
 
           it "returns a session" do
-            expect(session).to be_a(Moped::Session)
+            session.should be_a(Moped::Session)
           end
 
           it "sets the cluster's seeds" do
-            expect(cluster.seeds).to eq([ "localhost:27017" ])
+            cluster.seeds.should eq([ "localhost:27017" ])
           end
         end
 
@@ -64,15 +64,15 @@ describe Mongoid::Sessions::Factory do
           end
 
           it "returns a session" do
-            expect(session).to be_a(Moped::Session)
+            session.should be_a(Moped::Session)
           end
 
           it "sets the cluster's seed ports to 27017" do
-            expect(cluster.seeds).to eq([ "localhost:27017" ])
+            cluster.seeds.should eq([ "localhost:27017" ])
           end
 
           it "sets ips with no ports to 27017" do
-            expect(default.cluster.seeds).to eq([ "127.0.0.1:27017" ])
+            default.cluster.seeds.should eq([ "127.0.0.1:27017" ])
           end
         end
 
@@ -100,30 +100,30 @@ describe Mongoid::Sessions::Factory do
             end
 
             it "returns a session" do
-              expect(session).to be_a(Moped::Session)
+              session.should be_a(Moped::Session)
             end
 
             it "sets the cluster's seeds" do
-              expect(cluster.seeds).to eq([ "localhost:27017" ])
+              cluster.seeds.should eq([ "localhost:27017" ])
             end
 
             it "sets the database" do
-              expect(session.options[:database]).to eq("mongoid_test")
+              session.options[:database].should eq("mongoid_test")
             end
 
             it "sets the database in the configuration" do
               session
-              expect(Mongoid.sessions[:secondary]).to include(:database)
+              Mongoid.sessions[:secondary].should include(:database)
             end
 
             it "sets the hosts in the configuration" do
               session
-              expect(Mongoid.sessions[:secondary]).to include(:hosts)
+              Mongoid.sessions[:secondary].should include(:hosts)
             end
 
             it "removes the uri from the configuration" do
               session
-              expect(Mongoid.sessions[:secondary]).to_not include(:uri)
+              Mongoid.sessions[:secondary].should_not include(:uri)
             end
           end
 
@@ -149,30 +149,30 @@ describe Mongoid::Sessions::Factory do
             end
 
             it "returns a session" do
-              expect(session).to be_a(Moped::Session)
+              session.should be_a(Moped::Session)
             end
 
             it "sets the cluster's seeds" do
-              expect(cluster.seeds).to eq([ "localhost:27017", "localhost:27017" ])
+              cluster.seeds.should eq([ "localhost:27017", "localhost:27017" ])
             end
 
             it "sets the database" do
-              expect(session.options[:database]).to eq("mongoid_test")
+              session.options[:database].should eq("mongoid_test")
             end
 
             it "sets the database in the configuration" do
               session
-              expect(Mongoid.sessions[:secondary]).to include(:database)
+              Mongoid.sessions[:secondary].should include(:database)
             end
 
             it "sets the hosts in the configuration" do
               session
-              expect(Mongoid.sessions[:secondary]).to include(:hosts)
+              Mongoid.sessions[:secondary].should include(:hosts)
             end
 
             it "removes the uri from the configuration" do
               session
-              expect(Mongoid.sessions[:secondary]).to_not include(:uri)
+              Mongoid.sessions[:secondary].should_not include(:uri)
             end
           end
         end
@@ -207,11 +207,11 @@ describe Mongoid::Sessions::Factory do
       end
 
       it "returns the default session" do
-        expect(session).to be_a(Moped::Session)
+        session.should be_a(Moped::Session)
       end
 
       it "sets the cluster's seeds" do
-        expect(cluster.seeds).to eq([ "localhost:27017" ])
+        cluster.seeds.should eq([ "localhost:27017" ])
       end
     end
 
@@ -248,11 +248,11 @@ describe Mongoid::Sessions::Factory do
     end
 
     it "returns the default session" do
-      expect(session).to be_a(Moped::Session)
+      session.should be_a(Moped::Session)
     end
 
     it "sets the cluster's seeds" do
-      expect(cluster.seeds).to eq([ "localhost:27017" ])
+      cluster.seeds.should eq([ "localhost:27017" ])
     end
   end
 
@@ -286,27 +286,27 @@ describe Mongoid::Sessions::Factory do
     end
 
     it "returns the default session" do
-      expect(session).to be_a(Moped::Session)
+      session.should be_a(Moped::Session)
     end
 
     it "sets the cluster's seeds" do
-      expect(cluster.seeds).to eq([ "localhost:27017" ])
+      cluster.seeds.should eq([ "localhost:27017" ])
     end
 
     it "sets the cluster down interval" do
-      expect(cluster.down_interval).to eq(10)
+      cluster.down_interval.should eq(10)
     end
 
     it "sets the cluster max retries" do
-      expect(cluster.max_retries).to eq(5)
+      cluster.max_retries.should eq(5)
     end
 
     it "sets the cluster refresh interval" do
-      expect(cluster.refresh_interval).to eq(30)
+      cluster.refresh_interval.should eq(30)
     end
 
     it "sets the cluster retry interval" do
-      expect(cluster.retry_interval).to eq(0.1)
+      cluster.retry_interval.should eq(0.1)
     end
   end
 end

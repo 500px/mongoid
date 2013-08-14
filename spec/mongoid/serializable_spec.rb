@@ -9,7 +9,7 @@ describe Mongoid::Serializable do
     end
 
     it "does not duplicate fields" do
-      expect(band.send(:field_names, {})).to eq(band.fields.except("_type").keys.sort)
+      band.send(:field_names, {}).should eq(band.fields.except("_type").keys.sort)
     end
   end
 
@@ -26,7 +26,7 @@ describe Mongoid::Serializable do
       end
 
       it "returns true" do
-        expect(person.include_root_in_json).to be_true
+        person.include_root_in_json.should be_true
       end
     end
 
@@ -37,7 +37,7 @@ describe Mongoid::Serializable do
       end
 
       it "returns false" do
-        expect(person.include_root_in_json).to be_false
+        person.include_root_in_json.should be_false
       end
     end
   end
@@ -59,7 +59,7 @@ describe Mongoid::Serializable do
       end
 
       it "grabs the attribute direct from the hash" do
-        expect(attributes["loop"]).to eq("testing")
+        attributes["loop"].should eq("testing")
       end
     end
 
@@ -74,7 +74,7 @@ describe Mongoid::Serializable do
       end
 
       it "uses the overridden method" do
-        expect(attributes["override_me"]).to eq("1")
+        attributes["override_me"].should eq("1")
       end
     end
 
@@ -91,7 +91,7 @@ describe Mongoid::Serializable do
         end
 
         it "includes the embedded documents" do
-          expect(attributes["addresses"].first).to eq(address.serializable_hash)
+          attributes["addresses"].first.should eq(address.serializable_hash)
         end
       end
 
@@ -106,11 +106,11 @@ describe Mongoid::Serializable do
         end
 
         it "uses the options" do
-          expect(attributes["id"]).to eq(person.id)
+          attributes["id"].should eq(person.id)
         end
 
         it "uses the options on embedded documents" do
-          expect(address_attributes["id"]).to eq(address.id)
+          address_attributes["id"].should eq(address.id)
         end
       end
 
@@ -125,7 +125,7 @@ describe Mongoid::Serializable do
         end
 
         it "includes the deeply nested document" do
-          expect(attributes["addresses"][0]["locations"]).to_not be_empty
+          attributes["addresses"][0]["locations"].should_not be_empty
         end
       end
     end
@@ -145,7 +145,7 @@ describe Mongoid::Serializable do
       end
 
       it "converts the objects to the defined type" do
-        expect(attributes["dob"]).to eq(date)
+        attributes["dob"].should eq(date)
       end
     end
 
@@ -166,15 +166,15 @@ describe Mongoid::Serializable do
       end
 
       it "serializes assigned attributes" do
-        expect(person.serializable_hash).to include attributes
+        person.serializable_hash.should include attributes
       end
 
       it "includes all defined fields except _type" do
-        expect(person.serializable_hash.keys).to include(*field_names)
+        person.serializable_hash.keys.should include(*field_names)
       end
 
       it "does not include _type" do
-        expect(person.serializable_hash.keys).to_not include "_type"
+        person.serializable_hash.keys.should_not include "_type"
       end
 
       context "when providing options" do
@@ -188,7 +188,7 @@ describe Mongoid::Serializable do
         end
 
         it "does not modify the options in the argument" do
-          expect(options[:except]).to be_nil
+          options[:except].should be_nil
         end
 
         context "when using only one aliases" do
@@ -225,14 +225,14 @@ describe Mongoid::Serializable do
         end
 
         it "includes _type field" do
-          expect(person.serializable_hash.keys).to include '_type'
+          person.serializable_hash.keys.should include '_type'
         end
       end
 
       context "when specifying which fields to only include" do
 
         it "only includes the specified fields" do
-          expect(person.serializable_hash(only: [:title])).to eq(
+          person.serializable_hash(only: [:title]).should eq(
             { "title" => attributes["title"] }
           )
         end
@@ -241,16 +241,16 @@ describe Mongoid::Serializable do
       context "when specifying extra inclusions" do
 
         it "includes the extra fields" do
-          expect(person.serializable_hash(
+          person.serializable_hash(
             methods: [ :_type ]
-          ).has_key?("_type")).to be_true
+          ).has_key?("_type").should be_true
         end
       end
 
       context "when specifying which fields to exclude" do
 
         it "excludes the specified fields" do
-          expect(person.serializable_hash(except: [:title])).to_not include(
+          person.serializable_hash(except: [:title]).should_not include(
             "title" => attributes["title"]
           )
         end
@@ -272,13 +272,13 @@ describe Mongoid::Serializable do
       end
 
       it "includes dynamic fields" do
-        expect(person.serializable_hash[dynamic_field_name]).to eq(dynamic_value)
+        person.serializable_hash[dynamic_field_name].should eq(dynamic_value)
       end
 
       context "when specifying which dynamic fields to only include" do
 
         it "only includes the specified dynamic fields" do
-          expect(person.serializable_hash(only: [dynamic_field_name])).to eq(
+          person.serializable_hash(only: [dynamic_field_name]).should eq(
             { dynamic_field_name => dynamic_value }
           )
         end
@@ -287,7 +287,7 @@ describe Mongoid::Serializable do
       context "when specified which dynamic fields to exclude" do
 
         it "excludes the specified fields" do
-          expect(person.serializable_hash(except: [dynamic_field_name])).to_not include(
+          person.serializable_hash(except: [dynamic_field_name]).should_not include(
             dynamic_field_name => dynamic_value
           )
         end
@@ -321,7 +321,7 @@ describe Mongoid::Serializable do
           end
 
           it "includes the relation" do
-            expect(person.serializable_hash.keys).to include('addresses')
+            person.serializable_hash.keys.should include('addresses')
           end
         end
 
@@ -335,7 +335,7 @@ describe Mongoid::Serializable do
           end
 
           it "includes the relation" do
-            expect(person.serializable_hash.keys).to include('name')
+            person.serializable_hash.keys.should include('name')
           end
         end
       end
@@ -353,7 +353,7 @@ describe Mongoid::Serializable do
           end
 
           it "includes the relation" do
-            expect(person.serializable_hash.keys).to include('addresses')
+            person.serializable_hash.keys.should include('addresses')
           end
         end
 
@@ -367,7 +367,7 @@ describe Mongoid::Serializable do
           end
 
           it "includes the relation" do
-            expect(person.serializable_hash.keys).to include('name')
+            person.serializable_hash.keys.should include('name')
           end
         end
       end
@@ -376,7 +376,7 @@ describe Mongoid::Serializable do
     context "when including methods" do
 
       it "includes the method result" do
-        expect(person.serializable_hash(methods: [:foo])).to include(
+        person.serializable_hash(methods: [:foo]).should include(
           "foo" => person.foo
         )
       end
@@ -415,7 +415,7 @@ describe Mongoid::Serializable do
             end
 
             it "does not generate new ids" do
-              expect(hash["addresses"].first["_id"]).to be_nil
+              hash["addresses"].first["_id"].should be_nil
             end
           end
 
@@ -426,12 +426,12 @@ describe Mongoid::Serializable do
             end
 
             it "includes the first relation" do
-              expect(relation_hash[0]).to include
+              relation_hash[0].should include
                 { "_id" => "kudamm", "street" => "Kudamm" }
             end
 
             it "includes the second relation" do
-              expect(relation_hash[1]).to include
+              relation_hash[1].should include
                 { "_id" => "tauentzienstr", "street" => "Tauentzienstr" }
             end
           end
@@ -443,12 +443,12 @@ describe Mongoid::Serializable do
             end
 
             it "includes the first relation" do
-              expect(relation_hash[0]).to include
+              relation_hash[0].should include
                 { "_id" => "kudamm", "street" => "Kudamm" }
             end
 
             it "includes the second relation" do
-              expect(relation_hash[1]).to include
+              relation_hash[1].should include
                 { "_id" => "tauentzienstr", "street" => "Tauentzienstr" }
             end
           end
@@ -462,11 +462,11 @@ describe Mongoid::Serializable do
               end
 
               it "includes the first relation sans exceptions" do
-                expect(relation_hash[0]).to include({ "street" => "Kudamm" })
+                relation_hash[0].should include({ "street" => "Kudamm" })
               end
 
               it "includes the second relation sans exceptions" do
-                expect(relation_hash[1]).to include({ "street" => "Tauentzienstr" })
+                relation_hash[1].should include({ "street" => "Tauentzienstr" })
               end
             end
 
@@ -485,9 +485,9 @@ describe Mongoid::Serializable do
               end
 
               it "includes the first relation" do
-                expect(relation_hash[0]["locations"].any? do |location|
+                relation_hash[0]["locations"].any? do |location|
                   location["name"] == "Home"
-                end).to be_true
+                end.should be_true
               end
 
               context "after retrieved from database" do
@@ -513,12 +513,12 @@ describe Mongoid::Serializable do
                 end
 
                 it "includes the specific ralations" do
-                  expect(relation_hash[0]["locations"].map do |location|
+                  relation_hash[0]["locations"].map do |location|
                     location["name"]
-                  end).to include "Home"
-                  expect(relation_hash[1]["locations"].map do |location|
+                  end.should include "Home"
+                  relation_hash[1]["locations"].map do |location|
                     location["name"]
-                  end).to include "Hotel"
+                  end.should include "Hotel"
                 end
               end
             end
@@ -537,15 +537,15 @@ describe Mongoid::Serializable do
               end
 
               it "does not contain the root exclusion" do
-                expect(hash["_id"]).to be_nil
+                hash["_id"].should be_nil
               end
 
               it "does not include the embedded many exclusion" do
-                expect(relation_hash[0]["_id"]).to be_nil
+                relation_hash[0]["_id"].should be_nil
               end
 
               it "does not include the embedded one exclusion" do
-                expect(hash["name"]["_id"]).to be_nil
+                hash["name"]["_id"].should be_nil
               end
             end
           end
@@ -568,7 +568,7 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to include
+              relation_hash.should include
                 { "_id" => "leo-marvin", "first_name" => "Leo", "last_name" => "Marvin" }
             end
           end
@@ -580,7 +580,7 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to include
+              relation_hash.should include
                 { "_id" => "leo-marvin", "first_name" => "Leo", "last_name" => "Marvin" }
             end
           end
@@ -592,7 +592,7 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation sans exceptions" do
-              expect(relation_hash).to include
+              relation_hash.should include
                 { "first_name" => "Leo", "last_name" => "Marvin" }
             end
           end
@@ -619,15 +619,15 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to_not be_nil
+              relation_hash.should_not be_nil
             end
 
             it "includes the first document related fields" do
-              expect(relation_hash[0]["title"]).to eq("First")
+              relation_hash[0]["title"].should eq("First")
             end
 
             it "includes the second document related fields" do
-              expect(relation_hash[1]["title"]).to eq("Second")
+              relation_hash[1]["title"].should eq("Second")
             end
           end
 
@@ -638,15 +638,15 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to_not be_nil
+              relation_hash.should_not be_nil
             end
 
             it "includes the first document related fields" do
-              expect(relation_hash[0]["title"]).to eq("First")
+              relation_hash[0]["title"].should eq("First")
             end
 
             it "includes the second document related fields" do
-              expect(relation_hash[1]["title"]).to eq("Second")
+              relation_hash[1]["title"].should eq("Second")
             end
           end
 
@@ -657,23 +657,23 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to_not be_nil
+              relation_hash.should_not be_nil
             end
 
             it "includes the first document related fields" do
-              expect(relation_hash[0]["title"]).to eq("First")
+              relation_hash[0]["title"].should eq("First")
             end
 
             it "includes the second document related fields" do
-              expect(relation_hash[1]["title"]).to eq("Second")
+              relation_hash[1]["title"].should eq("Second")
             end
 
             it "does not include the first document exceptions" do
-              expect(relation_hash[0]["_id"]).to be_nil
+              relation_hash[0]["_id"].should be_nil
             end
 
             it "does not include the second document exceptions" do
-              expect(relation_hash[1]["_id"]).to be_nil
+              relation_hash[1]["_id"].should be_nil
             end
           end
         end
@@ -699,15 +699,15 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to_not be_nil
+              relation_hash.should_not be_nil
             end
 
             it "includes the first document related fields" do
-              expect(relation_hash[0]["name"]).to eq("First")
+              relation_hash[0]["name"].should eq("First")
             end
 
             it "includes the second document related fields" do
-              expect(relation_hash[1]["name"]).to eq("Second")
+              relation_hash[1]["name"].should eq("Second")
             end
           end
 
@@ -718,15 +718,15 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to_not be_nil
+              relation_hash.should_not be_nil
             end
 
             it "includes the first document related fields" do
-              expect(relation_hash[0]["name"]).to eq("First")
+              relation_hash[0]["name"].should eq("First")
             end
 
             it "includes the second document related fields" do
-              expect(relation_hash[1]["name"]).to eq("Second")
+              relation_hash[1]["name"].should eq("Second")
             end
           end
 
@@ -744,27 +744,27 @@ describe Mongoid::Serializable do
             end
 
             it "includes the specified relation" do
-              expect(relation_hash).to_not be_nil
+              relation_hash.should_not be_nil
             end
 
             it "includes the first document related fields" do
-              expect(relation_hash[0]["name"]).to eq("First")
+              relation_hash[0]["name"].should eq("First")
             end
 
             it "includes the second document related fields" do
-              expect(relation_hash[1]["name"]).to eq("Second")
+              relation_hash[1]["name"].should eq("Second")
             end
 
             it "does not include the first document exceptions" do
-              expect(relation_hash[0]["_id"]).to be_nil
+              relation_hash[0]["_id"].should be_nil
             end
 
             it "does not include the second document exceptions" do
-              expect(relation_hash[1]["_id"]).to be_nil
+              relation_hash[1]["_id"].should be_nil
             end
 
             it "does not include the root exceptions" do
-              expect(hash["preference_ids"]).to be_nil
+              hash["preference_ids"].should be_nil
             end
           end
         end
@@ -785,7 +785,7 @@ describe Mongoid::Serializable do
       end
 
       it "uses the mongoid configuration" do
-        expect(person.to_json).to include("person")
+        person.to_json.should include("person")
       end
     end
 
@@ -796,7 +796,7 @@ describe Mongoid::Serializable do
       end
 
       it "uses the mongoid configuration" do
-        expect(person.to_json).to_not include("person")
+        person.to_json.should_not include("person")
       end
     end
 
@@ -813,7 +813,7 @@ describe Mongoid::Serializable do
         end
 
         it "serializes only the relation" do
-          expect(json).to include(address.street)
+          json.should include(address.street)
         end
       end
 
@@ -828,7 +828,7 @@ describe Mongoid::Serializable do
         end
 
         it "serializes only the relation" do
-          expect(json).to include(post.title)
+          json.should include(post.title)
         end
       end
     end
@@ -843,7 +843,7 @@ describe Mongoid::Serializable do
       end
 
       it "serializes as string" do
-        expect(person.to_xml).to include("<id>#{person.id}</id>")
+        person.to_xml.should include("<id>#{person.id}</id>")
       end
     end
 
@@ -856,12 +856,12 @@ describe Mongoid::Serializable do
       end
 
       it "properly types the array" do
-        expect(person.to_xml).to include("<aliases type=\"array\">")
+        person.to_xml.should include("<aliases type=\"array\">")
       end
 
       it "serializes the array" do
-        expect(person.to_xml).to include("<alias>Kelly</alias>")
-        expect(person.to_xml).to include("<alias>Machine Gun</alias>")
+        person.to_xml.should include("<alias>Kelly</alias>")
+        person.to_xml.should include("<alias>Machine Gun</alias>")
       end
     end
 
@@ -874,12 +874,12 @@ describe Mongoid::Serializable do
       end
 
       it "properly types the hash" do
-        expect(person.to_xml).to include("<map>")
+        person.to_xml.should include("<map>")
       end
 
       it "serializes the hash" do
-        expect(person.to_xml).to include("<lat type=\"float\">24.5</lat>")
-        expect(person.to_xml).to include("<long type=\"float\">22.1</long>")
+        person.to_xml.should include("<lat type=\"float\">24.5</lat>")
+        person.to_xml.should include("<long type=\"float\">22.1</long>")
       end
     end
   end

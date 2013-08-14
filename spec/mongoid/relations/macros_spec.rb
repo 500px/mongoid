@@ -18,7 +18,7 @@ describe Mongoid::Relations::Macros do
   describe ".embedded_in" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:embedded_in)
+      klass.should respond_to(:embedded_in)
     end
 
     context "when defining the relation" do
@@ -28,25 +28,25 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["person"]).to_not be_nil
+        klass.relations["person"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:person)
+        klass.allocate.should respond_to(:person)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:person=)
+        klass.allocate.should respond_to(:person=)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["person"].relation).to eq(
+        klass.relations["person"].relation.should eq(
           Mongoid::Relations::Embedded::In
         )
       end
 
       it "does not add associated validations" do
-        expect(klass._validators).to be_empty
+        klass._validators.should be_empty
       end
 
       context "metadata properties" do
@@ -56,11 +56,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:person)
+          metadata.name.should eq(:person)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -69,7 +69,7 @@ describe Mongoid::Relations::Macros do
   describe ".embeds_many" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:embeds_many)
+      klass.should respond_to(:embeds_many)
     end
 
     context "when defining the relation" do
@@ -79,26 +79,26 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["addresses"]).to_not be_nil
+        klass.relations["addresses"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:addresses)
+        klass.allocate.should respond_to(:addresses)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:addresses=)
+        klass.allocate.should respond_to(:addresses=)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["addresses"].relation).to eq(
+        klass.relations["addresses"].relation.should eq(
           Mongoid::Relations::Embedded::Many
         )
       end
 
       it "adds an associated validation" do
-        expect(klass._validators[:addresses].first).to be_a(
-          Mongoid::Validatable::AssociatedValidator
+        klass._validators[:addresses].first.should be_a(
+          Mongoid::Validations::AssociatedValidator
         )
       end
 
@@ -109,11 +109,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:addresses)
+          metadata.name.should eq(:addresses)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -129,11 +129,11 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds metadata to klass" do
-        expect(metadata.order).to_not be_nil
+        metadata.order.should_not be_nil
       end
 
       it "returns Origin::Key" do
-        expect(metadata.order).to be_kind_of(Origin::Key)
+        metadata.order.should be_kind_of(Origin::Key)
       end
     end
 
@@ -144,7 +144,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "does not add associated validations" do
-        expect(klass._validators).to be_empty
+        klass._validators.should be_empty
       end
     end
   end
@@ -152,7 +152,7 @@ describe Mongoid::Relations::Macros do
   describe ".embeds_one" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:embeds_one)
+      klass.should respond_to(:embeds_one)
     end
 
     context "when defining the relation" do
@@ -162,34 +162,34 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["name"]).to_not be_nil
+        klass.relations["name"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:name)
+        klass.allocate.should respond_to(:name)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:name=)
+        klass.allocate.should respond_to(:name=)
       end
 
       it "defines the builder" do
-        expect(klass.allocate).to respond_to(:build_name)
+        klass.allocate.should respond_to(:build_name)
       end
 
       it "defines the creator" do
-        expect(klass.allocate).to respond_to(:create_name)
+        klass.allocate.should respond_to(:create_name)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["name"].relation).to eq(
+        klass.relations["name"].relation.should eq(
           Mongoid::Relations::Embedded::One
         )
       end
 
       it "adds an associated validation" do
-        expect(klass._validators[:name].first).to be_a(
-          Mongoid::Validatable::AssociatedValidator
+        klass._validators[:name].first.should be_a(
+          Mongoid::Validations::AssociatedValidator
         )
       end
 
@@ -200,11 +200,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:name)
+          metadata.name.should eq(:name)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -216,7 +216,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "does not add associated validations" do
-        expect(klass._validators).to be_empty
+        klass._validators.should be_empty
       end
     end
   end
@@ -224,7 +224,7 @@ describe Mongoid::Relations::Macros do
   describe ".belongs_to" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:belongs_to)
+      klass.should respond_to(:belongs_to)
     end
 
     context "when defining the relation" do
@@ -234,33 +234,33 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["person"]).to_not be_nil
+        klass.relations["person"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:person)
+        klass.allocate.should respond_to(:person)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:person=)
+        klass.allocate.should respond_to(:person=)
       end
 
       it "defines the builder" do
-        expect(klass.allocate).to respond_to(:build_person)
+        klass.allocate.should respond_to(:build_person)
       end
 
       it "defines the creator" do
-        expect(klass.allocate).to respond_to(:create_person)
+        klass.allocate.should respond_to(:create_person)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["person"].relation).to eq(
+        klass.relations["person"].relation.should eq(
           Mongoid::Relations::Referenced::In
         )
       end
 
       it "creates the field for the foreign key" do
-        expect(klass.allocate).to respond_to(:person_id)
+        klass.allocate.should respond_to(:person_id)
       end
 
       context "metadata properties" do
@@ -270,11 +270,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:person)
+          metadata.name.should eq(:person)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -283,7 +283,7 @@ describe Mongoid::Relations::Macros do
   describe ".has_many" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:has_many)
+      klass.should respond_to(:has_many)
     end
 
     context "when defining the relation" do
@@ -293,26 +293,26 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["posts"]).to_not be_nil
+        klass.relations["posts"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:posts)
+        klass.allocate.should respond_to(:posts)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:posts=)
+        klass.allocate.should respond_to(:posts=)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["posts"].relation).to eq(
+        klass.relations["posts"].relation.should eq(
           Mongoid::Relations::Referenced::Many
         )
       end
 
       it "adds an associated validation" do
-        expect(klass._validators[:posts].first).to be_a(
-          Mongoid::Validatable::AssociatedValidator
+        klass._validators[:posts].first.should be_a(
+          Mongoid::Validations::AssociatedValidator
         )
       end
 
@@ -323,11 +323,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:posts)
+          metadata.name.should eq(:posts)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -343,11 +343,11 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds metadata to klass" do
-        expect(metadata.order).to_not be_nil
+        metadata.order.should_not be_nil
       end
 
       it "returns Origin::Key" do
-        expect(metadata.order).to be_kind_of(Origin::Key)
+        metadata.order.should be_kind_of(Origin::Key)
       end
     end
 
@@ -358,7 +358,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "does not add associated validations" do
-        expect(klass._validators).to be_empty
+        klass._validators.should be_empty
       end
     end
   end
@@ -366,7 +366,7 @@ describe Mongoid::Relations::Macros do
   describe ".has_and_belongs_to_many" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:has_and_belongs_to_many)
+      klass.should respond_to(:has_and_belongs_to_many)
     end
 
     context "when defining the relation" do
@@ -376,25 +376,25 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["preferences"]).to_not be_nil
+        klass.relations["preferences"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:preferences)
+        klass.allocate.should respond_to(:preferences)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:preferences=)
+        klass.allocate.should respond_to(:preferences=)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["preferences"].relation).to eq(
+        klass.relations["preferences"].relation.should eq(
           Mongoid::Relations::Referenced::ManyToMany
         )
       end
 
       it "creates the field for the foreign key" do
-        expect(klass.allocate).to respond_to(:preference_ids)
+        klass.allocate.should respond_to(:preference_ids)
       end
 
       context 'when defining order on relation' do
@@ -408,11 +408,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "adds metadata to klass" do
-          expect(metadata.order).to_not be_nil
+          metadata.order.should_not be_nil
         end
 
         it "returns Origin::Key" do
-          expect(metadata.order).to be_kind_of(Origin::Key)
+          metadata.order.should be_kind_of(Origin::Key)
         end
       end
 
@@ -423,11 +423,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:preferences)
+          metadata.name.should eq(:preferences)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -436,7 +436,7 @@ describe Mongoid::Relations::Macros do
   describe ".has_one" do
 
     it "defines the macro" do
-      expect(klass).to respond_to(:has_one)
+      klass.should respond_to(:has_one)
     end
 
     context "when defining the relation" do
@@ -446,34 +446,34 @@ describe Mongoid::Relations::Macros do
       end
 
       it "adds the metadata to the klass" do
-        expect(klass.relations["game"]).to_not be_nil
+        klass.relations["game"].should_not be_nil
       end
 
       it "defines the getter" do
-        expect(klass.allocate).to respond_to(:game)
+        klass.allocate.should respond_to(:game)
       end
 
       it "defines the setter" do
-        expect(klass.allocate).to respond_to(:game=)
+        klass.allocate.should respond_to(:game=)
       end
 
       it "defines the builder" do
-        expect(klass.allocate).to respond_to(:build_game)
+        klass.allocate.should respond_to(:build_game)
       end
 
       it "defines the creator" do
-        expect(klass.allocate).to respond_to(:create_game)
+        klass.allocate.should respond_to(:create_game)
       end
 
       it "creates the correct relation" do
-        expect(klass.relations["game"].relation).to eq(
+        klass.relations["game"].relation.should eq(
           Mongoid::Relations::Referenced::One
         )
       end
 
       it "adds an associated validation" do
-        expect(klass._validators[:game].first).to be_a(
-          Mongoid::Validatable::AssociatedValidator
+        klass._validators[:game].first.should be_a(
+          Mongoid::Validations::AssociatedValidator
         )
       end
 
@@ -484,11 +484,11 @@ describe Mongoid::Relations::Macros do
         end
 
         it "automatically adds the name" do
-          expect(metadata.name).to eq(:game)
+          metadata.name.should eq(:game)
         end
 
         it "automatically adds the inverse class name" do
-          expect(metadata.inverse_class_name).to eq("TestClass")
+          metadata.inverse_class_name.should eq("TestClass")
         end
       end
     end
@@ -500,7 +500,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "does not add associated validations" do
-        expect(klass._validators).to be_empty
+        klass._validators.should be_empty
       end
     end
   end
@@ -512,17 +512,16 @@ describe Mongoid::Relations::Macros do
     end
 
     it "returns a hash of relations" do
-      expect(klass.allocate.relations).to be_a_kind_of(Hash)
+      klass.allocate.relations.should be_a_kind_of(Hash)
     end
 
     it "has keys that are the relation name" do
-      expect(klass.allocate.relations.keys.first).to eq("name")
+      klass.allocate.relations.keys.first.should eq("name")
     end
 
     it "has values that are metadata" do
-      expect(
-        klass.allocate.relations.values.first
-      ).to be_a_kind_of(Mongoid::Relations::Metadata)
+      klass.allocate.relations.values.first.should
+        be_a_kind_of(Mongoid::Relations::Metadata)
     end
   end
 
@@ -533,17 +532,16 @@ describe Mongoid::Relations::Macros do
     end
 
     it "returns a hash of relations" do
-      expect(klass.relations).to be_a_kind_of(Hash)
+      klass.relations.should be_a_kind_of(Hash)
     end
 
     it "has keys that are the relation name" do
-      expect(klass.relations.keys.first).to eq("name")
+      klass.relations.keys.first.should eq("name")
     end
 
     it "has values that are metadata" do
-      expect(
-        klass.relations.values.first
-      ).to be_a_kind_of(Mongoid::Relations::Metadata)
+      klass.relations.values.first.should
+        be_a_kind_of(Mongoid::Relations::Metadata)
     end
   end
 
@@ -584,7 +582,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "extends the relation" do
-        expect(peep.handle.full_name).to eq("spec")
+        peep.handle.full_name.should eq("spec")
       end
     end
 
@@ -595,7 +593,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "extends the relation" do
-        expect(peep.handle.short_name).to eq("spec")
+        peep.handle.short_name.should eq("spec")
       end
     end
 
@@ -606,7 +604,7 @@ describe Mongoid::Relations::Macros do
       end
 
       it "extends the relation" do
-        expect(peep.handle.very_short_name).to eq("spec")
+        peep.handle.very_short_name.should eq("spec")
       end
     end
   end

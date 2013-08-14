@@ -43,11 +43,11 @@ describe "Rack::Mongoid::Middleware::IdentityMap" do
       end
 
       it "returns the call with the body proxy" do
-        expect(result).to eq([])
+        result.should eq([])
       end
 
       it "clears out the identity map" do
-        expect(Mongoid::Threaded.identity_map).to be_empty
+        Mongoid::Threaded.identity_map.should be_empty
       end
     end
 
@@ -65,7 +65,7 @@ describe "Rack::Mongoid::Middleware::IdentityMap" do
       end
 
       it "clears out the identity map" do
-        expect(Mongoid::Threaded.identity_map).to be_empty
+        Mongoid::Threaded.identity_map.should be_empty
       end
     end
   end

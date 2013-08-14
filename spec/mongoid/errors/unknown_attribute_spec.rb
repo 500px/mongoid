@@ -9,20 +9,20 @@ describe Mongoid::Errors::UnknownAttribute do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Attempted to set a value for 'gender' which is not allowed on"
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
-        "Without including Mongoid::Attributes::Dynamic in your model"
+      error.message.should include(
+        "When setting Mongoid.allow_dynamic_fields to false"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
-        "You can include Mongoid::Attributes::Dynamic"
+      error.message.should include(
+        "You can set Mongoid.allow_dynamic_fields to true"
       )
     end
   end

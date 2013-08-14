@@ -9,19 +9,19 @@ describe Mongoid::Errors::MixedRelations do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Referencing a(n) Address document from the Post document"
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "In order to properly access a(n) Address from Post the reference"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Consider not embedding Address, or do the key storage"
       )
     end

@@ -62,68 +62,13 @@ describe "Rails::Mongoid" do
       end
 
       before do
-        klass.index(street: 1)
+        klass.index_options = { city: {} }
       end
 
       it "does nothing, but logging" do
         klass.should_receive(:create_indexes).never
         indexes
       end
-    end
-  end
-
-  describe ".undefined_indexes" do
-
-    before(:each) do
-      Rails::Mongoid.create_indexes
-    end
-
-    let(:indexes) do
-      Rails::Mongoid.undefined_indexes
-    end
-
-    it "returns the removed indexes" do
-      expect(indexes).to be_empty
-    end
-
-    context "with extra index on model collection" do
-
-      before(:each) do
-        User.collection.indexes.create(account_expires: 1)
-      end
-
-      let(:names) do
-        indexes[User].map{ |index| index['name'] }
-      end
-
-      it "should have single index returned" do
-        expect(names).to eq(['account_expires_1'])
-      end
-    end
-  end
-
-  describe ".drop_undefined_indexes" do
-
-    let(:logger) do
-      stub
-    end
-
-    let(:indexes) do
-      User.collection.indexes
-    end
-
-    before(:each) do
-      Rails::Mongoid.create_indexes
-      indexes.create(account_expires: 1)
-      Rails::Mongoid.remove_undefined_indexes
-    end
-
-    let(:removed_indexes) do
-      Rails::Mongoid.undefined_indexes
-    end
-
-    it "returns the removed indexes" do
-      expect(removed_indexes).to be_empty
     end
   end
 
@@ -147,11 +92,11 @@ describe "Rails::Mongoid" do
     end
 
     it "removes indexes from klass" do
-      expect(indexes.reject{ |doc| doc["name"] == "_id_" }).to be_empty
+      indexes.reject{ |doc| doc["name"] == "_id_" }.should be_empty
     end
 
     it "leaves _id index untouched" do
-      expect(indexes.select{ |doc| doc["name"] == "_id_" }).to_not be_empty
+      indexes.select{ |doc| doc["name"] == "_id_" }.should_not be_empty
     end
   end
 
@@ -195,7 +140,7 @@ describe "Rails::Mongoid" do
       end
 
       it "returns nil" do
-        expect(model).to be_nil
+        model.should be_nil
       end
     end
 
@@ -206,7 +151,7 @@ describe "Rails::Mongoid" do
       end
 
       it "returns nil" do
-        expect(model).to be_nil
+        model.should be_nil
       end
     end
 
@@ -217,7 +162,7 @@ describe "Rails::Mongoid" do
       end
 
       it "returns nil" do
-        expect(model).to be_nil
+        model.should be_nil
       end
     end
 
@@ -232,7 +177,7 @@ describe "Rails::Mongoid" do
       end
 
       it "returns nil" do
-        expect(model).to be_nil
+        model.should be_nil
       end
     end
 
@@ -241,7 +186,7 @@ describe "Rails::Mongoid" do
       context "when file is from normal model" do
 
         it "returns klass" do
-          expect(model).to eq(klass)
+          model.should eq(klass)
         end
       end
 
@@ -257,7 +202,7 @@ describe "Rails::Mongoid" do
 
         it "logs the class without an error" do
           logger.should_receive(:info)
-          expect { expect(model).to eq(klass) }.not_to raise_error(NameError)
+          expect { model.should eq(klass) }.not_to raise_error(NameError)
         end
       end
     end
@@ -272,7 +217,7 @@ describe "Rails::Mongoid" do
 
         it "returns klass" do
           logger.should_receive(:info)
-          expect(model).to eq(klass)
+          model.should eq(klass)
         end
       end
 
@@ -287,7 +232,7 @@ describe "Rails::Mongoid" do
         end
 
         it "returns klass in module" do
-          expect(model).to eq(klass)
+          model.should eq(klass)
         end
       end
 
@@ -302,7 +247,7 @@ describe "Rails::Mongoid" do
         end
 
         it "returns klass in module" do
-          expect(model).to eq(klass)
+          model.should eq(klass)
         end
       end
     end
@@ -318,7 +263,7 @@ describe "Rails::Mongoid" do
       end
 
       it "requires the models by base name from the engine's app/models dir" do
-        expect(model).to eq(klass)
+        model.should eq(klass)
       end
     end
   end

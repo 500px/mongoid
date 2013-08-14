@@ -31,13 +31,9 @@ describe Mongoid::Fields do
         end
 
         it "returns all the translations" do
-          expect(translations).to eq(
+          translations.should eq(
             { "en" => "test", "de" => "The best" }
           )
-        end
-
-        it "returns translations as a HashWithIndifferentAccess" do
-          expect(translations[:en]).to eq("test")
         end
       end
 
@@ -46,33 +42,25 @@ describe Mongoid::Fields do
         context "when no default is provided" do
 
           it "returns an empty hash" do
-            expect(product.description_translations).to be_empty
+            product.description_translations.should be_empty
           end
         end
 
         context "when a default is provided" do
 
           it "returns the translations with the default" do
-            expect(product.name_translations).to eq(
+            product.name_translations.should eq(
               { "en" => "no translation" }
             )
           end
         end
-      end
-
-      it "should have alias method #\{field}_t" do
-        product.method(:name_t).should eq product.method(:name_translations)
       end
     end
 
     context "when the field is not localized" do
 
       it "does not respond to the method" do
-        expect(product).to_not respond_to(:price_translations)
-      end
-
-      it "does not respond to the alias method" do
-        product.should_not respond_to(:price_t)
+        product.should_not respond_to(:price_translations)
       end
     end
   end
@@ -100,7 +88,7 @@ describe Mongoid::Fields do
         end
 
         it "sets the raw values of the translations" do
-          expect(product.description_translations).to eq(translations)
+          product.description_translations.should eq(translations)
         end
 
         context "when saving the new translations" do
@@ -110,7 +98,7 @@ describe Mongoid::Fields do
           end
 
           it "persists the changes" do
-            expect(product.reload.description_translations).to eq(translations)
+            product.reload.description_translations.should eq(translations)
           end
 
           context "when updating the translations" do
@@ -121,7 +109,7 @@ describe Mongoid::Fields do
             end
 
             it "persists the changes" do
-              expect(product.reload.description_translations).to eq(
+              product.reload.description_translations.should eq(
                 { "en" => "overwritten" }
               )
             end
@@ -140,7 +128,7 @@ describe Mongoid::Fields do
         end
 
         it "sets the mongoized values of the translations" do
-          expect(dictionary.description_translations).to eq(
+          dictionary.description_translations.should eq(
             { "en" => "1", "de" => "2" }
           )
         end
@@ -152,7 +140,7 @@ describe Mongoid::Fields do
           end
 
           it "persists the changes" do
-            expect(dictionary.reload.description_translations).to eq(
+            dictionary.reload.description_translations.should eq(
               { "en" => "1", "de" => "2" }
             )
           end
@@ -165,27 +153,19 @@ describe Mongoid::Fields do
             end
 
             it "persists the changes" do
-              expect(dictionary.reload.description_translations).to eq(
+              dictionary.reload.description_translations.should eq(
                 { "en" => "overwritten" }
               )
             end
           end
         end
       end
-
-      it "should have alias method #\{field}_t=" do
-        product.method(:name_t=).should eq product.method(:name_translations=)
-      end
     end
 
     context "when the field is not localized" do
 
       it "does not respond to the method" do
-        expect(product).to_not respond_to(:price_translations=)
-      end
-
-      it "does not respond to the alias method" do
-        product.should_not respond_to(:price_t=)
+        product.should_not respond_to(:price_translations=)
       end
     end
   end
@@ -199,7 +179,7 @@ describe Mongoid::Fields do
     context "when the document is subclassed" do
 
       it "does not include the child aliases" do
-        expect(person.aliased_fields.keys).to_not include("spec")
+        person.aliased_fields.keys.should_not include("spec")
       end
     end
   end
@@ -213,19 +193,19 @@ describe Mongoid::Fields do
       end
 
       it "includes the _id field" do
-        expect(shape.attribute_names).to include("_id")
+        shape.attribute_names.should include("_id")
       end
 
       it "includes the _type field" do
-        expect(shape.attribute_names).to include("_type")
+        shape.attribute_names.should include("_type")
       end
 
       it "includes its own fields" do
-        expect(shape.attribute_names).to include("x")
+        shape.attribute_names.should include("x")
       end
 
       it "does not return subclass fields" do
-        expect(shape.attribute_names).to_not include("radius")
+        shape.attribute_names.should_not include("radius")
       end
     end
 
@@ -236,23 +216,23 @@ describe Mongoid::Fields do
       end
 
       it "includes the _id field" do
-        expect(circle.attribute_names).to include("_id")
+        circle.attribute_names.should include("_id")
       end
 
       it "includes the _type field" do
-        expect(circle.attribute_names).to include("_type")
+        circle.attribute_names.should include("_type")
       end
 
       it "includes the first parent field" do
-        expect(circle.attribute_names).to include("x")
+        circle.attribute_names.should include("x")
       end
 
       it "includes the second parent field" do
-        expect(circle.attribute_names).to include("y")
+        circle.attribute_names.should include("y")
       end
 
       it "includes the child fields" do
-        expect(circle.attribute_names).to include("radius")
+        circle.attribute_names.should include("radius")
       end
     end
   end
@@ -262,42 +242,42 @@ describe Mongoid::Fields do
     context "when the class is a parent" do
 
       it "includes the _id field" do
-        expect(Shape.attribute_names).to include("_id")
+        Shape.attribute_names.should include("_id")
       end
 
       it "includes the _type field" do
-        expect(Shape.attribute_names).to include("_type")
+        Shape.attribute_names.should include("_type")
       end
 
       it "includes its own fields" do
-        expect(Shape.attribute_names).to include("x")
+        Shape.attribute_names.should include("x")
       end
 
       it "does not return subclass fields" do
-        expect(Shape.attribute_names).to_not include("radius")
+        Shape.attribute_names.should_not include("radius")
       end
     end
 
     context "when the class is a subclass" do
 
       it "includes the _id field" do
-        expect(Circle.attribute_names).to include("_id")
+        Circle.attribute_names.should include("_id")
       end
 
       it "includes the _type field" do
-        expect(Circle.attribute_names).to include("_type")
+        Circle.attribute_names.should include("_type")
       end
 
       it "includes the first parent field" do
-        expect(Circle.attribute_names).to include("x")
+        Circle.attribute_names.should include("x")
       end
 
       it "includes the second parent field" do
-        expect(Circle.attribute_names).to include("y")
+        Circle.attribute_names.should include("y")
       end
 
       it "includes the child fields" do
-        expect(Circle.attribute_names).to include("radius")
+        Circle.attribute_names.should include("radius")
       end
     end
   end
@@ -322,7 +302,7 @@ describe Mongoid::Fields do
         end
 
         it "adds the field to the model" do
-          expect(Band.fields["acceptable"]).to_not be_nil
+          Band.fields["acceptable"].should_not be_nil
         end
       end
 
@@ -333,7 +313,7 @@ describe Mongoid::Fields do
         end
 
         it "adds the field to the model" do
-          expect(Band.fields["acceptable"]).to_not be_nil
+          Band.fields["acceptable"].should_not be_nil
         end
       end
     end
@@ -361,7 +341,7 @@ describe Mongoid::Fields do
       end
 
       it "returns the binary data intact" do
-        expect(registry.data).to eq(binary)
+        registry.data.should eq(binary)
       end
     end
 
@@ -382,7 +362,7 @@ describe Mongoid::Fields do
         end
 
         it "returns the default locale value" do
-          expect(description).to eq("The best")
+          description.should eq("The best")
         end
       end
 
@@ -402,7 +382,7 @@ describe Mongoid::Fields do
         end
 
         it "returns the set locale value" do
-          expect(description).to eq("The best")
+          description.should eq("The best")
         end
       end
 
@@ -423,7 +403,7 @@ describe Mongoid::Fields do
         end
 
         it "returns the current locale value" do
-          expect(description).to eq("Cheaper drinks")
+          description.should eq("Cheaper drinks")
         end
       end
     end
@@ -437,7 +417,7 @@ describe Mongoid::Fields do
     context "when the attribute has not been assigned" do
 
       it "delgates to the getter" do
-        expect(person.age_before_type_cast).to eq(person.age)
+        person.age_before_type_cast.should eq(person.age)
       end
     end
 
@@ -445,7 +425,7 @@ describe Mongoid::Fields do
 
       it "returns the attribute before type cast" do
         person.age = "old"
-        expect(person.age_before_type_cast).to eq("old")
+        person.age_before_type_cast.should eq("old")
       end
     end
   end
@@ -485,7 +465,7 @@ describe Mongoid::Fields do
       end
 
       it "returns the binary data intact" do
-        expect(registry.data).to eq(binary)
+        registry.data.should eq(binary)
       end
     end
 
@@ -504,7 +484,7 @@ describe Mongoid::Fields do
         end
 
         it "allows the set" do
-          expect(product.stores).to be_nil
+          product.stores.should be_nil
         end
       end
 
@@ -516,11 +496,11 @@ describe Mongoid::Fields do
         end
 
         it "allows the set of nil values" do
-          expect(product.stores).to eq([ "kadewe", nil ])
+          product.stores.should eq([ "kadewe", nil ])
         end
 
         it "persists the nil values" do
-          expect(product.reload.stores).to eq([ "kadewe", nil ])
+          product.reload.stores.should eq([ "kadewe", nil ])
         end
       end
 
@@ -532,11 +512,11 @@ describe Mongoid::Fields do
         end
 
         it "reverses the values" do
-          expect(product.stores).to eq([ "karstadt", "kadewe" ])
+          product.stores.should eq([ "karstadt", "kadewe" ])
         end
 
         it "persists the changes" do
-          expect(product.reload.stores).to eq([ "karstadt", "kadewe" ])
+          product.reload.stores.should eq([ "karstadt", "kadewe" ])
         end
       end
     end
@@ -554,7 +534,7 @@ describe Mongoid::Fields do
         end
 
         it "sets the value in the default locale" do
-          expect(description).to eq({ "en" => "Cheap drinks" })
+          description.should eq({ "en" => "Cheap drinks" })
         end
       end
 
@@ -574,7 +554,7 @@ describe Mongoid::Fields do
         end
 
         it "sets the value in the default locale" do
-          expect(description).to eq({ "de" => "Cheaper drinks" })
+          description.should eq({ "de" => "Cheaper drinks" })
         end
       end
 
@@ -595,7 +575,7 @@ describe Mongoid::Fields do
         end
 
         it "sets the value in both locales" do
-          expect(description).to eq(
+          description.should eq(
             { "de" => "Cheaper drinks", "en" => "Cheap drinks" }
           )
         end
@@ -627,7 +607,7 @@ describe Mongoid::Fields do
         end
 
         it "returns an equal object of a different instance" do
-          expect(person_one.array_testing.object_id).to_not eq(
+          person_one.array_testing.object_id.should_not eq(
             person_two.array_testing.object_id
           )
         end
@@ -644,7 +624,7 @@ describe Mongoid::Fields do
         end
 
         it "returns an equal object of a different instance" do
-          expect(person_one.hash_testing.object_id).to_not eq(
+          person_one.hash_testing.object_id.should_not eq(
             person_two.hash_testing.object_id
           )
         end
@@ -668,7 +648,7 @@ describe Mongoid::Fields do
           end
 
           it "returns an equal object of a different instance" do
-            expect(person_one.generated_testing.object_id).to_not eq(
+            person_one.generated_testing.object_id.should_not eq(
               person_two.generated_testing.object_id
             )
           end
@@ -690,7 +670,7 @@ describe Mongoid::Fields do
           end
 
           it "yields the document to the proc" do
-            expect(Person.new.rank).to eq(2)
+            Person.new.rank.should eq(2)
           end
         end
       end
@@ -703,7 +683,7 @@ describe Mongoid::Fields do
       end
 
       it "does not return subclass defaults" do
-        expect(shape.pre_processed_defaults).to eq([ "_id", "x", "y", "_type" ])
+        shape.pre_processed_defaults.should eq([ "_id", "x", "y", "_type" ])
       end
     end
 
@@ -714,7 +694,7 @@ describe Mongoid::Fields do
       end
 
       it "has the parent and child defaults" do
-        expect(circle.pre_processed_defaults).to eq([ "_id", "x", "y", "_type", "radius" ])
+        circle.pre_processed_defaults.should eq([ "_id", "x", "y", "_type", "radius" ])
       end
     end
   end
@@ -722,7 +702,7 @@ describe Mongoid::Fields do
   describe ".field" do
 
     it "returns the generated field" do
-      expect(Person.field(:testing)).to eq(Person.fields["testing"])
+      Person.field(:testing).should equal Person.fields["testing"]
     end
 
     context "when the field name conflicts with mongoid's internals" do
@@ -734,23 +714,6 @@ describe Mongoid::Fields do
             Person.field(:metadata)
           }.to raise_error(Mongoid::Errors::InvalidField)
         end
-      end
-    end
-
-    context "when field already exist and validate_duplicate is enable" do
-
-      before do
-        Mongoid.duplicate_fields_exception = true
-      end
-
-      after do
-        Mongoid.duplicate_fields_exception = false
-      end
-
-      it "raises an error" do
-        expect {
-          Person.field(:title)
-        }.to raise_error(Mongoid::Errors::InvalidField)
       end
     end
 
@@ -775,7 +738,7 @@ describe Mongoid::Fields do
         end
 
         it "performs the necessary time conversions" do
-          expect(person.lunch_time.to_s).to eq(time.getlocal.to_s)
+          person.lunch_time.to_s.should eq(time.getlocal.to_s)
         end
       end
     end
@@ -791,15 +754,15 @@ describe Mongoid::Fields do
       end
 
       it "adds a reader for the fields defined" do
-        expect(person.testing).to eq("Test")
+        person.testing.should eq("Test")
       end
 
       it "adds a writer for the fields defined" do
-        (person.testing = expect("Testy")).to eq("Testy")
+        (person.testing = "Testy").should eq("Testy")
       end
 
       it "adds an existance method" do
-        expect(Person.new.testing?).to be_false
+        Person.new.testing?.should be_false
       end
 
       context "when overwriting an existing field" do
@@ -816,7 +779,7 @@ describe Mongoid::Fields do
         end
 
         it "properly overwrites the method" do
-          expect(person.testing_override_called).to be_true
+          person.testing_override_called.should be_true
         end
       end
     end
@@ -828,7 +791,7 @@ describe Mongoid::Fields do
       end
 
       it "returns the given value" do
-        expect(bob.reading).to eq(10.023)
+        bob.reading.should eq(10.023)
       end
     end
 
@@ -839,7 +802,7 @@ describe Mongoid::Fields do
       end
 
       it "adds an accessor method with a question mark" do
-        expect(person.terms?).to be_true
+        person.terms?.should be_true
       end
     end
 
@@ -854,35 +817,35 @@ describe Mongoid::Fields do
       end
 
       it "uses the alias to write the attribute" do
-        (person.alias = expect(true)).to be_true
+        (person.alias = true).should be_true
       end
 
       it "uses the alias to read the attribute" do
-        expect(person.alias).to be_true
+        person.alias.should be_true
       end
 
       it "uses the alias for the query method" do
-        expect(person).to be_alias
+        person.should be_alias
       end
 
       it "uses the name to write the attribute" do
-        (person.aliased = expect(true)).to be_true
+        (person.aliased = true).should be_true
       end
 
       it "uses the name to read the attribute" do
-        expect(person.aliased).to be_true
+        person.aliased.should be_true
       end
 
       it "uses the name for the query method" do
-        expect(person).to be_aliased
+        person.should be_aliased
       end
 
       it "creates dirty methods for the name" do
-        expect(person).to respond_to(:aliased_changed?)
+        person.should respond_to(:aliased_changed?)
       end
 
       it "creates dirty methods for the alias" do
-        expect(person).to respond_to(:alias_changed?)
+        person.should respond_to(:alias_changed?)
       end
 
       context "when changing the name" do
@@ -892,11 +855,11 @@ describe Mongoid::Fields do
         end
 
         it "sets name_changed?" do
-          expect(person.aliased_changed?).to be_true
+          person.aliased_changed?.should be_true
         end
 
         it "sets alias_changed?" do
-          expect(person.alias_changed?).to be_true
+          person.alias_changed?.should be_true
         end
       end
 
@@ -907,11 +870,11 @@ describe Mongoid::Fields do
         end
 
         it "sets name_changed?" do
-          expect(person.aliased_changed?).to be_true
+          person.aliased_changed?.should be_true
         end
 
         it "sets alias_changed?" do
-          expect(person.alias_changed?).to be_true
+          person.alias_changed?.should be_true
         end
       end
 
@@ -922,7 +885,7 @@ describe Mongoid::Fields do
         end
 
         it "properly serializes the aliased field" do
-          expect(criteria.selector).to eq({ "aliased" => true })
+          criteria.selector.should eq({ "aliased" => true })
         end
       end
     end
@@ -941,7 +904,7 @@ describe Mongoid::Fields do
 
         it "calls the handler with the model" do
           handler.should_receive(:call).with do |model,_,_|
-            expect(model).to eql User
+            model.should eql User
           end
 
           User.field :custom, option: true
@@ -949,7 +912,7 @@ describe Mongoid::Fields do
 
         it "calls the handler with the field" do
           handler.should_receive(:call).with do |_,field,_|
-            expect(field).to eql User.fields["custom"]
+            field.should eql User.fields["custom"]
           end
 
           User.field :custom, option: true
@@ -957,7 +920,7 @@ describe Mongoid::Fields do
 
         it "calls the handler with the option value" do
           handler.should_receive(:call).with do |_,_,value|
-            expect(value).to eql true
+            value.should eql true
           end
 
           User.field :custom, option: true
@@ -992,11 +955,11 @@ describe Mongoid::Fields do
       end
 
       it "includes its own fields" do
-        expect(shape.fields.keys).to include("x")
+        shape.fields.keys.should include("x")
       end
 
       it "does not return subclass fields" do
-        expect(shape.fields.keys).to_not include("radius")
+        shape.fields.keys.should_not include("radius")
       end
     end
 
@@ -1007,15 +970,15 @@ describe Mongoid::Fields do
       end
 
       it "includes the first parent field" do
-        expect(circle.fields.keys).to include("x")
+        circle.fields.keys.should include("x")
       end
 
       it "includes the second parent field" do
-        expect(circle.fields.keys).to include("y")
+        circle.fields.keys.should include("y")
       end
 
       it "includes the child fields" do
-        expect(circle.fields.keys).to include("radius")
+        circle.fields.keys.should include("radius")
       end
     end
   end
@@ -1039,11 +1002,11 @@ describe Mongoid::Fields do
     end
 
     it "sets the new type on the field" do
-      expect(new_field.type).to eq(String)
+      new_field.type.should eq(String)
     end
 
     it "keeps the options from the old field" do
-      expect(new_field.options[:label]).to eq("id")
+      new_field.options[:label].should eq("id")
     end
   end
 
@@ -1060,7 +1023,7 @@ describe Mongoid::Fields do
       end
 
       it "resets the fields" do
-        expect(fields.keys).to include("user_id")
+        fields.keys.should include("user_id")
       end
     end
 
@@ -1071,7 +1034,7 @@ describe Mongoid::Fields do
       end
 
       it "resets the fields" do
-        expect(fields.keys).to include("user_id")
+        fields.keys.should include("user_id")
       end
     end
   end
@@ -1083,7 +1046,7 @@ describe Mongoid::Fields do
     end
 
     it "sets the default value pre process" do
-      expect(person.map_with_default).to eq({ "key" => "testing" })
+      person.map_with_default.should eq({ "key" => "testing" })
     end
   end
 
@@ -1104,11 +1067,11 @@ describe Mongoid::Fields do
       end
 
       it "properly persists as a string" do
-        expect(band.attributes["sales"]).to eq(decimal.to_s)
+        band.attributes["sales"].should eq(decimal.to_s)
       end
 
       it "returns the proper big decimal" do
-        expect(band.sales).to eq(decimal)
+        band.sales.should eq(decimal)
       end
     end
 
@@ -1119,11 +1082,11 @@ describe Mongoid::Fields do
       end
 
       it "properly persists as a string" do
-        expect(band.attributes["sales"]).to eq(decimal.to_s)
+        band.attributes["sales"].should eq(decimal.to_s)
       end
 
       it "returns the proper big decimal" do
-        expect(band.sales).to eq(decimal)
+        band.sales.should eq(decimal)
       end
     end
 
@@ -1134,11 +1097,11 @@ describe Mongoid::Fields do
       end
 
       it "properly persists as a string" do
-        expect(band.attributes["sales"]).to eq("1000000")
+        band.attributes["sales"].should eq("1000000")
       end
 
       it "returns the proper big decimal" do
-        expect(band.sales).to eq(decimal)
+        band.sales.should eq(decimal)
       end
     end
 
@@ -1149,11 +1112,11 @@ describe Mongoid::Fields do
       end
 
       it "properly persists as a string" do
-        expect(band.attributes["sales"]).to eq(decimal.to_s)
+        band.attributes["sales"].should eq(decimal.to_s)
       end
 
       it "returns the proper big decimal" do
-        expect(band.sales).to eq(decimal)
+        band.sales.should eq(decimal)
       end
     end
   end
@@ -1179,7 +1142,7 @@ describe Mongoid::Fields do
     end
 
     it "properly updates the hash" do
-      expect(person.map).to eq(
+      person.map.should eq(
         {
           "stack1" => [ 4, 3, 2, 1 ],
           "stack2" => [ 1, 2, 3, 4 ],
@@ -1189,7 +1152,7 @@ describe Mongoid::Fields do
     end
 
     it "persists the changes" do
-      expect(person.reload.map).to eq(
+      person.reload.map.should eq(
         {
           "stack1" => [ 4, 3, 2, 1 ],
           "stack2" => [ 1, 2, 3, 4 ],
@@ -1212,11 +1175,11 @@ describe Mongoid::Fields do
       end
 
       it "does not override the parent" do
-        expect(canvas.foo).to eq("original")
+        canvas.foo.should eq("original")
       end
 
       it "overrides the default" do
-        expect(test.foo).to eq("overridden")
+        test.foo.should eq("overridden")
       end
     end
   end

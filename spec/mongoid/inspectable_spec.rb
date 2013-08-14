@@ -6,6 +6,10 @@ describe Mongoid::Inspectable do
 
     context "when not allowing dynamic fields" do
 
+      before do
+        Mongoid.configure.allow_dynamic_fields = false
+      end
+
       let(:person) do
         Person.new(title: "CEO")
       end
@@ -15,19 +19,19 @@ describe Mongoid::Inspectable do
       end
 
       it "includes the model type" do
-        expect(inspected).to include("#<Person")
+        inspected.should include("#<Person")
       end
 
       it "displays the id" do
-        expect(inspected).to include("_id: #{person.id}")
+        inspected.should include("_id: #{person.id}")
       end
 
       it "displays defined fields" do
-        expect(inspected).to include("title: \"CEO\"")
+        inspected.should include("title: \"CEO\"")
       end
 
       it "displays field aliases" do
-        expect(inspected).to include("t(test):")
+        inspected.should include("t(test):")
       end
     end
 
@@ -41,8 +45,12 @@ describe Mongoid::Inspectable do
         person.inspect
       end
 
+      before do
+        Mongoid.configure.allow_dynamic_fields = true
+      end
+
       it "includes dynamic attributes" do
-        expect(inspected).to include("some_attribute: \"foo\"")
+        inspected.should include("some_attribute: \"foo\"")
       end
     end
   end

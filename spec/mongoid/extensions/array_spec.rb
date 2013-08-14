@@ -23,11 +23,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "converts the convertible ones to object ids" do
-        expect(evolved).to eq([ object_id, other ])
+        evolved.should eq([ object_id, other ])
       end
 
       it "returns the same instance" do
-        expect(evolved).to equal(array)
+        evolved.should equal(array)
       end
     end
 
@@ -46,11 +46,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns the array" do
-        expect(evolved).to eq(array)
+        evolved.should eq(array)
       end
 
       it "returns the same instance" do
-        expect(evolved).to equal(array)
+        evolved.should equal(array)
       end
     end
 
@@ -69,11 +69,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns the array with the nils" do
-        expect(evolved).to eq([ object_id, nil ])
+        evolved.should eq([ object_id, nil ])
       end
 
       it "returns the same instance" do
-        expect(evolved).to equal(array)
+        evolved.should equal(array)
       end
     end
 
@@ -92,11 +92,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns the array with the empty strings" do
-        expect(evolved).to eq([ object_id, "" ])
+        evolved.should eq([ object_id, "" ])
       end
 
       it "returns the same instance" do
-        expect(evolved).to equal(array)
+        evolved.should equal(array)
       end
     end
   end
@@ -122,11 +122,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "converts the convertible ones to object ids" do
-        expect(mongoized).to eq([ object_id, other ])
+        mongoized.should eq([ object_id, other ])
       end
 
       it "returns the same instance" do
-        expect(mongoized).to equal(array)
+        mongoized.should equal(array)
       end
     end
 
@@ -145,11 +145,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns the array" do
-        expect(mongoized).to eq(array)
+        mongoized.should eq(array)
       end
 
       it "returns the same instance" do
-        expect(mongoized).to equal(array)
+        mongoized.should equal(array)
       end
     end
 
@@ -168,11 +168,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns the array without the nils" do
-        expect(mongoized).to eq([ object_id ])
+        mongoized.should eq([ object_id ])
       end
 
       it "returns the same instance" do
-        expect(mongoized).to equal(array)
+        mongoized.should equal(array)
       end
     end
 
@@ -191,11 +191,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns the array without the empty strings" do
-        expect(mongoized).to eq([ object_id ])
+        mongoized.should eq([ object_id ])
       end
 
       it "returns the same instance" do
-        expect(mongoized).to equal(array)
+        mongoized.should equal(array)
       end
     end
   end
@@ -223,7 +223,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns the object id as an array" do
-          expect(fk).to eq([ object_id ])
+          fk.should eq([ object_id ])
         end
       end
 
@@ -238,7 +238,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns the object ids" do
-          expect(fk).to eq([ object_id ])
+          fk.should eq([ object_id ])
         end
       end
 
@@ -255,7 +255,7 @@ describe Mongoid::Extensions::Array do
           end
 
           it "returns the object id in an array" do
-            expect(fk).to eq([ object_id ])
+            fk.should eq([ object_id ])
           end
         end
 
@@ -270,7 +270,7 @@ describe Mongoid::Extensions::Array do
           end
 
           it "returns the string in an array" do
-            expect(fk).to eq([ string ])
+            fk.should eq([ string ])
           end
         end
 
@@ -281,7 +281,7 @@ describe Mongoid::Extensions::Array do
           end
 
           it "returns an empty array" do
-            expect(fk).to be_empty
+            fk.should be_empty
           end
         end
       end
@@ -293,7 +293,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns an empty array" do
-          expect(fk).to be_empty
+          fk.should be_empty
         end
       end
 
@@ -310,7 +310,7 @@ describe Mongoid::Extensions::Array do
           end
 
           it "returns the object id in an array" do
-            expect(fk).to eq([ object_id ])
+            fk.should eq([ object_id ])
           end
         end
 
@@ -325,7 +325,7 @@ describe Mongoid::Extensions::Array do
           end
 
           it "returns the string in an array" do
-            expect(fk).to eq([ string ])
+            fk.should eq([ string ])
           end
         end
 
@@ -336,7 +336,7 @@ describe Mongoid::Extensions::Array do
           end
 
           it "returns an empty array" do
-            expect(fk).to be_empty
+            fk.should be_empty
           end
         end
       end
@@ -348,7 +348,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns an empty array" do
-          expect(fk).to be_empty
+          fk.should be_empty
         end
       end
     end
@@ -376,11 +376,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "converts to a time" do
-        expect(time).to eq(::Time.zone.local(*array))
+        time.should eq(::Time.zone.local(*array))
       end
 
       it "converts to the as time zone" do
-        expect(time.zone).to eq("JST")
+        time.zone.should eq("JST")
       end
     end
 
@@ -404,7 +404,7 @@ describe Mongoid::Extensions::Array do
       end
 
       it "converts to a time" do
-        expect(time).to eq(Time.local(*array))
+        time.should eq(Time.local(*array))
       end
     end
   end
@@ -420,7 +420,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns true" do
-          expect(array).to be_blank_criteria
+          array.should be_blank_criteria
         end
       end
 
@@ -431,7 +431,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns true" do
-          expect(array).to be_blank_criteria
+          array.should be_blank_criteria
         end
       end
     end
@@ -450,7 +450,7 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns nil" do
-        expect(deleted).to be_nil
+        deleted.should be_nil
       end
     end
 
@@ -465,11 +465,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "deletes the object" do
-        expect(array).to eq([ "2" ])
+        array.should eq([ "2" ])
       end
 
       it "returns the object" do
-        expect(deleted).to eq("1")
+        deleted.should eq("1")
       end
     end
 
@@ -484,11 +484,11 @@ describe Mongoid::Extensions::Array do
       end
 
       it "deletes the first object" do
-        expect(array).to eq([ "2", "1" ])
+        array.should eq([ "2", "1" ])
       end
 
       it "returns the object" do
-        expect(deleted).to eq("1")
+        deleted.should eq("1")
       end
     end
   end
@@ -500,7 +500,7 @@ describe Mongoid::Extensions::Array do
     end
 
     it "returns the array" do
-      expect(Array.demongoize(array)).to eq(array)
+      Array.demongoize(array).should eq(array)
     end
   end
 
@@ -519,11 +519,11 @@ describe Mongoid::Extensions::Array do
     end
 
     it "mongoizes each element in the array" do
-      expect(mongoized.first).to be_a(Time)
+      mongoized.first.should be_a(Time)
     end
 
     it "converts the elements properly" do
-      expect(mongoized.first).to eq(Time.utc(2012, 1, 1, 0, 0, 0))
+      mongoized.first.should eq(Time.utc(2012, 1, 1, 0, 0, 0))
     end
   end
 
@@ -542,11 +542,11 @@ describe Mongoid::Extensions::Array do
     end
 
     it "mongoizes each element in the array" do
-      expect(mongoized.first).to be_a(Time)
+      mongoized.first.should be_a(Time)
     end
 
     it "converts the elements properly" do
-      expect(mongoized.first).to eq(Time.utc(2012, 1, 1, 0, 0, 0))
+      mongoized.first.should eq(Time.utc(2012, 1, 1, 0, 0, 0))
     end
   end
 
@@ -559,7 +559,7 @@ describe Mongoid::Extensions::Array do
       end
 
       it "returns true" do
-        expect(array).to be_multi_arged
+        array.should be_multi_arged
       end
     end
 
@@ -572,7 +572,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns false" do
-          expect(array).to_not be_multi_arged
+          array.should_not be_multi_arged
         end
       end
 
@@ -583,7 +583,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns false" do
-          expect(array).to_not be_multi_arged
+          array.should_not be_multi_arged
         end
       end
 
@@ -594,7 +594,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns true" do
-          expect(array).to be_multi_arged
+          array.should be_multi_arged
         end
       end
 
@@ -605,7 +605,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns true" do
-          expect(array).to be_multi_arged
+          array.should be_multi_arged
         end
       end
 
@@ -616,7 +616,7 @@ describe Mongoid::Extensions::Array do
         end
 
         it "returns true" do
-          expect(array).to be_multi_arged
+          array.should be_multi_arged
         end
       end
     end
@@ -625,14 +625,14 @@ describe Mongoid::Extensions::Array do
   describe ".resizable?" do
 
     it "returns true" do
-      expect(Array).to be_resizable
+      Array.should be_resizable
     end
   end
 
   describe "#resiable?" do
 
     it "returns true" do
-      expect([]).to be_resizable
+      [].should be_resizable
     end
   end
 end

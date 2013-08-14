@@ -27,7 +27,7 @@ describe Mongoid::Relations::Builders::Embedded::In do
       end
 
       it "returns the document" do
-        expect(document).to eq(object)
+        document.should eq(object)
       end
     end
   end

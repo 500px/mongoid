@@ -25,7 +25,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the equality check" do
-          expect(enumerable).to eq([ post ])
+          enumerable.should eq([ post ])
         end
       end
 
@@ -36,7 +36,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the equality check" do
-          expect(enumerable._loaded.values).to eq([ post ])
+          enumerable._loaded.values.should eq([ post ])
         end
       end
 
@@ -61,7 +61,7 @@ describe Mongoid::Relations::Targets::Enumerable do
           end
 
           it "returns the equality check" do
-            expect(enumerable).to eq([ post, post_two ])
+            enumerable.should eq([ post, post_two ])
           end
         end
 
@@ -72,7 +72,7 @@ describe Mongoid::Relations::Targets::Enumerable do
           end
 
           it "returns the equality check" do
-            expect(enumerable).to eq([ post ])
+            enumerable.should eq([ post ])
           end
         end
 
@@ -90,7 +90,7 @@ describe Mongoid::Relations::Targets::Enumerable do
             end
 
             it "returns the equality check" do
-              expect(enumerable).to eq([ post ])
+              enumerable.should eq([ post ])
             end
           end
         end
@@ -104,53 +104,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns false" do
-        expect(enumerable).to_not eq("person")
-      end
-    end
-  end
-
-  describe "#===" do
-
-    let(:enumerable) do
-      described_class.new([])
-    end
-
-    context "when compared to an array class" do
-
-      it "returns true" do
-        expect(enumerable === Array).to be_true
-      end
-    end
-
-    context "when compared to a different class" do
-
-      it "returns false" do
-        expect(enumerable === Mongoid::Document).to be_false
-      end
-    end
-
-    context "when compared to an array instance" do
-
-      context "when the entries are equal" do
-
-        let(:other) do
-          described_class.new([])
-        end
-
-        it "returns true" do
-          expect(enumerable === other).to be_true
-        end
-      end
-
-      context "when the entries are not equal" do
-
-        let(:other) do
-          described_class.new([ Band.new ])
-        end
-
-        it "returns false" do
-          expect(enumerable === other).to be_false
-        end
+        enumerable.should_not eq("person")
       end
     end
   end
@@ -176,11 +130,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "adds the document to the added target" do
-        expect(enumerable._added).to eq({ post.id => post })
+        enumerable._added.should eq({ post.id => post })
       end
 
       it "returns the added documents" do
-        expect(added).to eq([ post ])
+        added.should eq([ post ])
       end
     end
   end
@@ -214,15 +168,15 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns true" do
-        expect(any).to be_true
+        any.should be_true
       end
 
       it "retains the correct length" do
-        expect(enumerable.length).to eq(2)
+        enumerable.length.should eq(2)
       end
 
       it "retains the correct length when calling to_a" do
-        expect(enumerable.to_a.length).to eq(2)
+        enumerable.to_a.length.should eq(2)
       end
 
       context "when iterating over the relation a second time" do
@@ -232,11 +186,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "retains the correct length" do
-          expect(enumerable.length).to eq(2)
+          enumerable.length.should eq(2)
         end
 
         it "retains the correct length when calling to_a" do
-          expect(enumerable.to_a.length).to eq(2)
+          enumerable.to_a.length.should eq(2)
         end
       end
     end
@@ -271,20 +225,20 @@ describe Mongoid::Relations::Targets::Enumerable do
 
     let!(:clear) do
       enumerable.clear do |doc|
-        expect(doc).to be_a(Post)
+        doc.should be_a(Post)
       end
     end
 
     it "clears out the loaded docs" do
-      expect(enumerable._loaded).to be_empty
+      enumerable._loaded.should be_empty
     end
 
     it "clears out the added docs" do
-      expect(enumerable._added).to be_empty
+      enumerable._added.should be_empty
     end
 
     it "retains its loaded state" do
-      expect(enumerable).to_not be__loaded
+      enumerable.should_not be__loaded
     end
   end
 
@@ -320,11 +274,11 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "does not retain the first id" do
-      expect(cloned.first).to_not eq(post)
+      cloned.first.should_not eq(post)
     end
 
     it "does not retain the last id" do
-      expect(cloned.last).to_not eq(post_two)
+      cloned.last.should_not eq(post_two)
     end
   end
 
@@ -349,11 +303,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "deletes the document from the enumerable" do
-        expect(enumerable._loaded).to be_empty
+        enumerable._loaded.should be_empty
       end
 
       it "returns the document" do
-        expect(deleted).to eq(post)
+        deleted.should eq(post)
       end
     end
 
@@ -380,11 +334,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "removes the document from the added docs" do
-        expect(enumerable._added).to be_empty
+        enumerable._added.should be_empty
       end
 
       it "returns the document" do
-        expect(deleted).to eq(post)
+        deleted.should eq(post)
       end
     end
 
@@ -407,11 +361,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "does not load the document" do
-        expect(enumerable._loaded).to be_empty
+        enumerable._loaded.should be_empty
       end
 
       it "returns the document" do
-        expect(deleted).to eq(post)
+        deleted.should eq(post)
       end
     end
 
@@ -431,12 +385,12 @@ describe Mongoid::Relations::Targets::Enumerable do
 
       let!(:deleted) do
         enumerable.delete(Post.new) do |doc|
-          expect(doc).to be_nil
+          doc.should be_nil
         end
       end
 
       it "returns nil" do
-        expect(deleted).to be_nil
+        deleted.should be_nil
       end
     end
   end
@@ -462,11 +416,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "deletes the document from the enumerable" do
-        expect(enumerable._loaded).to be_empty
+        enumerable._loaded.should be_empty
       end
 
       it "returns the remaining docs" do
-        expect(deleted).to be_empty
+        deleted.should be_empty
       end
     end
 
@@ -493,11 +447,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "removes the document from the added docs" do
-        expect(enumerable._added).to be_empty
+        enumerable._added.should be_empty
       end
 
       it "returns the remaining docs" do
-        expect(deleted).to be_empty
+        deleted.should be_empty
       end
     end
 
@@ -520,11 +474,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "does not load the document" do
-        expect(enumerable._loaded).to be_empty
+        enumerable._loaded.should be_empty
       end
 
       it "returns the remaining docs" do
-        expect(deleted).to be_empty
+        deleted.should be_empty
       end
     end
 
@@ -547,7 +501,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns the remaining docs" do
-        expect(deleted).to eq([ post ])
+        deleted.should eq([ post ])
       end
     end
   end
@@ -577,7 +531,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "sets the value on the instance" do
-        expect(enumerable.detect{ |post| post.title = "test" }.rating).to eq(10)
+        enumerable.detect{ |post| post.title = "test" }.rating.should eq(10)
       end
     end
   end
@@ -604,16 +558,16 @@ describe Mongoid::Relations::Targets::Enumerable do
 
       let!(:iterated) do
         enumerable.each do |doc|
-          expect(doc).to be_a(Post)
+          doc.should be_a(Post)
         end
       end
 
       it "loads each document" do
-        expect(enumerable._loaded).to eq({ post.id => post })
+        enumerable._loaded.should eq({ post.id => post })
       end
 
       it "becomes loaded" do
-        expect(enumerable).to be__loaded
+        enumerable.should be__loaded
       end
     end
 
@@ -625,16 +579,16 @@ describe Mongoid::Relations::Targets::Enumerable do
 
       let!(:iterated) do
         enumerable.each do |doc|
-          expect(doc).to be_a(Post)
+          doc.should be_a(Post)
         end
       end
 
       it "does not alter the loaded docs" do
-        expect(enumerable._loaded).to eq({ post.id => post })
+        enumerable._loaded.should eq({ post.id => post })
       end
 
       it "stays loaded" do
-        expect(enumerable).to be__loaded
+        enumerable.should be__loaded
       end
     end
 
@@ -660,20 +614,20 @@ describe Mongoid::Relations::Targets::Enumerable do
 
         let!(:iterated) do
           enumerable.each do |doc|
-            expect(doc).to be_a(Post)
+            doc.should be_a(Post)
           end
         end
 
         it "adds the unloaded to the loaded docs" do
-          expect(enumerable._loaded).to eq({ post.id => post })
+          enumerable._loaded.should eq({ post.id => post })
         end
 
         it "keeps the appended in the added docs" do
-          expect(enumerable._added).to eq({ post_two.id => post_two })
+          enumerable._added.should eq({ post_two.id => post_two })
         end
 
         it "stays loaded" do
-          expect(enumerable).to be__loaded
+          enumerable.should be__loaded
         end
       end
 
@@ -685,16 +639,16 @@ describe Mongoid::Relations::Targets::Enumerable do
 
         let!(:iterated) do
           enumerable.each do |doc|
-            expect(doc).to be_a(Post)
+            doc.should be_a(Post)
           end
         end
 
         it "adds the persisted added doc to the loaded" do
-          expect(enumerable._loaded).to eq({ post.id => post })
+          enumerable._loaded.should eq({ post.id => post })
         end
 
         it "stays loaded" do
-          expect(enumerable).to be__loaded
+          enumerable.should be__loaded
         end
       end
     end
@@ -710,7 +664,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns an enumerator" do
-        expect(enumerable.each.class.include?(Enumerable)).to be_true
+        enumerable.each.class.include?(Enumerable).should be_true
       end
 
     end
@@ -745,7 +699,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "yields to the in memory documents first" do
-        expect(entries.first).to equal(post)
+        entries.first.should equal(post)
       end
     end
   end
@@ -779,11 +733,11 @@ describe Mongoid::Relations::Targets::Enumerable do
           end
 
           it "returns the first unloaded doc" do
-            expect(first).to eq(post)
+            first.should eq(post)
           end
 
           it "does not load the enumerable" do
-            expect(enumerable).to_not be__loaded
+            enumerable.should_not be__loaded
           end
 
           it "receives query only once" do
@@ -813,11 +767,11 @@ describe Mongoid::Relations::Targets::Enumerable do
           context "when a perviously persisted unloaded doc exists" do
 
             it "returns the first added doc" do
-              expect(first).to eq(post)
+              first.should eq(post)
             end
 
             it "does not load the enumerable" do
-              expect(enumerable).to_not be__loaded
+              enumerable.should_not be__loaded
             end
           end
         end
@@ -838,11 +792,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the first loaded doc" do
-          expect(first).to eq(post)
+          first.should eq(post)
         end
 
         it "does not load the enumerable" do
-          expect(enumerable).to_not be__loaded
+          enumerable.should_not be__loaded
         end
       end
 
@@ -853,11 +807,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns nil" do
-          expect(first).to be_nil
+          first.should be_nil
         end
 
         it "does not load the enumerable" do
-          expect(enumerable).to_not be__loaded
+          enumerable.should_not be__loaded
         end
       end
     end
@@ -879,7 +833,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the first loaded doc" do
-          expect(first).to eq(post)
+          first.should eq(post)
         end
       end
 
@@ -902,7 +856,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the first added doc" do
-          expect(first).to eq(post)
+          first.should eq(post)
         end
       end
 
@@ -917,7 +871,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns nil" do
-          expect(first).to be_nil
+          first.should be_nil
         end
       end
     end
@@ -950,15 +904,15 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns true" do
-          expect(included).to be_true
+          included.should be_true
         end
 
         it "retains the correct length" do
-          expect(enumerable.length).to eq(2)
+          enumerable.length.should eq(2)
         end
 
         it "retains the correct length when calling to_a" do
-          expect(enumerable.to_a.length).to eq(2)
+          enumerable.to_a.length.should eq(2)
         end
       end
 
@@ -981,7 +935,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns true" do
-          expect(included).to be_true
+          included.should be_true
         end
       end
     end
@@ -1001,15 +955,15 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns true" do
-        expect(included).to be_true
+        included.should be_true
       end
 
       it "retains the correct length" do
-        expect(enumerable.length).to eq(2)
+        enumerable.length.should eq(2)
       end
 
       it "retains the correct length when calling to_a" do
-        expect(enumerable.to_a.length).to eq(2)
+        enumerable.to_a.length.should eq(2)
       end
 
       context "when iterating over the relation a second time" do
@@ -1019,11 +973,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "retains the correct length" do
-          expect(enumerable.length).to eq(2)
+          enumerable.length.should eq(2)
         end
 
         it "retains the correct length when calling to_a" do
-          expect(enumerable.to_a.length).to eq(2)
+          enumerable.to_a.length.should eq(2)
         end
       end
     end
@@ -1046,11 +1000,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "sets the criteria" do
-        expect(enumerable._unloaded).to eq(criteria)
+        enumerable._unloaded.should eq(criteria)
       end
 
       it "is not loaded" do
-        expect(enumerable).to_not be__loaded
+        enumerable.should_not be__loaded
       end
     end
 
@@ -1065,11 +1019,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "does not set a criteria" do
-        expect(enumerable._unloaded).to be_nil
+        enumerable._unloaded.should be_nil
       end
 
       it "is loaded" do
-        expect(enumerable).to be__loaded
+        enumerable.should be__loaded
       end
     end
   end
@@ -1103,7 +1057,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns the loaded and added docs" do
-        expect(in_memory).to eq([ post, post_two ])
+        in_memory.should eq([ post, post_two ])
       end
     end
 
@@ -1130,7 +1084,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns the added docs" do
-        expect(in_memory).to eq([ post_two ])
+        in_memory.should eq([ post_two ])
       end
     end
 
@@ -1150,7 +1104,7 @@ describe Mongoid::Relations::Targets::Enumerable do
 
       it "yields to each in memory document" do
         enumerable.in_memory do |doc|
-          expect(doc).to eq(post_two)
+          doc.should eq(post_two)
         end
       end
     end
@@ -1165,14 +1119,14 @@ describe Mongoid::Relations::Targets::Enumerable do
     context "when checking against enumerable" do
 
       it "returns true" do
-        expect(enumerable.is_a?(::Enumerable)).to be_true
+        enumerable.is_a?(::Enumerable).should be_true
       end
     end
 
     context "when checking against array" do
 
       it "returns true" do
-        expect(enumerable.is_a?(Array)).to be_true
+        enumerable.is_a?(Array).should be_true
       end
     end
   end
@@ -1204,11 +1158,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the last unloaded doc" do
-          expect(last).to eq(post)
+          last.should eq(post)
         end
 
         it "does not load the enumerable" do
-          expect(enumerable).to_not be__loaded
+          enumerable.should_not be__loaded
         end
 
         it "receives query only once" do
@@ -1232,11 +1186,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the last unloaded doc" do
-          expect(last).to eq(post)
+          last.should eq(post)
         end
 
         it "does not load the enumerable" do
-          expect(enumerable).to_not be__loaded
+          enumerable.should_not be__loaded
         end
       end
 
@@ -1247,11 +1201,11 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns nil" do
-          expect(last).to be_nil
+          last.should be_nil
         end
 
         it "does not load the enumerable" do
-          expect(enumerable).to_not be__loaded
+          enumerable.should_not be__loaded
         end
       end
 
@@ -1272,7 +1226,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         context "when accessing from a reloaded child" do
 
           it "returns the last document" do
-            expect(post_one.reload.person.posts.last).to eq(post_two)
+            post_one.reload.person.posts.last.should eq(post_two)
           end
         end
       end
@@ -1295,7 +1249,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the last loaded doc" do
-          expect(last).to eq(post)
+          last.should eq(post)
         end
       end
 
@@ -1318,7 +1272,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the last added doc" do
-          expect(last).to eq(post)
+          last.should eq(post)
         end
       end
 
@@ -1333,7 +1287,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns nil" do
-          expect(last).to be_nil
+          last.should be_nil
         end
       end
     end
@@ -1348,14 +1302,14 @@ describe Mongoid::Relations::Targets::Enumerable do
     context "when checking against enumerable" do
 
       it "returns true" do
-        expect(enumerable.kind_of?(::Enumerable)).to be_true
+        enumerable.kind_of?(::Enumerable).should be_true
       end
     end
 
     context "when checking against array" do
 
       it "returns true" do
-        expect(enumerable.kind_of?(Array)).to be_true
+        enumerable.kind_of?(Array).should be_true
       end
     end
   end
@@ -1383,15 +1337,15 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "loads all the unloaded documents" do
-      expect(enumerable._loaded).to eq({ post.id => post })
+      enumerable._loaded.should eq({ post.id => post })
     end
 
     it "returns true" do
-      expect(loaded).to be_true
+      loaded.should be_true
     end
 
     it "sets loaded to true" do
-      expect(enumerable).to be__loaded
+      enumerable.should be__loaded
     end
   end
 
@@ -1422,15 +1376,15 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "is not loaded" do
-      expect(enumerable).to_not be__loaded
+      enumerable.should_not be__loaded
     end
 
     it "clears out the loaded docs" do
-      expect(enumerable._loaded).to be_empty
+      enumerable._loaded.should be_empty
     end
 
     it "clears out the added docs" do
-      expect(enumerable._added).to be_empty
+      enumerable._added.should be_empty
     end
   end
 
@@ -1445,7 +1399,7 @@ describe Mongoid::Relations::Targets::Enumerable do
       [].methods.each do |method|
 
         it "returns true for #{method}" do
-          expect(enumerable).to respond_to(method)
+          enumerable.should respond_to(method)
         end
       end
     end
@@ -1480,7 +1434,7 @@ describe Mongoid::Relations::Targets::Enumerable do
           end
 
           it "includes the number of all added documents" do
-            expect(enumerable.size).to eq(1)
+            enumerable.size.should eq(1)
           end
         end
       end
@@ -1505,11 +1459,11 @@ describe Mongoid::Relations::Targets::Enumerable do
       end
 
       it "returns the loaded size plus added size" do
-        expect(size).to eq(2)
+        size.should eq(2)
       end
 
       it "matches the size of the loaded enumerable" do
-        expect(size).to eq(enumerable.to_a.size)
+        size.should eq(enumerable.to_a.size)
       end
     end
 
@@ -1534,7 +1488,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the unloaded count plus added new size" do
-          expect(size).to eq(2)
+          size.should eq(2)
         end
       end
 
@@ -1553,7 +1507,7 @@ describe Mongoid::Relations::Targets::Enumerable do
         end
 
         it "returns the unloaded count plus added new size" do
-          expect(size).to eq(2)
+          size.should eq(2)
         end
       end
     end
@@ -1586,7 +1540,7 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "serializes the enumerable" do
-      expect(json).to include(post.title)
+      json.should include(post.title)
     end
   end
 
@@ -1609,7 +1563,7 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "serializes the enumerable" do
-      expect(json).to_not include(post.title)
+      json.should_not include(post.title)
     end
   end
 
@@ -1640,8 +1594,8 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "serializes the enumerable" do
-      expect(json.size).to eq(1)
-      expect(json[0]['title']).to eq(post.title)
+      json.size.should eq(1)
+      json[0]['title'].should eq(post.title)
     end
   end
 
@@ -1664,11 +1618,11 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "serializes the enumerable" do
-      expect(json.size).to eq(1)
+      json.size.should eq(1)
     end
 
     it "includes the proper fields" do
-      expect(json[0].keys).to_not include("title")
+      json[0].keys.should_not include("title")
     end
   end
 
@@ -1700,11 +1654,11 @@ describe Mongoid::Relations::Targets::Enumerable do
     end
 
     it "returns the unique documents" do
-      expect(uniq).to eq([ post ])
+      uniq.should eq([ post ])
     end
 
     it "sets loaded to true" do
-      expect(enumerable).to be__loaded
+      enumerable.should be__loaded
     end
   end
 end

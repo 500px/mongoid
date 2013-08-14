@@ -75,6 +75,14 @@ en:
             expecting the option to be there, please consult the following page
             with repect to Mongoid's configuration:\n\n
             \_\_http://mongoid.org/en/mongoid/docs/installation.html"
+        invalid_database:
+          message: "Database should be a Mongo::DB, not %{name}."
+          summary: "When setting a master database in the Mongoid configuration
+            it must be an actual instance of a Mongo::DB, and not just a name
+            of the database. This check is performed when calling
+            Mongoid.master = object."
+          resolution: "Make sure that when setting the configuration
+            programatically that you are passing an actual db instance."
         invalid_field:
           message: "Defining a field named '%{name}' is not allowed."
           summary: "Defining this field would override the method '%{name}',
@@ -411,12 +419,12 @@ en:
         unknown_attribute:
           message: "Attempted to set a value for '%{name}' which is not
             allowed on the model %{klass}."
-          summary: "Without including Mongoid::Attributes::Dynamic in your model
-            and the attribute does not already exist in the attributes hash,
-            attempting to call %{klass}#%{name}= for it is not allowed. This is
-            also triggered by passing the attribute to any method that accepts an
+          summary: "When setting Mongoid.allow_dynamic_fields to false and the
+            attribute does not already exist in the attributes hash, attempting
+            to call %{klass}#%{name}= for it is not allowed. This is also
+            triggered by passing the attribute to any method that accepts an
             attributes hash, and is raised instead of getting a NoMethodError."
-          resolution: "You can include Mongoid::Attributes::Dynamic if you
+          resolution: "You can set Mongoid.allow_dynamic_fields to true if you
             expect to be writing values for undefined fields often."
         unsaved_document:
           message: "Attempted to save %{document} before the parent %{base}."

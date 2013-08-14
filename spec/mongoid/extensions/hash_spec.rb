@@ -19,7 +19,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "converts each value in the hash" do
-        expect(evolved[:field]).to eq(object_id)
+        evolved[:field].should eq(object_id)
       end
     end
 
@@ -38,7 +38,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "converts each value in the hash" do
-        expect(evolved[:field]).to eq(object_id)
+        evolved[:field].should eq(object_id)
       end
     end
 
@@ -57,7 +57,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "retains the empty string values" do
-        expect(evolved[:field]).to be_empty
+        evolved[:field].should be_empty
       end
     end
 
@@ -76,7 +76,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "retains the nil values" do
-        expect(evolved[:field]).to be_nil
+        evolved[:field].should be_nil
       end
     end
   end
@@ -98,7 +98,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "converts each value in the hash" do
-        expect(mongoized[:field]).to eq(object_id)
+        mongoized[:field].should eq(object_id)
       end
     end
 
@@ -117,7 +117,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "converts each value in the hash" do
-        expect(mongoized[:field]).to eq(object_id)
+        mongoized[:field].should eq(object_id)
       end
     end
 
@@ -136,7 +136,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "converts the empty strings to nil" do
-        expect(mongoized[:field]).to be_nil
+        mongoized[:field].should be_nil
       end
     end
 
@@ -155,7 +155,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "retains the nil values" do
-        expect(mongoized[:field]).to be_nil
+        mongoized[:field].should be_nil
       end
     end
   end
@@ -175,7 +175,7 @@ describe Mongoid::Extensions::Hash do
         end
 
         it "moves the non hash values under the provided key" do
-          expect(consolidated).to eq({
+          consolidated.should eq({
             "$set" => { name: "Tool", likes: 10 }, "$inc" => { plays: 1 }
           })
         end
@@ -192,7 +192,7 @@ describe Mongoid::Extensions::Hash do
         end
 
         it "moves the non hash values under the provided key" do
-          expect(consolidated).to eq({
+          consolidated.should eq({
             "$set" => { likes: 10, name: "Tool" }, "$inc" => { plays: 1 }
           })
         end
@@ -210,7 +210,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "moves the non hash values under the provided key" do
-        expect(consolidated).to eq({
+        consolidated.should eq({
           "$set" => { likes: 10, name: "Tool" }, "$inc" => { plays: 1 }
         })
       end
@@ -228,7 +228,7 @@ describe Mongoid::Extensions::Hash do
     end
 
     it "should retrieve a nested value under the provided key" do
-      expect(nested).to eq "hundred"
+      nested.should eq "hundred"
     end
   end
 
@@ -243,7 +243,7 @@ describe Mongoid::Extensions::Hash do
     end
 
     it "should retrieve a nested value under the provided key" do
-      expect(nested).to eq("hundred")
+      nested.should eq("hundred")
     end
   end
 
@@ -254,7 +254,7 @@ describe Mongoid::Extensions::Hash do
     end
 
     it "returns the hash" do
-      expect(Hash.demongoize(hash)).to eq(hash)
+      Hash.demongoize(hash).should eq(hash)
     end
   end
 
@@ -275,11 +275,11 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "mongoizes each element in the hash" do
-        expect(mongoized[:date]).to be_a(Time)
+        mongoized[:date].should be_a(Time)
       end
 
       it "converts the elements properly" do
-        expect(mongoized[:date]).to eq(Time.utc(2012, 1, 1, 0, 0, 0))
+        mongoized[:date].should eq(Time.utc(2012, 1, 1, 0, 0, 0))
       end
     end
 
@@ -289,7 +289,7 @@ describe Mongoid::Extensions::Hash do
       end
 
       it "returns nil" do
-        expect(mongoized).to be_nil
+        mongoized.should be_nil
       end
     end
   end
@@ -309,25 +309,25 @@ describe Mongoid::Extensions::Hash do
     end
 
     it "mongoizes each element in the hash" do
-      expect(mongoized[:date]).to be_a(Time)
+      mongoized[:date].should be_a(Time)
     end
 
     it "converts the elements properly" do
-      expect(mongoized[:date]).to eq(Time.utc(2012, 1, 1, 0, 0, 0))
+      mongoized[:date].should eq(Time.utc(2012, 1, 1, 0, 0, 0))
     end
   end
 
   describe "#resizable?" do
 
     it "returns true" do
-      expect({}).to be_resizable
+      {}.should be_resizable
     end
   end
 
   describe ".resizable?" do
 
     it "returns true" do
-      expect(Hash).to be_resizable
+      Hash.should be_resizable
     end
   end
 end

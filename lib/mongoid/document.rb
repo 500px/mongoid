@@ -1,5 +1,5 @@
 # encoding: utf-8
-require "mongoid/positional"
+require "mongoid/atomic/positionable"
 require "mongoid/evolvable"
 require "mongoid/extensions"
 require "mongoid/errors"
@@ -7,6 +7,7 @@ require "mongoid/threaded"
 require "mongoid/relations"
 require "mongoid/atomic"
 require "mongoid/attributes"
+require "mongoid/callbacks"
 require "mongoid/contextual"
 require "mongoid/copyable"
 require "mongoid/equality"
@@ -14,9 +15,13 @@ require "mongoid/criteria"
 require "mongoid/factory"
 require "mongoid/fields"
 require "mongoid/identity_map"
+require "mongoid/matchers"
+require "mongoid/nested_attributes"
+require "mongoid/persistence"
 require "mongoid/state"
 require "mongoid/timestamps"
-require "mongoid/composable"
+require "mongoid/validations"
+require "mongoid/components"
 
 module Mongoid
 
@@ -24,7 +29,7 @@ module Mongoid
   # the database as documents.
   module Document
     extend ActiveSupport::Concern
-    include Composable
+    include Mongoid::Components
 
     attr_accessor :criteria_instance_id
     attr_reader :new_record
@@ -108,7 +113,6 @@ module Mongoid
         @attributes ||= {}
         options ||= {}
         apply_pre_processed_defaults
-        apply_default_scoping
         process_attributes(attrs) do
           yield(self) if block_given?
         end
@@ -203,8 +207,7 @@ module Mongoid
       became = klass.new(clone_document)
       became.id = id
       became.instance_variable_set(:@changed_attributes, changed_attributes)
-      became.instance_variable_set(:@errors, ActiveModel::Errors.new(became))
-      became.errors.instance_variable_set(:@messages, errors.instance_variable_get(:@messages))
+      became.instance_variable_set(:@errors, errors)
       became.instance_variable_set(:@new_record, new_record?)
       became.instance_variable_set(:@destroyed, destroyed?)
       became.changed_attributes["_type"] = self.class.to_s
@@ -241,7 +244,7 @@ module Mongoid
     # @since 2.4.0
     def cache_key
       return "#{model_key}/new" if new_record?
-      return "#{model_key}/#{id}-#{updated_at.utc.to_s(:number)}" if do_or_do_not(:updated_at)
+      return "#{model_key}/#{id}-#{updated_at.utc.to_s(:number)}" unless self[:updated_at].nil?
       "#{model_key}/#{id}"
     end
 

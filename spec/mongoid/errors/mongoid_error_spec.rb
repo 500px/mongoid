@@ -19,30 +19,30 @@ describe Mongoid::Errors::MongoidError do
   describe "#compose_message" do
 
     it "sets ivar problem" do
-      expect(error.instance_variable_get(:@problem)).to be
+      error.instance_variable_get(:@problem).should be
     end
 
     it "sets ivar summary" do
-      expect(error.instance_variable_get(:@summary)).to be
+      error.instance_variable_get(:@summary).should be
     end
 
     it "sets ivar resolution" do
-      expect(error.instance_variable_get(:@resolution)).to be
+      error.instance_variable_get(:@resolution).should be
     end
   end
 
   describe "#to_json" do
 
     it "has problem" do
-      expect(error.to_json).to include('"problem":"message"')
+      error.to_json.should include('"problem":"message"')
     end
 
     it "has summary" do
-      expect(error.to_json).to include('"summary":"summary"')
+      error.to_json.should include('"summary":"summary"')
     end
 
     it "has resolution" do
-      expect(error.to_json).to include('"resolution":"resolution"')
+      error.to_json.should include('"resolution":"resolution"')
     end
   end
 end

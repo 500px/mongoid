@@ -19,7 +19,7 @@ describe Mongoid::Extensions::Module do
       end
 
       it "redefines the existing method" do
-        expect(Smoochy.new.sing).to eq("singing again")
+        Smoochy.new.sing.should eq("singing again")
       end
     end
 
@@ -35,7 +35,7 @@ describe Mongoid::Extensions::Module do
       end
 
       it "redefines the existing method" do
-        expect(Rhino.new.sing).to eq("singing")
+        Rhino.new.sing.should eq("singing")
       end
     end
   end

@@ -141,6 +141,16 @@ module Mongoid
       true
     end
 
+    # Clear out all options set on a one-time basis.
+    #
+    # @example Clear out the options.
+    #   Threaded.clear_options!
+    #
+    # @since 2.3.0
+    def clear_options!
+      self.timeless = false
+    end
+
     # Exit autosaving a document on the current thread.
     #
     # @example Exit autosave.
@@ -343,6 +353,42 @@ module Mongoid
     # @since 2.1.0
     def scope_stack
       Thread.current["[mongoid]:scope-stack"] ||= {}
+    end
+
+    # Get the value of the one-off timeless call.
+    #
+    # @example Get the timeless value.
+    #   Threaded.timeless
+    #
+    # @return [ true, false ] The timeless setting.
+    #
+    # @since 2.3.0
+    def timeless
+      !!Thread.current["[mongoid]:timeless"]
+    end
+
+    # Set the value of the one-off timeless call.
+    #
+    # @example Set the timeless value.
+    #   Threaded.timeless = true
+    #
+    # @param [ true, false ] value The value.
+    #
+    # @since 2.3.0
+    def timeless=(value)
+      Thread.current["[mongoid]:timeless"] = value
+    end
+
+    # Is the current thread setting timestamps?
+    #
+    # @example Is the current thread timestamping?
+    #   Threaded.timestamping?
+    #
+    # @return [ true, false ] If timestamps can be applied.
+    #
+    # @since 2.3.0
+    def timestamping?
+      !timeless
     end
 
     # Is the document autosaved on the current thread?

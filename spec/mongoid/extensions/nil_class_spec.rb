@@ -5,7 +5,7 @@ describe Mongoid::Extensions::NilClass do
   describe "#collectionize" do
 
     it "returns ''" do
-      expect(nil.collectionize).to be_empty
+      nil.collectionize.should be_empty
     end
   end
 end

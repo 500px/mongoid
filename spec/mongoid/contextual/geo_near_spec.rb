@@ -31,7 +31,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the average distance" do
-        expect(geo_near.average_distance).to_not be_nil
+        geo_near.average_distance.should_not be_nil
       end
     end
 
@@ -46,7 +46,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns 0.0" do
-        expect(geo_near.average_distance).to be_nil
+        geo_near.average_distance.should be_nil
       end
     end
   end
@@ -84,7 +84,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns all the documents" do
-        expect(results).to eq([ bar_one, bar_two ])
+        results.should eq([ bar_one, bar_two ])
       end
     end
 
@@ -103,7 +103,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the limited documents" do
-        expect(results).to eq([ bar_one ])
+        results.should eq([ bar_one ])
       end
     end
 
@@ -122,7 +122,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the limited documents" do
-        expect(results).to eq([ bar_one ])
+        results.should eq([ bar_one ])
       end
     end
 
@@ -141,7 +141,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the documents" do
-        expect(results).to eq([ bar_one, bar_two ])
+        results.should eq([ bar_one, bar_two ])
       end
     end
 
@@ -160,11 +160,11 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the documents" do
-        expect(results).to eq([ bar_one, bar_two ])
+        results.should eq([ bar_one, bar_two ])
       end
 
       it "multiplies the distance factor" do
-        expect(results.first.geo_near_distance.to_i).to eq(2490)
+        results.first.geo_near_distance.to_i.should eq(2490)
       end
     end
 
@@ -183,7 +183,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the documents" do
-        expect(results).to eq([ bar_one, bar_two ])
+        results.should eq([ bar_one, bar_two ])
       end
     end
   end
@@ -217,7 +217,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns false" do
-        expect(geo_near).to_not be_empty
+        geo_near.should_not be_empty
       end
     end
 
@@ -228,7 +228,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns true" do
-        expect(geo_near).to be_empty
+        geo_near.should be_empty
       end
     end
   end
@@ -264,7 +264,7 @@ describe Mongoid::Contextual::GeoNear do
     end
 
     it "returns a hash" do
-      expect(execution_results).to be_a_kind_of(Hash)
+      execution_results.should be_a_kind_of(Hash)
     end
   end
 
@@ -297,7 +297,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns the max distance" do
-        expect(geo_near.max_distance).to_not be_nil
+        geo_near.max_distance.should_not be_nil
       end
     end
 
@@ -312,7 +312,7 @@ describe Mongoid::Contextual::GeoNear do
       end
 
       it "returns 0.0" do
-        expect(geo_near.max_distance).to eq(0.0)
+        geo_near.max_distance.should eq(0.0)
       end
     end
   end
@@ -344,31 +344,31 @@ describe Mongoid::Contextual::GeoNear do
     end
 
     it "contains the selector" do
-      expect(geo_near.inspect).to include("selector")
+      geo_near.inspect.should include("selector")
     end
 
     it "contains the class" do
-      expect(geo_near.inspect).to include("class")
+      geo_near.inspect.should include("class")
     end
 
     it "contains the near" do
-      expect(geo_near.inspect).to include("near")
+      geo_near.inspect.should include("near")
     end
 
     it "contains the multiplier" do
-      expect(geo_near.inspect).to include("multiplier")
+      geo_near.inspect.should include("multiplier")
     end
 
     it "contains the max" do
-      expect(geo_near.inspect).to include("max")
+      geo_near.inspect.should include("max")
     end
 
     it "contains the unique" do
-      expect(geo_near.inspect).to include("unique")
+      geo_near.inspect.should include("unique")
     end
 
     it "contains the spherical" do
-      expect(geo_near.inspect).to include("spherical")
+      geo_near.inspect.should include("spherical")
     end
   end
 
@@ -399,7 +399,7 @@ describe Mongoid::Contextual::GeoNear do
     end
 
     it "returns the execution time" do
-      expect(geo_near.time).to_not be_nil
+      geo_near.time.should_not be_nil
     end
   end
 end

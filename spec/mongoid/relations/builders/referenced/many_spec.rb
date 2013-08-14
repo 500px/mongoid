@@ -45,7 +45,7 @@ describe Mongoid::Relations::Builders::Referenced::Many do
       end
 
       it "sets the documents" do
-        expect(documents).to eq(criteria)
+        documents.should eq(criteria)
       end
     end
 
@@ -79,7 +79,7 @@ describe Mongoid::Relations::Builders::Referenced::Many do
       end
 
       it "ordered by specified filed" do
-        expect(documents).to eq(criteria)
+        documents.should eq(criteria)
       end
     end
 
@@ -103,7 +103,7 @@ describe Mongoid::Relations::Builders::Referenced::Many do
       end
 
       it "returns the object" do
-        expect(documents).to eq(object)
+        documents.should eq(object)
       end
     end
   end
@@ -119,15 +119,15 @@ describe Mongoid::Relations::Builders::Referenced::Many do
       context "when the ids are empty" do
 
         it "returns an empty array" do
-          expect(person.posts).to be_empty
+          person.posts.should be_empty
         end
 
         context "during initialization" do
 
           it "returns an empty array" do
             Person.new do |p|
-              expect(p.posts).to be_empty
-              expect(p.posts.metadata).to_not be_nil
+              p.posts.should be_empty
+              p.posts.metadata.should_not be_nil
             end
           end
         end

@@ -1,6 +1,5 @@
 class Person
   include Mongoid::Document
-  include Mongoid::Attributes::Dynamic
   attr_accessor :mode
 
   class_attribute :somebody_elses_important_class_options
@@ -32,9 +31,6 @@ class Person
   field :i, as: :inte, type: Integer
   field :a, as: :array, type: Array
   field :desc, localize: true
-  field :test_array, type: Array
-  field :overridden_setter, type: String
-  field :arrays, type: Array
 
   index age: 1
   index addresses: 1
@@ -150,11 +146,6 @@ class Person
 
   def override_me
     read_attribute(:override_me).to_s
-  end
-
-  def overridden_setter=(value)
-    @override_called = true
-    super(value)
   end
 
   class << self

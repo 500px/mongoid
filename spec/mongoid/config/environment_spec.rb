@@ -25,7 +25,7 @@ describe Mongoid::Config::Environment do
       end
 
       it "returns the rails environment" do
-        expect(described_class.env_name).to eq("production")
+        described_class.env_name.should eq("production")
       end
     end
 
@@ -47,7 +47,7 @@ describe Mongoid::Config::Environment do
       end
 
       it "returns the sinatra environment" do
-        expect(described_class.env_name).to eq("staging")
+        described_class.env_name.should eq("staging")
       end
     end
 
@@ -63,7 +63,7 @@ describe Mongoid::Config::Environment do
       end
 
       it "returns the rack environment" do
-        expect(described_class.env_name).to eq("acceptance")
+        described_class.env_name.should eq("acceptance")
       end
     end
 

@@ -5,18 +5,18 @@ describe Mongoid::Extensions::Set do
   describe "#demongoize" do
 
     it "returns the set if Array" do
-      expect(Set.demongoize([ "test" ])).to eq(Set.new([ "test" ]))
+      Set.demongoize([ "test" ]).should eq(Set.new([ "test" ]))
     end
   end
 
   describe ".mongoize" do
 
     it "returns an array" do
-      expect(Set.mongoize([ "test" ])).to eq([ "test" ])
+      Set.mongoize([ "test" ]).should eq([ "test" ])
     end
 
     it "returns an array even if the value is a set" do
-      expect(Set.mongoize(Set.new([ "test" ]))).to eq([ "test" ])
+      Set.mongoize(Set.new([ "test" ])).should eq([ "test" ])
     end
   end
 
@@ -27,7 +27,7 @@ describe Mongoid::Extensions::Set do
     end
 
     it "returns an array" do
-      expect(set.mongoize).to eq([ "test" ])
+      set.mongoize.should eq([ "test" ])
     end
   end
 end

@@ -9,19 +9,19 @@ describe Mongoid::Errors::InvalidFind do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Calling Document.find with nil is invalid"
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Document.find expects the parameters to be 1 or more ids"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Most likely this is caused by passing parameters directly"
       )
     end

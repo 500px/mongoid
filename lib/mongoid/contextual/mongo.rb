@@ -6,7 +6,6 @@ require "mongoid/contextual/eager"
 require "mongoid/contextual/find_and_modify"
 require "mongoid/contextual/geo_near"
 require "mongoid/contextual/map_reduce"
-require "mongoid/contextual/text_search"
 
 module Mongoid
   module Contextual
@@ -45,19 +44,15 @@ module Mongoid
       #     doc.likes > 1
       #   end
       #
-      # @param [ Document ] document A document to match or true if wanting
-      #   skip and limit to be factored into the count.
+      # @param [ Document ] document A document ot match.
       #
       # @return [ Integer ] The number of matches.
       #
       # @since 3.0.0
-      def count(document = false, &block)
+      def count(document = nil, &block)
         return super(&block) if block_given?
-        if document.is_a?(Document)
-          return collection.find(criteria.and(_id: document.id).selector).count
-        end
-        return query.count(document) if document
-        try_cache(:count) { query.count }
+        return (cached? ? @count ||= query.count : query.count) unless document
+        collection.find(criteria.and(_id: document.id).selector).count
       end
 
       # Delete all documents in the database that match the selector.
@@ -144,12 +139,7 @@ module Mongoid
       #
       # @since 3.0.0
       def exists?
-        return !documents.empty? if cached? && cache_loaded?
-        return @count > 0 if instance_variable_defined?(:@count)
-
-        try_cache(:exists) do
-          !!(query.dup.select(_id: 1).limit(1).first)
-        end
+        @exists ||= check_existence
       end
 
       # Run an explain on the criteria.
@@ -195,8 +185,9 @@ module Mongoid
       #
       # @since 3.0.0
       def first
-        return documents.first if cached? && cache_loaded?
-        try_cache(:first) do
+        if cached? && cache_loaded?
+          documents.first
+        else
           with_sorting do
             with_eager_loading(query.first)
           end
@@ -279,10 +270,8 @@ module Mongoid
       #
       # @since 3.0.0
       def last
-        try_cache(:last) do
-          with_inverse_sorting do
-            with_eager_loading(query.first)
-          end
+        with_inverse_sorting do
+          with_eager_loading(query.first)
         end
       end
 
@@ -337,24 +326,14 @@ module Mongoid
       # @note This method will return the raw db values - it performs no custom
       #   serialization.
       #
-      # @param [ String, Symbol, Array ] field Fields to pluck.
+      # @param [ String, Symbol ] field The field to pluck.
       #
-      # @return [ Array<Object, Array> ] The plucked values.
+      # @return [ Array<Object> ] The plucked values.
       #
       # @since 3.1.0
-      def pluck(*fields)
-        normalized_select = fields.inject({}) do |hash, f|
-          hash[klass.database_field_name(f)] = 1
-          hash
-        end
-
-        query.dup.select(normalized_select).map do |doc|
-          if normalized_select.size == 1
-            doc[normalized_select.keys.first]
-          else
-            normalized_select.keys.map { |n| doc[n] }.compact
-          end
-        end.compact
+      def pluck(field)
+        normalized = klass.database_field_name(field)
+        query.select(normalized => 1).map{ |doc| doc[normalized] }.compact
       end
 
       # Skips the provided number of documents.
@@ -393,20 +372,6 @@ module Mongoid
         end
       end
 
-      # Execute a text command against the database.
-      #
-      # @example Find documents with the text "phase"
-      #   context.text_search("phase")
-      #
-      # @param [ String ] query The text search query.
-      #
-      # @return [ TextSearch ] The TextSearch command.
-      #
-      # @since 4.0.0
-      def text_search(query)
-        TextSearch.new(collection, criteria, query)
-      end
-
       # Update the first matching document atomically.
       #
       # @example Update the first matching document.
@@ -437,21 +402,21 @@ module Mongoid
 
       private
 
-      # yield the block given or return the cached value
+      # Checks if any documents exist in the database.
       #
-      # @param [ String, Symbol ] key The instance variable name
+      # @api private
       #
-      # @return the result of the block
+      # @example Check for document existsence.
+      #   context.check_existence
       #
-      # @since 3.1.4
-      def try_cache(key, &block)
-        unless cached?
-          yield
+      # @return [ true, false ] If documents exist.
+      #
+      # @since 3.1.0
+      def check_existence
+        if cached? && cache_loaded?
+          !documents.empty?
         else
-          unless ret = instance_variable_get("@#{key}")
-            instance_variable_set("@#{key}", ret = yield)
-          end
-          ret
+          @count ? @count > 0 : !query.dup.select(_id: 1).limit(1).entries.first.nil?
         end
       end
 

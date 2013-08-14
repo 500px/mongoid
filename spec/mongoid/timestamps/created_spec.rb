@@ -18,15 +18,15 @@ describe Mongoid::Timestamps::Created do
     end
 
     it "adds created_at to the document" do
-      expect(fields["created_at"]).to_not be_nil
+      fields["created_at"].should_not be_nil
     end
 
     it "does not add updated_at to the document" do
-      expect(fields["updated_at"]).to be_nil
+      fields["updated_at"].should be_nil
     end
 
     it "forces the created_at timestamps to UTC" do
-      expect(quiz.created_at).to be_within(10).of(Time.now.utc)
+      quiz.created_at.should be_within(10).of(Time.now.utc)
     end
   end
 
@@ -37,8 +37,8 @@ describe Mongoid::Timestamps::Created do
     end
 
     it "runs the created callbacks" do
-      expect(quiz.created_at).to_not be_nil
-      expect(quiz.created_at).to be_within(10).of(Time.now.utc)
+      quiz.created_at.should_not be_nil
+      quiz.created_at.should be_within(10).of(Time.now.utc)
     end
   end
 end

@@ -9,19 +9,19 @@ describe Mongoid::Errors::NoParent do
     end
 
     it "contains the problem in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Cannot persist embedded document Address without a parent document."
       )
     end
 
     it "contains the summary in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "If the document is embedded, in order to be persisted it must"
       )
     end
 
     it "contains the resolution in the message" do
-      expect(error.message).to include(
+      error.message.should include(
         "Ensure that you've set the parent relation if instantiating"
       )
     end

@@ -1,5 +1,6 @@
 # encoding: utf-8
 require "mongoid/config/environment"
+require "mongoid/config/inflections"
 require "mongoid/config/options"
 require "mongoid/config/validators"
 
@@ -16,13 +17,13 @@ module Mongoid
 
     LOCK = Mutex.new
 
+    option :allow_dynamic_fields, default: true
     option :identity_map_enabled, default: false
     option :include_root_in_json, default: false
     option :include_type_for_serialization, default: false
     option :preload_models, default: false
     option :raise_not_found_error, default: true
     option :scope_overwrite_exception, default: false
-    option :duplicate_fields_exception, default: false
     option :use_activesupport_time_zone, default: true
     option :use_utc, default: false
 
@@ -67,7 +68,7 @@ module Mongoid
     #
     # @return [ Array<String> ] An array of bad field names.
     def destructive_fields
-      Composable.prohibited_methods
+      Components.prohibited_methods
     end
 
     # Load the settings from a compliant mongoid.yml file. This can be used for
@@ -82,11 +83,7 @@ module Mongoid
     # @since 2.0.1
     def load!(path, environment = nil)
       settings = Environment.load_yaml(path, environment)
-      if settings.present?
-        Sessions.disconnect
-        Sessions.clear
-        load_configuration(settings)
-      end
+      load_configuration(settings) if settings.present?
       settings
     end
 

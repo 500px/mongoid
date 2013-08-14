@@ -47,7 +47,7 @@ require "spec_helper"
       # end
 
       # it "adds the current to the modifications" do
-        # expect(mods["preference_ids"]).to eq(
+        # mods["preference_ids"].should eq(
           # [ preference_one.id, preference_three.id ]
         # )
       # end
@@ -71,11 +71,11 @@ require "spec_helper"
     # end
 
     # it "dups the default value" do
-      # expect(field.eval_default(nil)).to_not equal(default)
+      # field.eval_default(nil).should_not equal(default)
     # end
 
     # it "returns the correct value" do
-      # expect(field.eval_default(nil)).to eq(default)
+      # field.eval_default(nil).should eq(default)
     # end
   # end
 
@@ -92,7 +92,7 @@ require "spec_helper"
     # end
 
     # it "returns true" do
-      # expect(field).to be_foreign_key
+      # field.should be_foreign_key
     # end
   # end
 
@@ -121,7 +121,7 @@ require "spec_helper"
       # context "when provided nil" do
 
         # it "returns an empty array" do
-          # expect(field.serialize(nil)).to be_empty
+          # field.serialize(nil).should be_empty
         # end
       # end
 
@@ -132,11 +132,11 @@ require "spec_helper"
         # end
 
         # it "returns an empty array" do
-          # expect(field.serialize(array)).to eq(array)
+          # field.serialize(array).should eq(array)
         # end
 
         # it "returns the same instance" do
-          # expect(field.serialize(array)).to equal(array)
+          # field.serialize(array).should equal(array)
         # end
       # end
 
@@ -147,7 +147,7 @@ require "spec_helper"
         # end
 
         # it "performs conversion on the ids if strings" do
-          # expect(field.serialize([object_id.to_s])).to eq([object_id])
+          # field.serialize([object_id.to_s]).should eq([object_id])
         # end
       # end
 
@@ -176,7 +176,7 @@ require "spec_helper"
         # end
 
         # it "does not convert" do
-          # expect(field.serialize([object_id.to_s])).to eq([object_id.to_s])
+          # field.serialize([object_id.to_s]).should eq([object_id.to_s])
         # end
       # end
     # end

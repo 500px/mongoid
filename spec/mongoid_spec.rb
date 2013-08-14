@@ -7,7 +7,7 @@ describe Mongoid do
     context "when no block supplied" do
 
       it "returns the config singleton" do
-        expect(Mongoid.configure).to eq(Mongoid::Config)
+        Mongoid.configure.should eq(Mongoid::Config)
       end
     end
 
@@ -15,18 +15,18 @@ describe Mongoid do
 
       before do
         Mongoid.configure do |config|
-          config.identity_map_enabled = false
+          config.allow_dynamic_fields = false
         end
       end
 
       after do
         Mongoid.configure do |config|
-          config.identity_map_enabled = true
+          config.allow_dynamic_fields = true
         end
       end
 
       it "sets the values on the config instance" do
-        expect(Mongoid.identity_map_enabled).to be_false
+        Mongoid.allow_dynamic_fields.should be_false
       end
     end
   end
@@ -34,7 +34,7 @@ describe Mongoid do
   describe ".default_session" do
 
     it "returns the default session" do
-      expect(Mongoid.default_session).to eq(Mongoid::Sessions.default)
+      Mongoid.default_session.should eq(Mongoid::Sessions.default)
     end
   end
 
@@ -52,7 +52,7 @@ describe Mongoid do
     it "disconnects from all active sessions" do
       sessions.each do |session|
         session.cluster.nodes.each do |node|
-          expect(node.send(:connected?)).to be_false
+          node.send(:connected?).should be_false
         end
       end
     end
@@ -61,14 +61,14 @@ describe Mongoid do
   describe ".session" do
 
     it "returns the named session" do
-      expect(Mongoid.session(:default)).to eq(Mongoid::Sessions.default)
+      Mongoid.session(:default).should eq(Mongoid::Sessions.default)
     end
   end
 
   describe ".models" do
 
     it "returns the list of known models" do
-      expect(Mongoid.models).to include(Band)
+      Mongoid.models.should include(Band)
     end
   end
 end

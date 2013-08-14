@@ -21,35 +21,35 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "appends to the target" do
-          expect(person.addresses).to eq([ address ])
+          person.addresses.should eq([ address ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(address.addressable).to eq(person)
+          address.addressable.should eq(person)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(address.addressable).to eql(person)
+          address.addressable.should eql(person)
         end
 
         it "does not save the new document" do
-          expect(address).to_not be_persisted
+          address.should_not be_persisted
         end
 
         it "sets the parent on the child" do
-          expect(address._parent).to eq(person)
+          address._parent.should eq(person)
         end
 
         it "sets the metadata on the child" do
-          expect(address.metadata).to_not be_nil
+          address.metadata.should_not be_nil
         end
 
         it "sets the index on the child" do
-          expect(address._index).to eq(0)
+          address._index.should eq(0)
         end
 
         it "returns the relation" do
-          expect(added).to eq(person.addresses)
+          added.should eq(person.addresses)
         end
 
         context "with a limiting default scope" do
@@ -65,11 +65,11 @@ describe Mongoid::Relations::Embedded::Many do
             end
 
             it "appends to the target" do
-              expect(person.appointments.target).to eq([ active ])
+              person.appointments.target.should eq([ active ])
             end
 
             it "appends to the _unscoped" do
-              expect(person.appointments.send(:_unscoped)).to eq([ active ])
+              person.appointments.send(:_unscoped).should eq([ active ])
             end
           end
 
@@ -84,11 +84,11 @@ describe Mongoid::Relations::Embedded::Many do
             end
 
             it "doesn't append to the target" do
-              expect(person.appointments.target).to_not eq([ inactive ])
+              person.appointments.target.should_not eq([ inactive ])
             end
 
             it "appends to the _unscoped" do
-              expect(person.appointments.send(:_unscoped)).to eq([ inactive ])
+              person.appointments.send(:_unscoped).should eq([ inactive ])
             end
           end
         end
@@ -109,7 +109,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the new document" do
-          expect(address).to be_persisted
+          address.should be_persisted
         end
       end
 
@@ -132,15 +132,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the first document" do
-          expect(address_one).to be_persisted
+          address_one.should be_persisted
         end
 
         it "saves the second document" do
-          expect(address_two).to be_persisted
+          address_two.should be_persisted
         end
 
         it "returns the relation" do
-          expect(added).to eq(person.addresses)
+          added.should eq(person.addresses)
         end
       end
 
@@ -161,31 +161,31 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "appends to the target" do
-            expect(parent_role.child_roles).to eq([ child_role ])
+            parent_role.child_roles.should eq([ child_role ])
           end
 
           it "sets the base on the inverse relation" do
-            expect(child_role.parent_role).to eq(parent_role)
+            child_role.parent_role.should eq(parent_role)
           end
 
           it "sets the same instance on the inverse relation" do
-            expect(child_role.parent_role).to eql(parent_role)
+            child_role.parent_role.should eql(parent_role)
           end
 
           it "does not save the new document" do
-            expect(child_role).to_not be_persisted
+            child_role.should_not be_persisted
           end
 
           it "sets the parent on the child" do
-            expect(child_role._parent).to eq(parent_role)
+            child_role._parent.should eq(parent_role)
           end
 
           it "sets the metadata on the child" do
-            expect(child_role.metadata).to_not be_nil
+            child_role.metadata.should_not be_nil
           end
 
           it "sets the index on the child" do
-            expect(child_role._index).to eq(0)
+            child_role._index.should eq(0)
           end
         end
 
@@ -204,7 +204,7 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "saves the new document" do
-            expect(child_role).to be_persisted
+            child_role.should be_persisted
           end
         end
       end
@@ -228,35 +228,35 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets the target of the relation" do
-        expect(person.addresses).to eq([ address ])
+        person.addresses.should eq([ address ])
       end
 
       it "sets the _unscoped of the relation" do
-        expect(person.addresses.send(:_unscoped)).to eq([ address ])
+        person.addresses.send(:_unscoped).should eq([ address ])
       end
 
       it "sets the base on the inverse relation" do
-        expect(address.addressable).to eq(person)
+        address.addressable.should eq(person)
       end
 
       it "sets the same instance on the inverse relation" do
-        expect(address.addressable).to eql(person)
+        address.addressable.should eql(person)
       end
 
       it "does not save the target" do
-        expect(address).to_not be_persisted
+        address.should_not be_persisted
       end
 
       it "sets the parent on the child" do
-        expect(address._parent).to eq(person)
+        address._parent.should eq(person)
       end
 
       it "sets the metadata on the child" do
-        expect(address.metadata).to_not be_nil
+        address.metadata.should_not be_nil
       end
 
       it "sets the index on the child" do
-        expect(address._index).to eq(0)
+        address._index.should eq(0)
       end
     end
 
@@ -277,7 +277,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the target" do
-          expect(address).to be_persisted
+          address.should be_persisted
         end
       end
 
@@ -300,7 +300,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "overwrites the existing addresses" do
-          expect(person.reload.addresses).to eq([ new_address ])
+          person.reload.addresses.should eq([ new_address ])
         end
       end
 
@@ -311,11 +311,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation" do
-          expect(person.addresses).to eq([ address ])
+          person.addresses.should eq([ address ])
         end
 
         it "does not save the target" do
-          expect(address).to_not be_persisted
+          address.should_not be_persisted
         end
 
         context "when setting the relation multiple times" do
@@ -330,11 +330,11 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "sets the new documents" do
-            expect(person.addresses).to eq([ address_two ])
+            person.addresses.should eq([ address_two ])
           end
 
           it "persits only the new documents" do
-            expect(person.reload.addresses).to eq([ address_two ])
+            person.reload.addresses.should eq([ address_two ])
           end
         end
       end
@@ -364,11 +364,11 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "sets the documents" do
-            expect(doctor.addresses).to eq([ address_one ])
+            doctor.addresses.should eq([ address_one ])
           end
 
           it "persists the document" do
-            expect(doctor.reload.addresses).to eq([ address_one ])
+            doctor.reload.addresses.should eq([ address_one ])
           end
 
           context "when setting the relation multiple times" do
@@ -383,11 +383,11 @@ describe Mongoid::Relations::Embedded::Many do
             end
 
             it "sets the new documents" do
-              expect(doctor.addresses).to eq([ address_two ])
+              doctor.addresses.should eq([ address_two ])
             end
 
             it "persits only the new documents" do
-              expect(doctor.reload.addresses).to eq([ address_two ])
+              doctor.reload.addresses.should eq([ address_two ])
             end
           end
         end
@@ -412,7 +412,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "deletes the old documents" do
-        expect(person.reload.addresses).to eq([ address ])
+        person.reload.addresses.should eq([ address ])
       end
     end
 
@@ -452,15 +452,15 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "allows creation of the embedded document" do
-        expect(tracking_id.validation_history.size).to eq(1)
+        tracking_id.validation_history.size.should eq(1)
       end
 
       it "saves the relation" do
-        expect(history).to be_persisted
+        history.should be_persisted
       end
 
       it "remains on reload" do
-        expect(tracking_id.reload.validation_history.size).to eq(1)
+        tracking_id.reload.validation_history.size.should eq(1)
       end
     end
 
@@ -479,7 +479,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "requires an inflection to determine the class" do
-        expect(slave.reload.address_numbers.size).to eq(1)
+        slave.reload.address_numbers.size.should eq(1)
       end
     end
 
@@ -509,11 +509,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the new attributes" do
-          expect(person.addresses.first.city).to eq("Berlin")
+          person.addresses.first.city.should eq("Berlin")
         end
 
         it "persists the changes" do
-          expect(person.reload.addresses.first.city).to eq("Berlin")
+          person.reload.addresses.first.city.should eq("Berlin")
         end
       end
     end
@@ -545,23 +545,23 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the new attributes on the address" do
-          expect(person.addresses.first.city).to eq("Berlin")
+          person.addresses.first.city.should eq("Berlin")
         end
 
         it "sets the new attributes on the location" do
-          expect(person.addresses.first.locations.first.name).to eq("Home")
+          person.addresses.first.locations.first.name.should eq("Home")
         end
 
         it "persists the changes to the address" do
-          expect(person.reload.addresses.first.city).to eq("Berlin")
+          person.reload.addresses.first.city.should eq("Berlin")
         end
 
         it "persists the changes to the location" do
-          expect(person.reload.addresses.first.locations.first.name).to eq("Home")
+          person.reload.addresses.first.locations.first.name.should eq("Home")
         end
 
         it "does not persist the locations collection to the person document" do
-          expect(person.reload[:locations]).to be_nil
+          person.reload[:locations].should be_nil
         end
       end
     end
@@ -583,31 +583,31 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the target of the relation" do
-          expect(parent_role.child_roles).to eq([ child_role ])
+          parent_role.child_roles.should eq([ child_role ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(child_role.parent_role).to eq(parent_role)
+          child_role.parent_role.should eq(parent_role)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(child_role.parent_role).to eql(parent_role)
+          child_role.parent_role.should eql(parent_role)
         end
 
         it "does not save the target" do
-          expect(child_role).to_not be_persisted
+          child_role.should_not be_persisted
         end
 
         it "sets the parent on the child" do
-          expect(child_role._parent).to eq(parent_role)
+          child_role._parent.should eq(parent_role)
         end
 
         it "sets the metadata on the child" do
-          expect(child_role.metadata).to_not be_nil
+          child_role.metadata.should_not be_nil
         end
 
         it "sets the index on the child" do
-          expect(child_role._index).to eq(0)
+          child_role._index.should eq(0)
         end
       end
 
@@ -626,7 +626,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the target" do
-          expect(child_role).to be_persisted
+          child_role.should be_persisted
         end
       end
     end
@@ -652,15 +652,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation to empty" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
 
         it "sets the unscoped to empty" do
-          expect(person.addresses.send(:_unscoped)).to be_empty
+          person.addresses.send(:_unscoped).should be_empty
         end
 
         it "removes the inverse relation" do
-          expect(address.addressable).to be_nil
+          address.addressable.should be_nil
         end
       end
 
@@ -675,7 +675,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation to empty" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
       end
 
@@ -697,19 +697,19 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "sets the relation to empty" do
-            expect(person.addresses).to be_empty
+            person.addresses.should be_empty
           end
 
           it "sets the relation to empty in the database" do
-            expect(person.reload.addresses).to be_empty
+            person.reload.addresses.should be_empty
           end
 
           it "removed the inverse relation" do
-            expect(address.addressable).to be_nil
+            address.addressable.should be_nil
           end
 
           it "deletes the child document" do
-            expect(address).to be_destroyed
+            address.should be_destroyed
           end
         end
 
@@ -721,11 +721,11 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "sets the relation to empty" do
-            expect(person.addresses).to be_empty
+            person.addresses.should be_empty
           end
 
           it "deletes the child document" do
-            expect(address).to be_destroyed
+            address.should be_destroyed
           end
 
           context "when saving the parent" do
@@ -736,7 +736,7 @@ describe Mongoid::Relations::Embedded::Many do
             end
 
             it "persists the deletion" do
-              expect(person.addresses).to be_empty
+              person.addresses.should be_empty
             end
           end
         end
@@ -762,11 +762,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation to empty" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
 
         it "sets the relation to empty in the database" do
-          expect(reloaded.addresses).to be_empty
+          reloaded.addresses.should be_empty
         end
       end
     end
@@ -789,11 +789,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation to empty" do
-          expect(parent_role.child_roles).to be_empty
+          parent_role.child_roles.should be_empty
         end
 
         it "removes the inverse relation" do
-          expect(child_role.parent_role).to be_nil
+          child_role.parent_role.should be_nil
         end
       end
 
@@ -808,7 +808,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation to empty" do
-          expect(parent_role.child_roles).to be_empty
+          parent_role.child_roles.should be_empty
         end
       end
 
@@ -828,15 +828,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets the relation to empty" do
-          expect(parent_role.child_roles).to be_empty
+          parent_role.child_roles.should be_empty
         end
 
         it "removed the inverse relation" do
-          expect(child_role.parent_role).to be_nil
+          child_role.parent_role.should be_nil
         end
 
         it "deletes the child document" do
-          expect(child_role).to be_destroyed
+          child_role.should be_destroyed
         end
       end
     end
@@ -859,7 +859,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns the documents as an array of hashes" do
-        expect(document).to eq([ address.as_document ])
+        document.should eq([ address.as_document ])
       end
     end
 
@@ -884,7 +884,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns the unscoped documents as an array of hashes" do
-          expect(document).to eq([ headache.as_document, cough.as_document ])
+          document.should eq([ headache.as_document, cough.as_document ])
         end
       end
 
@@ -907,7 +907,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns the unscoped documents as an array of hashes" do
-          expect(document).to eq([ active.as_document, inactive.as_document ])
+          document.should eq([ active.as_document, inactive.as_document ])
         end
       end
     end
@@ -930,39 +930,39 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "appends to the target" do
-          expect(person.addresses).to eq([ address ])
+          person.addresses.should eq([ address ])
         end
 
         it "appends to the unscoped" do
-          expect(person.addresses.send(:_unscoped)).to eq([ address ])
+          person.addresses.send(:_unscoped).should eq([ address ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(address.addressable).to eq(person)
+          address.addressable.should eq(person)
         end
 
         it "does not save the new document" do
-          expect(address).to_not be_persisted
+          address.should_not be_persisted
         end
 
         it "sets the parent on the child" do
-          expect(address._parent).to eq(person)
+          address._parent.should eq(person)
         end
 
         it "sets the metadata on the child" do
-          expect(address.metadata).to_not be_nil
+          address.metadata.should_not be_nil
         end
 
         it "sets the index on the child" do
-          expect(address._index).to eq(0)
+          address._index.should eq(0)
         end
 
         it "writes to the attributes" do
-          expect(address.street).to eq("Bond")
+          address.street.should eq("Bond")
         end
 
         it "calls the passed block" do
-          expect(address.state).to eq("CA")
+          address.state.should eq("CA")
         end
       end
 
@@ -977,31 +977,31 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "appends to the target" do
-          expect(parent_role.child_roles).to eq([ child_role ])
+          parent_role.child_roles.should eq([ child_role ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(child_role.parent_role).to eq(parent_role)
+          child_role.parent_role.should eq(parent_role)
         end
 
         it "does not save the new document" do
-          expect(child_role).to_not be_persisted
+          child_role.should_not be_persisted
         end
 
         it "sets the parent on the child" do
-          expect(child_role._parent).to eq(parent_role)
+          child_role._parent.should eq(parent_role)
         end
 
         it "sets the metadata on the child" do
-          expect(child_role.metadata).to_not be_nil
+          child_role.metadata.should_not be_nil
         end
 
         it "sets the index on the child" do
-          expect(child_role._index).to eq(0)
+          child_role._index.should eq(0)
         end
 
         it "writes to the attributes" do
-          expect(child_role.name).to eq("CTO")
+          child_role.name.should eq("CTO")
         end
       end
 
@@ -1030,7 +1030,7 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "persists the deeply embedded document" do
-            expect(location.name).to eq("Home")
+            location.name.should eq("Home")
           end
         end
       end
@@ -1060,9 +1060,8 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the many builder" do
-      expect(
-        described_class.builder(base, metadata, document)
-      ).to be_a(Mongoid::Relations::Builders::Embedded::Many)
+      described_class.builder(base, metadata, document).should
+        be_a(Mongoid::Relations::Builders::Embedded::Many)
     end
   end
 
@@ -1085,23 +1084,23 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "clears out the relation" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
 
         it "clears the unscoped" do
-          expect(person.addresses.send(:_unscoped)).to be_empty
+          person.addresses.send(:_unscoped).should be_empty
         end
 
         it "marks the documents as deleted" do
-          expect(address).to be_destroyed
+          address.should be_destroyed
         end
 
         it "deletes the documents from the db" do
-          expect(person.reload.addresses).to be_empty
+          person.reload.addresses.should be_empty
         end
 
         it "returns the relation" do
-          expect(relation).to be_empty
+          relation.should be_empty
         end
       end
 
@@ -1116,7 +1115,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "clears out the relation" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
       end
     end
@@ -1136,7 +1135,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "clears out the relation" do
-        expect(person.addresses).to be_empty
+        person.addresses.should be_empty
       end
     end
   end
@@ -1158,35 +1157,35 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "appends to the target" do
-        expect(person.addresses).to eq([ address ])
+        person.addresses.should eq([ address ])
       end
 
       it "appends to the unscoped" do
-        expect(person.addresses.send(:_unscoped)).to eq([ address ])
+        person.addresses.send(:_unscoped).should eq([ address ])
       end
 
       it "sets the base on the inverse relation" do
-        expect(address.addressable).to eq(person)
+        address.addressable.should eq(person)
       end
 
       it "sets the same instance on the inverse relation" do
-        expect(address.addressable).to eql(person)
+        address.addressable.should eql(person)
       end
 
       it "does not save the new document" do
-        expect(address).to_not be_persisted
+        address.should_not be_persisted
       end
 
       it "sets the parent on the child" do
-        expect(address._parent).to eq(person)
+        address._parent.should eq(person)
       end
 
       it "sets the metadata on the child" do
-        expect(address.metadata).to_not be_nil
+        address.metadata.should_not be_nil
       end
 
       it "sets the index on the child" do
-        expect(address._index).to eq(0)
+        address._index.should eq(0)
       end
     end
 
@@ -1205,7 +1204,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "saves the new document" do
-        expect(address).to be_persisted
+        address.should be_persisted
       end
     end
 
@@ -1221,7 +1220,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "doesn't update the target" do
-        expect(person.addresses).to be_empty
+        person.addresses.should be_empty
       end
     end
 
@@ -1244,11 +1243,11 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "saves the first document" do
-        expect(address_one).to be_persisted
+        address_one.should be_persisted
       end
 
       it "saves the second document" do
-        expect(address_two).to be_persisted
+        address_two.should be_persisted
       end
     end
 
@@ -1269,31 +1268,31 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "appends to the target" do
-          expect(parent_role.child_roles).to eq([ child_role ])
+          parent_role.child_roles.should eq([ child_role ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(child_role.parent_role).to eq(parent_role)
+          child_role.parent_role.should eq(parent_role)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(child_role.parent_role).to eql(parent_role)
+          child_role.parent_role.should eql(parent_role)
         end
 
         it "does not save the new document" do
-          expect(child_role).to_not be_persisted
+          child_role.should_not be_persisted
         end
 
         it "sets the parent on the child" do
-          expect(child_role._parent).to eq(parent_role)
+          child_role._parent.should eq(parent_role)
         end
 
         it "sets the metadata on the child" do
-          expect(child_role.metadata).to_not be_nil
+          child_role.metadata.should_not be_nil
         end
 
         it "sets the index on the child" do
-          expect(child_role._index).to eq(0)
+          child_role._index.should eq(0)
         end
       end
 
@@ -1312,7 +1311,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the new document" do
-          expect(child_role).to be_persisted
+          child_role.should be_persisted
         end
       end
     end
@@ -1330,7 +1329,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the number of persisted documents" do
-      expect(person.addresses.count).to eq(1)
+      person.addresses.count.should eq(1)
     end
   end
 
@@ -1349,39 +1348,39 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "appends to the target" do
-        expect(person.reload.addresses).to eq([ address ])
+        person.reload.addresses.should eq([ address ])
       end
 
       it "appends to the unscoped" do
-        expect(person.reload.addresses.send(:_unscoped)).to eq([ address ])
+        person.reload.addresses.send(:_unscoped).should eq([ address ])
       end
 
       it "sets the base on the inverse relation" do
-        expect(address.addressable).to eq(person)
+        address.addressable.should eq(person)
       end
 
       it "saves the document" do
-        expect(address).to be_persisted
+        address.should be_persisted
       end
 
       it "sets the parent on the child" do
-        expect(address._parent).to eq(person)
+        address._parent.should eq(person)
       end
 
       it "sets the metadata on the child" do
-        expect(address.metadata).to_not be_nil
+        address.metadata.should_not be_nil
       end
 
       it "sets the index on the child" do
-        expect(address._index).to eq(0)
+        address._index.should eq(0)
       end
 
       it "writes to the attributes" do
-        expect(address.street).to eq("Bond")
+        address.street.should eq("Bond")
       end
 
       it "calls the passed block" do
-        expect(address.state).to eq("CA")
+        address.state.should eq("CA")
       end
 
       context "when embedding a multi word named document" do
@@ -1391,7 +1390,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the embedded document" do
-          expect(person.reload.address_components.first).to eq(component)
+          person.reload.address_components.first.should eq(component)
         end
       end
     end
@@ -1407,7 +1406,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "creates a new child" do
-        expect(child_entry).to be_persisted
+        child_entry.should be_persisted
       end
     end
   end
@@ -1425,35 +1424,35 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "appends to the target" do
-        expect(person.addresses).to eq([ address ])
+        person.addresses.should eq([ address ])
       end
 
       it "appends to the unscoped" do
-        expect(person.addresses.send(:_unscoped)).to eq([ address ])
+        person.addresses.send(:_unscoped).should eq([ address ])
       end
 
       it "sets the base on the inverse relation" do
-        expect(address.addressable).to eq(person)
+        address.addressable.should eq(person)
       end
 
       it "saves the document" do
-        expect(address).to be_persisted
+        address.should be_persisted
       end
 
       it "sets the parent on the child" do
-        expect(address._parent).to eq(person)
+        address._parent.should eq(person)
       end
 
       it "sets the metadata on the child" do
-        expect(address.metadata).to_not be_nil
+        address.metadata.should_not be_nil
       end
 
       it "sets the index on the child" do
-        expect(address._index).to eq(0)
+        address._index.should eq(0)
       end
 
       it "writes to the attributes" do
-        expect(address.street).to eq("Bond")
+        address.street.should eq("Bond")
       end
     end
 
@@ -1492,26 +1491,26 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "deletes the document" do
-        expect(person.addresses).to eq([ address_two ])
+        person.addresses.should eq([ address_two ])
       end
 
       it "deletes the document from the unscoped" do
-        expect(person.addresses.send(:_unscoped)).to eq([ address_two ])
+        person.addresses.send(:_unscoped).should eq([ address_two ])
       end
 
       it "reindexes the relation" do
-        expect(address_two._index).to eq(0)
+        address_two._index.should eq(0)
       end
 
       it "returns the document" do
-        expect(deleted).to eq(address_one)
+        deleted.should eq(address_one)
       end
     end
 
     context "when the document does not exist" do
 
       it "returns nil" do
-        expect(person.addresses.delete(Address.new)).to be_nil
+        person.addresses.delete(Address.new).should be_nil
       end
     end
   end
@@ -1541,15 +1540,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "removes the matching documents" do
-          expect(person.addresses.size).to eq(1)
+          person.addresses.size.should eq(1)
         end
 
         it "removes from the unscoped" do
-          expect(person.addresses.send(:_unscoped).size).to eq(1)
+          person.addresses.send(:_unscoped).size.should eq(1)
         end
 
         it "returns the relation" do
-          expect(deleted).to eq(person.addresses)
+          deleted.should eq(person.addresses)
         end
       end
 
@@ -1560,7 +1559,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns an enumerator" do
-          expect(deleted).to be_a(Enumerator)
+          deleted.should be_a(Enumerator)
         end
       end
     end
@@ -1584,15 +1583,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "deletes the matching documents" do
-          expect(person.addresses.count).to eq(1)
+          person.addresses.count.should eq(1)
         end
 
         it "deletes the matching documents from the db" do
-          expect(person.reload.addresses.count).to eq(1)
+          person.reload.addresses.count.should eq(1)
         end
 
         it "returns the relation" do
-          expect(deleted).to eq(person.addresses)
+          deleted.should eq(person.addresses)
         end
       end
     end
@@ -1608,15 +1607,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "deletes the matching documents" do
-          expect(person.addresses.count).to eq(0)
+          person.addresses.count.should eq(0)
         end
 
         it "deletes all the documents from the db" do
-          expect(person.reload.addresses.count).to eq(0)
+          person.reload.addresses.count.should eq(0)
         end
 
         it "returns the relation" do
-          expect(deleted).to eq(person.addresses)
+          deleted.should eq(person.addresses)
         end
       end
     end
@@ -1650,15 +1649,15 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "removes the matching documents" do
-            expect(person.addresses.size).to eq(1)
+            person.addresses.size.should eq(1)
           end
 
           it "removes from the unscoped" do
-            expect(person.addresses.send(:_unscoped).size).to eq(1)
+            person.addresses.send(:_unscoped).size.should eq(1)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(1)
+            deleted.should eq(1)
           end
         end
 
@@ -1669,11 +1668,11 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "removes all documents" do
-            expect(person.addresses.size).to eq(0)
+            person.addresses.size.should eq(0)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(2)
+            deleted.should eq(2)
           end
         end
       end
@@ -1698,15 +1697,15 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "deletes the matching documents" do
-            expect(person.addresses.count).to eq(1)
+            person.addresses.count.should eq(1)
           end
 
           it "deletes the matching documents from the db" do
-            expect(person.reload.addresses.count).to eq(1)
+            person.reload.addresses.count.should eq(1)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(1)
+            deleted.should eq(1)
           end
         end
 
@@ -1717,15 +1716,15 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "deletes all the documents" do
-            expect(person.addresses.count).to eq(0)
+            person.addresses.count.should eq(0)
           end
 
           it "deletes all the documents from the db" do
-            expect(person.reload.addresses.count).to eq(0)
+            person.reload.addresses.count.should eq(0)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(2)
+            deleted.should eq(2)
           end
         end
 
@@ -1743,13 +1742,13 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "removes the documents" do
-            expect(owner.pet.vet_visits).to be_empty
+            owner.pet.vet_visits.should be_empty
           end
 
           it "allows addition and a resave" do
             owner.pet.vet_visits << VetVisit.new(date: Date.today)
             owner.save!
-            expect(owner.pet.vet_visits.first).to be_persisted
+            owner.pet.vet_visits.first.should be_persisted
           end
         end
       end
@@ -1762,15 +1761,15 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "deletes all the documents" do
-            expect(person.addresses.count).to eq(0)
+            person.addresses.count.should eq(0)
           end
 
           it "deletes all the documents from the db" do
-            expect(person.reload.addresses.count).to eq(0)
+            person.reload.addresses.count.should eq(0)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(0)
+            deleted.should eq(0)
           end
         end
 
@@ -1784,15 +1783,15 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "deletes all the documents" do
-            expect(person.addresses.count).to eq(0)
+            person.addresses.count.should eq(0)
           end
 
           it "deletes all the documents from the db" do
-            expect(person.reload.addresses.count).to eq(0)
+            person.reload.addresses.count.should eq(0)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(0)
+            deleted.should eq(0)
           end
         end
 
@@ -1803,15 +1802,15 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "deletes all the documents" do
-            expect(person.addresses.count).to eq(0)
+            person.addresses.count.should eq(0)
           end
 
           it "deletes all the documents from the db" do
-            expect(person.reload.addresses.count).to eq(0)
+            person.reload.addresses.count.should eq(0)
           end
 
           it "returns the number deleted" do
-            expect(deleted).to eq(0)
+            deleted.should eq(0)
           end
         end
       end
@@ -1821,14 +1820,14 @@ describe Mongoid::Relations::Embedded::Many do
   describe ".embedded?" do
 
     it "returns true" do
-      expect(described_class).to be_embedded
+      described_class.should be_embedded
     end
   end
 
   describe ".foreign_key_suffix" do
 
     it "returns nil" do
-      expect(described_class.foreign_key_suffix).to be_nil
+      described_class.foreign_key_suffix.should be_nil
     end
   end
 
@@ -1845,7 +1844,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns true" do
-        expect(person.addresses.exists?).to be_true
+        person.addresses.exists?.should be_true
       end
     end
 
@@ -1856,7 +1855,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns false" do
-        expect(person.addresses.exists?).to be_false
+        person.addresses.exists?.should be_false
       end
     end
   end
@@ -1884,7 +1883,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns the matching document" do
-          expect(address).to eq(address_one)
+          address.should eq(address_one)
         end
       end
 
@@ -1918,7 +1917,7 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "returns nil" do
-            expect(address).to be_nil
+            address.should be_nil
           end
         end
       end
@@ -1933,7 +1932,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns the matching documents" do
-          expect(addresses).to eq([ address_one, address_two ])
+          addresses.should eq([ address_one, address_two ])
         end
       end
 
@@ -1967,7 +1966,7 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "returns an empty array" do
-            expect(addresses).to be_empty
+            addresses.should be_empty
           end
         end
       end
@@ -1991,7 +1990,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns the document" do
-        expect(found).to eq(address)
+        found.should eq(address)
       end
     end
 
@@ -2004,15 +2003,15 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets the new document attributes" do
-        expect(found.street).to eq("King")
+        found.street.should eq("King")
       end
 
       it "returns a newly persisted document" do
-        expect(found).to be_persisted
+        found.should be_persisted
       end
 
       it "calls the passed block" do
-        expect(found.state).to eq("CA")
+        found.state.should eq("CA")
       end
     end
 
@@ -2034,7 +2033,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "properly creates the document" do
-        expect(line_item.product).to eq(product)
+        line_item.product.should eq(product)
       end
     end
   end
@@ -2056,7 +2055,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns the document" do
-        expect(found).to eq(address)
+        found.should eq(address)
       end
     end
 
@@ -2069,15 +2068,15 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets the new document attributes" do
-        expect(found.street).to eq("King")
+        found.street.should eq("King")
       end
 
       it "returns a non persisted document" do
-        expect(found).to_not be_persisted
+        found.should_not be_persisted
       end
 
       it "calls the passed block" do
-        expect(found.state).to eq("CA")
+        found.state.should eq("CA")
       end
     end
   end
@@ -2085,7 +2084,7 @@ describe Mongoid::Relations::Embedded::Many do
   describe ".macro" do
 
     it "returns embeds_many" do
-      expect(described_class.macro).to eq(:embeds_many)
+      described_class.macro.should eq(:embeds_many)
     end
   end
 
@@ -2114,7 +2113,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the document with the max value of the supplied field" do
-      expect(max).to eq(address_two)
+      max.should eq(address_two)
     end
   end
 
@@ -2141,7 +2140,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the document with the max value of the supplied field" do
-      expect(max).to eq(address_two)
+      max.should eq(address_two)
     end
   end
 
@@ -2176,7 +2175,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "applies the criteria to the documents" do
-          expect(addresses).to eq([ address_one ])
+          addresses.should eq([ address_one ])
         end
       end
 
@@ -2187,7 +2186,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "applies the criteria to the documents" do
-          expect(addresses).to eq([ address_one, address_two ])
+          addresses.should eq([ address_one, address_two ])
         end
       end
 
@@ -2198,7 +2197,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "applies the criteria to the documents" do
-          expect(addresses).to eq([ address_one, address_two ])
+          addresses.should eq([ address_one, address_two ])
         end
       end
     end
@@ -2210,7 +2209,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "applies the criteria to the documents" do
-        expect(addresses).to eq([ address_one ])
+        addresses.should eq([ address_one ])
       end
     end
 
@@ -2221,7 +2220,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "applies the criteria to the documents" do
-        expect(addresses).to eq([ address_one ])
+        addresses.should eq([ address_one ])
       end
     end
 
@@ -2230,7 +2229,8 @@ describe Mongoid::Relations::Embedded::Many do
       describe "#distinct" do
 
         it "returns the distinct values for the fields" do
-          expect(person.addresses.distinct(:street)).to eq([ "Market",  "Madison"])
+          person.addresses.distinct(:street).should =~
+            [ "Market",  "Madison"]
         end
       end
     end
@@ -2261,7 +2261,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the min value of the supplied field" do
-      expect(min).to eq(address_one)
+      min.should eq(address_one)
     end
   end
 
@@ -2288,7 +2288,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the min value of the supplied field" do
-      expect(min).to eq(address_one)
+      min.should eq(address_one)
     end
   end
 
@@ -2299,9 +2299,8 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the many nested builder class" do
-      expect(
-        described_class.nested_builder(metadata, {}, {})
-      ).to be_a(Mongoid::Relations::Builders::NestedAttributes::Many)
+      described_class.nested_builder(metadata, {}, {}).should
+        be_a(Mongoid::Relations::Builders::NestedAttributes::Many)
     end
   end
 
@@ -2326,15 +2325,15 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns the popped document" do
-        expect(popped).to eq(address_two)
+        popped.should eq(address_two)
       end
 
       it "removes the document from the relation" do
-        expect(person.addresses).to eq([ address_one ])
+        person.addresses.should eq([ address_one ])
       end
 
       it "persists the pop" do
-        expect(person.reload.addresses).to eq([ address_one ])
+        person.reload.addresses.should eq([ address_one ])
       end
     end
 
@@ -2355,15 +2354,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns the popped documents" do
-          expect(popped).to eq([ address_one, address_two ])
+          popped.should eq([ address_one, address_two ])
         end
 
         it "removes the document from the relation" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
 
         it "persists the pop" do
-          expect(person.reload.addresses).to be_empty
+          person.reload.addresses.should be_empty
         end
       end
 
@@ -2374,15 +2373,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "returns the popped documents" do
-          expect(popped).to eq([ address_one, address_two ])
+          popped.should eq([ address_one, address_two ])
         end
 
         it "removes the document from the relation" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
 
         it "persists the pop" do
-          expect(person.reload.addresses).to be_empty
+          person.reload.addresses.should be_empty
         end
       end
     end
@@ -2392,14 +2391,14 @@ describe Mongoid::Relations::Embedded::Many do
       context "when providing no number" do
 
         it "returns nil" do
-          expect(person.addresses.pop).to be_nil
+          person.addresses.pop.should be_nil
         end
       end
 
       context "when providing a number" do
 
         it "returns nil" do
-          expect(person.addresses.pop(2)).to be_nil
+          person.addresses.pop(2).should be_nil
         end
       end
     end
@@ -2416,11 +2415,11 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the relation criteria" do
-      expect(scoped).to be_a(Mongoid::Criteria)
+      scoped.should be_a(Mongoid::Criteria)
     end
 
     it "returns with an empty selector" do
-      expect(scoped.selector).to be_empty
+      scoped.selector.should be_empty
     end
   end
 
@@ -2439,7 +2438,7 @@ describe Mongoid::Relations::Embedded::Many do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(addresses.respond_to?(method)).to be_true
+          addresses.respond_to?(method).should be_true
         end
       end
     end
@@ -2449,7 +2448,7 @@ describe Mongoid::Relations::Embedded::Many do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(addresses.respond_to?(method)).to be_true
+          addresses.respond_to?(method).should be_true
         end
       end
     end
@@ -2459,7 +2458,7 @@ describe Mongoid::Relations::Embedded::Many do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(addresses.respond_to?(method)).to be_true
+          addresses.respond_to?(method).should be_true
         end
       end
     end
@@ -2483,7 +2482,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "returns the number of persisted documents" do
-        expect(person.addresses.send(method)).to eq(2)
+        person.addresses.send(method).should eq(2)
       end
     end
   end
@@ -2499,15 +2498,15 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "returns the relation criteria" do
-      expect(unscoped).to be_a(Mongoid::Criteria)
+      unscoped.should be_a(Mongoid::Criteria)
     end
 
     it "returns with empty options" do
-      expect(unscoped.options).to be_empty
+      unscoped.options.should be_empty
     end
 
     it "returns with an empty selector" do
-      expect(unscoped.selector).to be_empty
+      unscoped.selector.should be_empty
     end
   end
 
@@ -2520,7 +2519,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "updates nothing" do
-        expect(person.addresses.update_all(street: "test")).to be_false
+        person.addresses.update_all(street: "test").should be_false
       end
     end
 
@@ -2543,19 +2542,19 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "resets the matching dirty flags" do
-          expect(address).to_not be_changed
+          address.should_not be_changed
         end
 
         it "updates the first field" do
-          expect(address.reload.number).to eq(26)
+          address.reload.number.should eq(26)
         end
 
         it "updates the second field" do
-          expect(address.reload.post_code).to eq("12437")
+          address.reload.post_code.should eq("12437")
         end
 
         it "does not wipe out other fields" do
-          expect(address.reload.street).to eq("Hobrecht")
+          address.reload.street.should eq("Hobrecht")
         end
       end
     end
@@ -2564,7 +2563,7 @@ describe Mongoid::Relations::Embedded::Many do
   describe ".valid_options" do
 
     it "returns the valid options" do
-      expect(described_class.valid_options).to eq(
+      described_class.valid_options.should eq(
         [
           :as, :cascade_callbacks, :cyclic, :order,
           :store_as, :before_add, :after_add, :before_remove, :after_remove
@@ -2576,7 +2575,7 @@ describe Mongoid::Relations::Embedded::Many do
   describe ".validation_default" do
 
     it "returns true" do
-      expect(described_class.validation_default).to be_true
+      described_class.validation_default.should be_true
     end
   end
 
@@ -2603,15 +2602,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "updates the attributes" do
-          expect(address.locations.first.name).to eq("home")
+          address.locations.first.name.should eq("home")
         end
 
         it "overwrites the existing documents" do
-          expect(address.locations.count).to eq(1)
+          address.locations.count.should eq(1)
         end
 
         it "persists the changes" do
-          expect(address.reload.locations.count).to eq(1)
+          address.reload.locations.count.should eq(1)
         end
       end
     end
@@ -2641,15 +2640,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets up the hierarchy" do
-          expect(animal.circus).to eq(circus)
+          animal.circus.should eq(circus)
         end
 
         it "assigns the attributes" do
-          expect(animal.name).to eq(animal_name)
+          animal.name.should eq(animal_name)
         end
 
         it "uses custom writer methods" do
-          expect(animal.tag_list).to eq(tag_list)
+          animal.tag_list.should eq(tag_list)
         end
       end
 
@@ -2660,15 +2659,15 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "sets up the hierarchy" do
-          expect(animal.circus).to eq(circus)
+          animal.circus.should eq(circus)
         end
 
         it "assigns the attributes" do
-          expect(animal.name).to eq(animal_name)
+          animal.name.should eq(animal_name)
         end
 
         it "uses custom writer methods" do
-          expect(animal.tag_list).to eq(tag_list)
+          animal.tag_list.should eq(tag_list)
         end
       end
     end
@@ -2697,7 +2696,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets up the hierarchy" do
-        expect(question).to eq(page_question)
+        question.should eq(page_question)
       end
     end
 
@@ -2720,7 +2719,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets up the hierarchy" do
-        expect(question).to eq(page_question)
+        question.should eq(page_question)
       end
     end
 
@@ -2748,7 +2747,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets up the hierarchy" do
-        expect(question).to eq(page_question)
+        question.should eq(page_question)
       end
 
       context "when reloading" do
@@ -2762,7 +2761,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "reloads the entire tree" do
-          expect(reloaded_question).to eq(question)
+          reloaded_question.should eq(question)
         end
       end
     end
@@ -2796,11 +2795,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "persists the first level document" do
-          expect(person.reload.addresses.first).to eq(address)
+          person.reload.addresses.first.should eq(address)
         end
 
         it "persists the second level document" do
-          expect(person.reload.addresses[0].locations).to eq([ location ])
+          person.reload.addresses[0].locations.should eq([ location ])
         end
       end
     end
@@ -2835,7 +2834,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "ignores the nil and persist the remaining items" do
           reloaded = Person.find(person.id)
-          expect(reloaded.phone_numbers).to eq([ home_phone, office_phone ])
+          reloaded.phone_numbers.should eq([ home_phone, office_phone ])
         end
       end
 
@@ -2856,7 +2855,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "ignores the nil and persist the remaining items" do
           reloaded = Person.find(person.id)
-          expect(reloaded.phone_numbers).to eq([ home_phone, office_phone ])
+          reloaded.phone_numbers.should eq([ home_phone, office_phone ])
         end
       end
 
@@ -2877,7 +2876,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "ignores the nil and persist the remaining items" do
           reloaded = Person.find(person.id)
-          expect(reloaded.phone_numbers).to eq([ home_phone, office_phone ])
+          reloaded.phone_numbers.should eq([ home_phone, office_phone ])
         end
       end
     end
@@ -2899,7 +2898,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "ignores the nil and persist the remaining items" do
           reloaded = Person.find(person.id)
-          expect(reloaded.phone_numbers).to eq(person.phone_numbers)
+          reloaded.phone_numbers.should eq(person.phone_numbers)
         end
       end
 
@@ -2918,7 +2917,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "ignores the nil and persist the remaining items" do
           reloaded = Person.find(person.id)
-          expect(reloaded.phone_numbers).to eq(person.phone_numbers)
+          reloaded.phone_numbers.should eq(person.phone_numbers)
         end
       end
 
@@ -2937,7 +2936,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "ignores the nil and persist the remaining items" do
           reloaded = Person.find(person.id)
-          expect(reloaded.phone_numbers).to eq(person.phone_numbers)
+          reloaded.phone_numbers.should eq(person.phone_numbers)
         end
       end
     end
@@ -2958,7 +2957,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "retains the reference to the parent" do
-      expect(league.name).to eq("Destroyed")
+      league.name.should eq("Destroyed")
     end
   end
 
@@ -2977,11 +2976,11 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "does not duplicate the embedded documents" do
-      expect(person.addresses).to eq([ address ])
+      person.addresses.should eq([ address ])
     end
 
     it "does not persist duplicate embedded documents" do
-      expect(person.reload.addresses).to eq([ address ])
+      person.reload.addresses.should eq([ address ])
     end
   end
 
@@ -2998,7 +2997,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "allows the operation" do
-        expect(version.number).to eq(1)
+        version.number.should eq(1)
       end
 
       context "when reloading the parent" do
@@ -3008,7 +3007,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "saves the child versions" do
-          expect(from_db.versions).to eq([ version ])
+          from_db.versions.should eq([ version ])
         end
       end
     end
@@ -3035,7 +3034,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "does not lose the parent reference" do
-        expect(from_db.memberships.first.account).to eq(account)
+        from_db.memberships.first.account.should eq(account)
       end
     end
 
@@ -3046,7 +3045,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "does not lose the parent reference" do
-        expect(from_db.memberships.first.account).to eq(account)
+        from_db.memberships.first.account.should eq(account)
       end
     end
   end
@@ -3070,11 +3069,11 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "adds the document to the new paarent" do
-      expect(person_two.addresses).to eq([ address ])
+      person_two.addresses.should eq([ address ])
     end
 
     it "sets the new parent on the document" do
-      expect(address._parent).to eq(person_two)
+      address._parent.should eq(person_two)
     end
 
     context "when reloading the documents" do
@@ -3085,11 +3084,11 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "persists the change to the new parent" do
-        expect(person_two.addresses).to eq([ address ])
+        person_two.addresses.should eq([ address ])
       end
 
       it "keeps the address on the previous document" do
-        expect(person_one.addresses).to eq([ address ])
+        person_one.addresses.should eq([ address ])
       end
     end
   end
@@ -3125,7 +3124,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "applies the default scope" do
-          expect(symptoms).to eq([ cough, headache, nausea ])
+          symptoms.should eq([ cough, headache, nausea ])
         end
       end
 
@@ -3146,7 +3145,7 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "applies the default scope" do
-            expect(symptoms).to eq([ constipation, cough, headache, nausea ])
+            symptoms.should eq([ constipation, cough, headache, nausea ])
           end
         end
       end
@@ -3158,7 +3157,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "removes the default scope" do
-          expect(unscoped).to eq([ nausea, cough, headache ])
+          unscoped.should eq([ nausea, cough, headache ])
         end
       end
     end
@@ -3189,11 +3188,11 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "retains the unscoped index for the excluded document" do
-        expect(relation.send(:_unscoped).first._index).to eq(0)
+        relation.send(:_unscoped).first._index.should eq(0)
       end
 
       it "retains the unscoped index for the included document" do
-        expect(relation.first._index).to eq(1)
+        relation.first._index.should eq(1)
       end
 
       context "when a reindexing operation occurs" do
@@ -3203,11 +3202,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "retains the unscoped index for the excluded document" do
-          expect(relation.send(:_unscoped).first._index).to eq(0)
+          relation.send(:_unscoped).first._index.should eq(0)
         end
 
         it "retains the unscoped index for the included document" do
-          expect(relation.first._index).to eq(1)
+          relation.first._index.should eq(1)
         end
       end
     end
@@ -3231,11 +3230,11 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "sets the value" do
-        expect(video.genres).to eq([ "horror", "scifi" ])
+        video.genres.should eq([ "horror", "scifi" ])
       end
 
       it "persists the value" do
-        expect(video.reload.genres).to eq([ "horror", "scifi" ])
+        video.reload.genres.should eq([ "horror", "scifi" ])
       end
 
       context "when reloading the parent" do
@@ -3256,11 +3255,11 @@ describe Mongoid::Relations::Embedded::Many do
           end
 
           it "sets the new value" do
-            expect(loaded_video.genres).to eq([ "comedy" ])
+            loaded_video.genres.should eq([ "comedy" ])
           end
 
           it "persists the new value" do
-            expect(loaded_video.reload.genres).to eq([ "comedy" ])
+            loaded_video.reload.genres.should eq([ "comedy" ])
           end
         end
       end
@@ -3286,15 +3285,15 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "destroys the document" do
-      expect(address_one).to be_destroyed
+      address_one.should be_destroyed
     end
 
     it "reindexes the relation" do
-      expect(address_two._index).to eq(0)
+      address_two._index.should eq(0)
     end
 
     it "removes the document from the unscoped" do
-      expect(person.addresses.send(:_unscoped)).to_not include(address_one)
+      person.addresses.send(:_unscoped).should_not include(address_one)
     end
 
     context "when subsequently updating the next document" do
@@ -3308,11 +3307,11 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "updates the correct document" do
-        expect(addresses.first.number).to eq(10)
+        addresses.first.number.should eq(10)
       end
 
       it "does not add additional documents" do
-        expect(addresses.count).to eq(1)
+        addresses.count.should eq(1)
       end
     end
   end
@@ -3342,7 +3341,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "adds both documents" do
-        expect(result).to eq([ address_one, address_two ])
+        result.should eq([ address_one, address_two ])
       end
     end
   end
@@ -3366,7 +3365,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "allows the dot notation criteria" do
-      expect(criteria).to eq([ address ])
+      criteria.should eq([ address ])
     end
   end
 
@@ -3399,7 +3398,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "updates the nested document" do
-        expect(updated.name).to eq("work")
+        updated.name.should eq("work")
       end
     end
   end
@@ -3419,7 +3418,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "orders properly with the boolean" do
-      expect(circuit.reload.buses).to eq([ bus_two, bus_one ])
+      circuit.reload.buses.should eq([ bus_two, bus_one ])
     end
   end
 
@@ -3457,11 +3456,11 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "does not duplicate the first relation" do
-      expect(person.reload.symptoms.count).to eq(2)
+      person.reload.symptoms.count.should eq(2)
     end
 
     it "does not duplicate the second relation" do
-      expect(person.reload.appointments.count).to eq(2)
+      person.reload.appointments.count.should eq(2)
     end
   end
 
@@ -3482,15 +3481,15 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "executes the callback" do
-        expect(artist.before_add_called).to be_true
+        artist.before_add_called.should be_true
       end
 
       it "executes the callback as proc" do
-        expect(song.before_add_called).to be_true
+        song.before_add_called.should be_true
       end
 
       it "adds the document to the relation" do
-        expect(artist.songs).to eq([song])
+        artist.songs.should eq([song])
       end
     end
 
@@ -3504,7 +3503,7 @@ describe Mongoid::Relations::Embedded::Many do
         expect {
           artist.songs << song
         }.to raise_error
-        expect(artist.songs).to be_empty
+        artist.songs.should be_empty
       end
     end
   end
@@ -3521,7 +3520,7 @@ describe Mongoid::Relations::Embedded::Many do
 
     it "executes the callback" do
       artist.labels << label
-      expect(artist.after_add_called).to be_true
+      artist.after_add_called.should be_true
     end
 
     context "when errors are raised" do
@@ -3534,7 +3533,7 @@ describe Mongoid::Relations::Embedded::Many do
         expect {
           artist.labels << label
         }.to raise_error
-        expect(artist.labels).to eq([ label ])
+        artist.labels.should eq([ label ])
       end
     end
   end
@@ -3562,11 +3561,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "executes the callback" do
-          expect(artist.before_remove_embedded_called).to be_true
+          artist.before_remove_embedded_called.should be_true
         end
 
         it "removes the document from the relation" do
-          expect(artist.songs).to be_empty
+          artist.songs.should be_empty
         end
       end
 
@@ -3577,11 +3576,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "executes the callback" do
-          expect(artist.before_remove_embedded_called).to be_true
+          artist.before_remove_embedded_called.should be_true
         end
 
         it "shoud clear the relation" do
-          expect(artist.songs).to be_empty
+          artist.songs.should be_empty
         end
       end
 
@@ -3597,7 +3596,7 @@ describe Mongoid::Relations::Embedded::Many do
             expect {
               artist.songs.delete(song)
             }.to raise_error
-            expect(artist.songs).to eq([ song ])
+            artist.songs.should eq([ song ])
           end
         end
 
@@ -3607,7 +3606,7 @@ describe Mongoid::Relations::Embedded::Many do
             expect {
               artist.songs.clear
             }.to raise_error
-            expect(artist.songs).to eq([ song ])
+            artist.songs.should eq([ song ])
           end
         end
       end
@@ -3636,7 +3635,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "executes the callback" do
-          expect(artist.after_remove_embedded_called).to be_true
+          artist.after_remove_embedded_called.should be_true
         end
       end
 
@@ -3648,7 +3647,7 @@ describe Mongoid::Relations::Embedded::Many do
 
         it "executes the callback" do
           artist.labels.clear
-          expect(artist.after_remove_embedded_called).to be_true
+          artist.after_remove_embedded_called.should be_true
         end
       end
     end
@@ -3668,7 +3667,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "removes the document from the relation" do
-          expect(artist.labels).to be_empty
+          artist.labels.should be_empty
         end
       end
 
@@ -3681,7 +3680,7 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "should remove from collection" do
-          expect(artist.labels).to be_empty
+          artist.labels.should be_empty
         end
       end
     end
@@ -3704,7 +3703,7 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "does not push the embedded documents twice" do
-        expect(server.reload.filesystems.count).to eq(1)
+        server.reload.filesystems.count.should eq(1)
       end
     end
   end
@@ -3732,11 +3731,11 @@ describe Mongoid::Relations::Embedded::Many do
       end
 
       it "creates proper documents from the db" do
-        expect(record.name).to eq("Moderat")
+        record.name.should eq("Moderat")
       end
 
       it "assigns ids to the documents" do
-        expect(record.id).to_not be_nil
+        record.id.should_not be_nil
       end
 
       context "when subsequently updating the documents" do
@@ -3746,11 +3745,11 @@ describe Mongoid::Relations::Embedded::Many do
         end
 
         it "updates the document" do
-          expect(record.name).to eq("Apparat")
+          record.name.should eq("Apparat")
         end
 
         it "persists the change" do
-          expect(record.reload.name).to eq("Apparat")
+          record.reload.name.should eq("Apparat")
         end
       end
     end
@@ -3775,7 +3774,7 @@ describe Mongoid::Relations::Embedded::Many do
     end
 
     it "keeps the proxy extensions when remarshalling" do
-      expect(loaded.extension).to eq("Testing")
+      loaded.extension.should eq("Testing")
     end
   end
 end

@@ -35,7 +35,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "persists the child document" do
-            expect(preference).to be_persisted
+            preference.should be_persisted
           end
         end
 
@@ -67,7 +67,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns an array of loaded documents" do
-          expect(result).to eq([ preference ])
+          result.should eq([ preference ])
         end
       end
 
@@ -86,7 +86,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns an array of loaded documents" do
-          expect(result).to eq([ preference ])
+          result.should eq([ preference ])
         end
       end
 
@@ -107,11 +107,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "appends the document to the relation" do
-            expect(person.houses).to eq([ house ])
+            person.houses.should eq([ house ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.house_ids).to eq([ house.id ])
+            person.house_ids.should eq([ house.id ])
           end
         end
 
@@ -128,27 +128,27 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the documents to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "saves the target" do
-            expect(preference).to be_persisted
+            preference.should be_persisted
           end
 
           it "adds the correct number of documents" do
-            expect(person.preferences.size).to eq(1)
+            person.preferences.size.should eq(1)
           end
 
           it "persists the link" do
-            expect(person.reload.preferences).to eq([ preference ])
+            person.reload.preferences.should eq([ preference ])
           end
         end
 
@@ -169,23 +169,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "adds the documents to the relation" do
-              expect(person.preferences).to eq([ preference ])
+              person.preferences.should eq([ preference ])
             end
 
             it "sets the foreign key on the relation" do
-              expect(person.preference_ids).to eq([ preference.id ])
+              person.preference_ids.should eq([ preference.id ])
             end
 
             it "sets the foreign key on the inverse relation" do
-              expect(preference.person_ids).to eq([ person.id ])
+              preference.person_ids.should eq([ person.id ])
             end
 
             it "does not save the target" do
-              expect(preference).to be_new_record
+              preference.should be_new_record
             end
 
             it "adds the correct number of documents" do
-              expect(person.preferences.size).to eq(1)
+              person.preferences.size.should eq(1)
             end
 
             context "when appending a second time" do
@@ -195,11 +195,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
               end
 
               it "does not allow the document to be added again" do
-                expect(person.preferences).to eq([ preference ])
+                person.preferences.should eq([ preference ])
               end
 
               it "does not allow duplicate ids" do
-                expect(person.preference_ids).to eq([ preference.id ])
+                person.preference_ids.should eq([ preference.id ])
               end
             end
           end
@@ -220,27 +220,27 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "adds the documents to the relation" do
-              expect(person.preferences).to eq([ preference ])
+              person.preferences.should eq([ preference ])
             end
 
             it "sets the foreign key on the relation" do
-              expect(person.preference_ids).to eq([ preference.id ])
+              person.preference_ids.should eq([ preference.id ])
             end
 
             it "sets the foreign key on the inverse relation" do
-              expect(preference.person_ids).to eq([ person.id ])
+              preference.person_ids.should eq([ person.id ])
             end
 
             it "saves the target" do
-              expect(preference).to be_persisted
+              preference.should be_persisted
             end
 
             it "adds the correct number of documents" do
-              expect(person.preferences.size).to eq(1)
+              person.preferences.size.should eq(1)
             end
 
             it "persists the link" do
-              expect(person.reload.preferences).to eq([ preference ])
+              person.reload.preferences.should eq([ preference ])
             end
           end
 
@@ -263,57 +263,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "adds the documents to the relation" do
-              expect(person.preferences).to eq([ preference ])
+              person.preferences.should eq([ preference ])
             end
 
             it "sets the foreign key on the relation" do
-              expect(person.preference_ids).to eq([ preference.id ])
+              person.preference_ids.should eq([ preference.id ])
             end
 
             it "sets the foreign key on the inverse relation" do
-              expect(preference.reload.person_ids).to eq([ person.id ])
+              preference.reload.person_ids.should eq([ person.id ])
             end
 
             it "adds the correct number of documents" do
-              expect(person.preferences.size).to eq(1)
+              person.preferences.size.should eq(1)
             end
 
             it "persists the link" do
-              expect(person.reload.preferences).to eq([ preference ])
-            end
-          end
-
-          pending "when the identity map is enabled [ Github-3015 ]" do
-
-            let(:dungeon) do
-              Dungeon.new
-            end
-
-            let(:dragon) do
-              Dragon.new
-            end
-
-            before do
-              Mongoid.identity_map_enabled = true
-              dungeon.save!
-              dragon.dungeons.send(method, dungeon)
-              dragon.save!
-            end
-
-            after do
-              Mongoid.identity_map_enabled = false
-            end
-
-            it "sets the proper length of the child" do
-              expect(dragon.dungeons.length).to eq(1)
-            end
-
-            it "sets the proper number of foreign keys" do
-              expect(dungeon.dragon_ids.length).to eq(1)
-            end
-
-            it "sets the proper number of parent docs" do
-              expect(dungeon.dragons.length).to eq(1)
+              person.reload.preferences.should eq([ preference ])
             end
           end
         end
@@ -333,31 +299,31 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the documents to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "sets the base on the inverse relation" do
-            expect(preference.people).to eq([ person ])
+            preference.people.should eq([ person ])
           end
 
           it "sets the same instance on the inverse relation" do
-            expect(preference.people.first).to eql(person)
+            preference.people.first.should eql(person)
           end
 
           it "saves the target" do
-            expect(preference).to_not be_new_record
+            preference.should_not be_new_record
           end
 
           it "adds the document to the target" do
-            expect(person.preferences.count).to eq(1)
+            person.preferences.count.should eq(1)
           end
 
           context "when documents already exist on the relation" do
@@ -371,31 +337,31 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "adds the documents to the relation" do
-              expect(person.preferences).to eq([ preference, preference_two ])
+              person.preferences.should eq([ preference, preference_two ])
             end
 
             it "sets the foreign key on the relation" do
-              expect(person.preference_ids).to eq([ preference.id, preference_two.id ])
+              person.preference_ids.should eq([ preference.id, preference_two.id ])
             end
 
             it "sets the foreign key on the inverse relation" do
-              expect(preference_two.person_ids).to eq([ person.id ])
+              preference_two.person_ids.should eq([ person.id ])
             end
 
             it "sets the base on the inverse relation" do
-              expect(preference_two.people).to eq([ person ])
+              preference_two.people.should eq([ person ])
             end
 
             it "sets the same instance on the inverse relation" do
-              expect(preference_two.people.first).to eql(person)
+              preference_two.people.first.should eql(person)
             end
 
             it "saves the target" do
-              expect(preference).to_not be_new_record
+              preference.should_not be_new_record
             end
 
             it "adds the document to the target" do
-              expect(person.preferences.count).to eq(2)
+              person.preferences.count.should eq(2)
             end
           end
         end
@@ -415,21 +381,21 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the front side of the relation" do
-            expect(person.administrated_events).to eq([ event ])
+            person.administrated_events.should eq([ event ])
           end
 
           it "sets the inverse side of the relation" do
-            expect(event.administrators(true)).to eq([ person ])
+            event.administrators(true).should eq([ person ])
           end
 
           context "when reloading" do
 
             it "sets the front side of the relation" do
-              expect(person.reload.administrated_events).to eq([ event ])
+              person.reload.administrated_events.should eq([ event ])
             end
 
             it "sets the inverse side of the relation" do
-              expect(event.reload.administrators).to eq([ person ])
+              event.reload.administrators.should eq([ person ])
             end
           end
 
@@ -444,11 +410,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "sets the front side of the relation" do
-              expect(loaded_person.administrated_events).to eq([ event ])
+              loaded_person.administrated_events.should eq([ event ])
             end
 
             it "sets the inverse side of the relation" do
-              expect(loaded_event.administrators).to eq([ person ])
+              loaded_event.administrators.should eq([ person ])
             end
           end
         end
@@ -472,7 +438,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "creates a single artwork object" do
-            expect(Artwork.count).to eq(1)
+            Artwork.count.should eq(1)
           end
         end
 
@@ -491,21 +457,21 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the front side of the relation" do
-            expect(tag_one.related).to eq([ tag_two ])
+            tag_one.related.should eq([ tag_two ])
           end
 
           it "sets the inverse side of the relation" do
-            expect(tag_two.related(true)).to eq([ tag_one ])
+            tag_two.related(true).should eq([ tag_one ])
           end
 
           context "when reloading" do
 
             it "sets the front side of the relation" do
-              expect(tag_one.reload.related).to eq([ tag_two ])
+              tag_one.reload.related.should eq([ tag_two ])
             end
 
             it "sets the inverse side of the relation" do
-              expect(tag_two.reload.related).to eq([ tag_one ])
+              tag_two.reload.related.should eq([ tag_one ])
             end
           end
 
@@ -520,11 +486,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "sets the front side of the relation" do
-              expect(loaded_tag_one.related).to eq([ tag_two ])
+              loaded_tag_one.related.should eq([ tag_two ])
             end
 
             it "sets the inverse side of the relation" do
-              expect(loaded_tag_two.related).to eq([ tag_one ])
+              loaded_tag_two.related.should eq([ tag_one ])
             end
           end
         end
@@ -544,7 +510,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
 
           it "executes the callback" do
             post.tags.send(method, tag)
-            expect(post.before_add_called).to be_true
+            post.before_add_called.should be_true
           end
 
           context "when errors are raised" do
@@ -557,7 +523,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
               expect {
                 post.tags.send(method, tag)
               }.to raise_error
-              expect(post.tags).to be_empty
+              post.tags.should be_empty
             end
           end
         end
@@ -566,7 +532,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
 
           it "executes the callback" do
             post.tags.send(method, tag)
-            expect(post.after_add_called).to be_true
+            post.after_add_called.should be_true
           end
 
           context "when errors are raised" do
@@ -579,7 +545,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
               expect {
                 post.tags.send(method, tag)
               }.to raise_error
-              expect(post.tags).to eq([ tag ])
+              post.tags.should eq([ tag ])
             end
           end
         end
@@ -606,11 +572,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       context "when the document is new" do
 
         it "does not add the duplicates" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "does not create duplicate keys" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
       end
 
@@ -621,19 +587,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "does not add the duplicates" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "does not create duplicate keys" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
 
         it "does not add duplicates on the inverse" do
-          expect(preference.people).to eq([ person ])
+          preference.people.should eq([ person ])
         end
 
         it "does not add duplicate inverse keys" do
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
       end
     end
@@ -655,19 +621,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the relation" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
 
         it "sets the foreign key on the inverse relation" do
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
 
         it "does not save the target" do
-          expect(preference).to be_new_record
+          preference.should be_new_record
         end
       end
 
@@ -686,15 +652,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the relation" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
 
         it "sets the foreign key on the inverse relation" do
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
 
         context "and the parent is persisted" do
@@ -705,19 +671,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "maintains the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "maintains the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "maintains the foreign key on the inverse relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "maintains the base on the inverse relation" do
-            expect(preference.people.first).to eq(person)
+            preference.people.first.should eq(person)
           end
         end
       end
@@ -737,23 +703,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the relation" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
 
         it "sets the foreign key on the inverse relation" do
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(preference.people.first).to eq(person)
+          preference.people.first.should eq(person)
         end
 
         it "saves the target" do
-          expect(preference).to be_persisted
+          preference.should be_persisted
         end
 
         it "persists the relation" do
@@ -771,19 +737,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the relation" do
-            expect(person.preferences).to eq([ another_preference ])
+            person.preferences.should eq([ another_preference ])
           end
 
           it "saves the target" do
-            expect(another_preference).to be_persisted
+            another_preference.should be_persisted
           end
 
           it "does not leave foreign keys of the previous relation" do
-            expect(person.preference_ids).to eq([ another_preference.id ])
+            person.preference_ids.should eq([ another_preference.id ])
           end
 
           it "clears its own key on the foreign relation" do
-            expect(preference.person_ids).to be_empty
+            preference.person_ids.should be_empty
           end
 
           context "and then overwriting it again with the same value" do
@@ -793,7 +759,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "persists the relation between another_preference and person" do
-              expect(another_preference.reload.people).to eq([ person ])
+              another_preference.reload.people.should eq([ person ])
             end
 
           end
@@ -806,15 +772,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "persists the relation between person and another_preference" do
-              expect(person.preferences).to eq([ another_preference ])
+              person.preferences.should eq([ another_preference ])
             end
 
             it "persists the relation between another_prefrence and person" do
-              expect(another_preference.people).to eq([ person ])
+              another_preference.people.should eq([ person ])
             end
 
             it "no longer has any relation between preference and person" do
-              expect(preference.people).to be_empty
+              preference.people.should be_empty
             end
           end
 
@@ -827,15 +793,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "persists the relation between person and another_preference" do
-              expect(person.preferences).to eq([ another_preference ])
+              person.preferences.should eq([ another_preference ])
             end
 
             it "persists the relation between another_prefrence and person" do
-              expect(another_preference.people).to eq([ person ])
+              another_preference.people.should eq([ person ])
             end
 
             it "no longer has any relation between preference and person" do
-              expect(preference.people).to be_empty
+              preference.people.should be_empty
             end
           end
         end
@@ -865,11 +831,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "clears the relation" do
-            expect(person.houses).to be_empty
+            person.houses.should be_empty
           end
 
           it "clears the foreign keys" do
-            expect(person.house_ids).to be_empty
+            person.house_ids.should be_empty
           end
         end
 
@@ -889,19 +855,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the relation to an empty array" do
-            expect(person.preferences).to be_empty
+            person.preferences.should be_empty
           end
 
           it "removed the inverse relation" do
-            expect(preference.people).to be_empty
+            preference.people.should be_empty
           end
 
           it "removes the foreign key values" do
-            expect(person.preference_ids).to be_empty
+            person.preference_ids.should be_empty
           end
 
           it "removes the inverse foreign key values" do
-            expect(preference.person_ids).to be_empty
+            preference.person_ids.should be_empty
           end
         end
 
@@ -923,23 +889,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "sets the relation to an empty array" do
-              expect(person.preferences).to be_empty
+              person.preferences.should be_empty
             end
 
             it "removed the inverse relation" do
-              expect(preference.people).to be_empty
+              preference.people.should be_empty
             end
 
             it "removes the foreign key values" do
-              expect(person.preference_ids).to be_empty
+              person.preference_ids.should be_empty
             end
 
             it "removes the inverse foreign key values" do
-              expect(preference.person_ids).to be_empty
+              preference.person_ids.should be_empty
             end
 
             it "does not delete the target from the database" do
-              expect(preference).to_not be_destroyed
+              preference.should_not be_destroyed
             end
           end
 
@@ -964,11 +930,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "sets the relation to an empty array" do
-              expect(from_db.preferences).to be_empty
+              from_db.preferences.should be_empty
             end
 
             it "removes the foreign key values" do
-              expect(from_db.preference_ids).to be_empty
+              from_db.preference_ids.should be_empty
             end
           end
         end
@@ -993,27 +959,27 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the document to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the inverse foreign key on the relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "sets the attributes" do
-            expect(preference.name).to eq("settings")
+            preference.name.should eq("settings")
           end
 
           it "does not save the target" do
-            expect(preference).to be_new_record
+            preference.should be_new_record
           end
 
           it "adds the correct number of documents" do
-            expect(person.preferences.size).to eq(1)
+            person.preferences.size.should eq(1)
           end
         end
 
@@ -1028,31 +994,31 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the document to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the inverse foreign key on the relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "sets the base on the inverse relation" do
-            expect(preference.people).to eq([ person ])
+            preference.people.should eq([ person ])
           end
 
           it "sets the attributes" do
-            expect(preference.name).to eq("settings")
+            preference.name.should eq("settings")
           end
 
           it "does not save the target" do
-            expect(preference).to be_new_record
+            preference.should be_new_record
           end
 
           it "adds the correct number of documents" do
-            expect(person.preferences.size).to eq(1)
+            person.preferences.size.should eq(1)
           end
 
           context "when saving the target" do
@@ -1062,7 +1028,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "persists the parent keys" do
-              expect(person.reload.preference_ids).to eq([ preference.id ])
+              person.reload.preference_ids.should eq([ preference.id ])
             end
           end
         end
@@ -1085,9 +1051,8 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "returns the embedded in builder" do
-      expect(
-        described_class.builder(nil, metadata, document)
-      ).to be_a_kind_of(builder_klass)
+      described_class.builder(nil, metadata, document).should
+        be_a_kind_of(builder_klass)
     end
   end
 
@@ -1112,31 +1077,31 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "clears out the relation" do
-            expect(person.preferences).to be_empty
+            person.preferences.should be_empty
           end
 
           it "removes the parent from the inverse relation" do
-            expect(preference.people).to_not include(person)
+            preference.people.should_not include(person)
           end
 
           it "removes the foreign keys" do
-            expect(person.preference_ids).to be_empty
+            person.preference_ids.should be_empty
           end
 
           it "removes the parent key from the inverse" do
-            expect(preference.person_ids).to_not include(person.id)
+            preference.person_ids.should_not include(person.id)
           end
 
           it "does not delete the documents" do
-            expect(preference).to_not be_destroyed
+            preference.should_not be_destroyed
           end
 
           it "persists the nullification" do
-            expect(person.reload.preferences).to be_empty
+            person.reload.preferences.should be_empty
           end
 
           it "returns the relation" do
-            expect(relation).to be_empty
+            relation.should be_empty
           end
         end
 
@@ -1151,7 +1116,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "clears out the relation" do
-            expect(person.preferences).to be_empty
+            person.preferences.should be_empty
           end
         end
       end
@@ -1171,7 +1136,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "clears out the relation" do
-          expect(person.preferences).to be_empty
+          person.preferences.should be_empty
         end
       end
     end
@@ -1199,11 +1164,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "executes the callback" do
-            expect(post.before_remove_called).to be_true
+            post.before_remove_called.should be_true
           end
 
           it "removes the document from the relation" do
-            expect(post.tags).to be_empty
+            post.tags.should be_empty
           end
         end
 
@@ -1217,7 +1182,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             expect {
               post.tags.clear
             }.to raise_error
-            expect(post.tags).to eq([ tag ])
+            post.tags.should eq([ tag ])
           end
         end
       end
@@ -1231,11 +1196,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "executes the callback" do
-            expect(post.after_remove_called).to be_true
+            post.after_remove_called.should be_true
           end
 
           it "removes the document from the relation" do
-            expect(post.tags).to be_empty
+            post.tags.should be_empty
           end
         end
 
@@ -1249,7 +1214,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             expect {
               post.tags.clear
             }.to raise_error
-            expect(post.tags).to be_empty
+            post.tags.should be_empty
           end
         end
       end
@@ -1273,7 +1238,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns an array of loaded documents" do
-        expect(result).to eq([ preference ])
+        result.should eq([ preference ])
       end
     end
 
@@ -1292,7 +1257,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns an array of loaded documents" do
-        expect(result).to eq([ preference ])
+        result.should eq([ preference ])
       end
     end
 
@@ -1313,11 +1278,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "appends the document to the relation" do
-          expect(person.houses).to eq([ house ])
+          person.houses.should eq([ house ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(person.house_ids).to eq([ house.id ])
+          person.house_ids.should eq([ house.id ])
         end
       end
 
@@ -1334,27 +1299,27 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "adds the documents to the relation" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
 
         it "sets the foreign key on the inverse relation" do
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
 
         it "saves the target" do
-          expect(preference).to be_persisted
+          preference.should be_persisted
         end
 
         it "adds the correct number of documents" do
-          expect(person.preferences.size).to eq(1)
+          person.preferences.size.should eq(1)
         end
 
         it "persists the link" do
-          expect(person.reload.preferences).to eq([ preference ])
+          person.reload.preferences.should eq([ preference ])
         end
       end
 
@@ -1375,23 +1340,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the documents to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "does not save the target" do
-            expect(preference).to be_new_record
+            preference.should be_new_record
           end
 
           it "adds the correct number of documents" do
-            expect(person.preferences.size).to eq(1)
+            person.preferences.size.should eq(1)
           end
 
           context "when appending a second time" do
@@ -1401,11 +1366,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "does not allow the document to be added again" do
-              expect(person.preferences).to eq([ preference ])
+              person.preferences.should eq([ preference ])
             end
 
             it "does not allow duplicate ids" do
-              expect(person.preference_ids).to eq([ preference.id ])
+              person.preference_ids.should eq([ preference.id ])
             end
           end
         end
@@ -1426,27 +1391,27 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the documents to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "saves the target" do
-            expect(preference).to be_persisted
+            preference.should be_persisted
           end
 
           it "adds the correct number of documents" do
-            expect(person.preferences.size).to eq(1)
+            person.preferences.size.should eq(1)
           end
 
           it "persists the link" do
-            expect(person.reload.preferences).to eq([ preference ])
+            person.reload.preferences.should eq([ preference ])
           end
         end
 
@@ -1469,23 +1434,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the documents to the relation" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference.reload.person_ids).to eq([ person.id ])
+            preference.reload.person_ids.should eq([ person.id ])
           end
 
           it "adds the correct number of documents" do
-            expect(person.preferences.size).to eq(1)
+            person.preferences.size.should eq(1)
           end
 
           it "persists the link" do
-            expect(person.reload.preferences).to eq([ preference ])
+            person.reload.preferences.should eq([ preference ])
           end
         end
       end
@@ -1505,31 +1470,31 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "adds the documents to the relation" do
-          expect(person.preferences).to eq([ preference ])
+          person.preferences.should eq([ preference ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(person.preference_ids).to eq([ preference.id ])
+          person.preference_ids.should eq([ preference.id ])
         end
 
         it "sets the foreign key on the inverse relation" do
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
 
         it "sets the base on the inverse relation" do
-          expect(preference.people).to eq([ person ])
+          preference.people.should eq([ person ])
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(preference.people.first).to eql(person)
+          preference.people.first.should eql(person)
         end
 
         it "saves the target" do
-          expect(preference).to_not be_new_record
+          preference.should_not be_new_record
         end
 
         it "adds the document to the target" do
-          expect(person.preferences.count).to eq(1)
+          person.preferences.count.should eq(1)
         end
 
         context "when documents already exist on the relation" do
@@ -1543,31 +1508,31 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "adds the documents to the relation" do
-            expect(person.preferences).to eq([ preference, preference_two ])
+            person.preferences.should eq([ preference, preference_two ])
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id, preference_two.id ])
+            person.preference_ids.should eq([ preference.id, preference_two.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference_two.person_ids).to eq([ person.id ])
+            preference_two.person_ids.should eq([ person.id ])
           end
 
           it "sets the base on the inverse relation" do
-            expect(preference_two.people).to eq([ person ])
+            preference_two.people.should eq([ person ])
           end
 
           it "sets the same instance on the inverse relation" do
-            expect(preference_two.people.first).to eql(person)
+            preference_two.people.first.should eql(person)
           end
 
           it "saves the target" do
-            expect(preference).to_not be_new_record
+            preference.should_not be_new_record
           end
 
           it "adds the document to the target" do
-            expect(person.preferences.count).to eq(2)
+            person.preferences.count.should eq(2)
           end
         end
       end
@@ -1587,21 +1552,21 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the front side of the relation" do
-          expect(person.administrated_events).to eq([ event ])
+          person.administrated_events.should eq([ event ])
         end
 
         it "sets the inverse side of the relation" do
-          expect(event.administrators(true)).to eq([ person ])
+          event.administrators(true).should eq([ person ])
         end
 
         context "when reloading" do
 
           it "sets the front side of the relation" do
-            expect(person.reload.administrated_events).to eq([ event ])
+            person.reload.administrated_events.should eq([ event ])
           end
 
           it "sets the inverse side of the relation" do
-            expect(event.reload.administrators).to eq([ person ])
+            event.reload.administrators.should eq([ person ])
           end
         end
 
@@ -1616,11 +1581,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the front side of the relation" do
-            expect(loaded_person.administrated_events).to eq([ event ])
+            loaded_person.administrated_events.should eq([ event ])
           end
 
           it "sets the inverse side of the relation" do
-            expect(loaded_event.administrators).to eq([ person ])
+            loaded_event.administrators.should eq([ person ])
           end
         end
       end
@@ -1644,7 +1609,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "creates a single artwork object" do
-          expect(Artwork.count).to eq(1)
+          Artwork.count.should eq(1)
         end
       end
 
@@ -1663,21 +1628,21 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the front side of the relation" do
-          expect(tag_one.related).to eq([ tag_two ])
+          tag_one.related.should eq([ tag_two ])
         end
 
         it "sets the inverse side of the relation" do
-          expect(tag_two.related(true)).to eq([ tag_one ])
+          tag_two.related(true).should eq([ tag_one ])
         end
 
         context "when reloading" do
 
           it "sets the front side of the relation" do
-            expect(tag_one.reload.related).to eq([ tag_two ])
+            tag_one.reload.related.should eq([ tag_two ])
           end
 
           it "sets the inverse side of the relation" do
-            expect(tag_two.reload.related).to eq([ tag_one ])
+            tag_two.reload.related.should eq([ tag_one ])
           end
         end
 
@@ -1692,11 +1657,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the front side of the relation" do
-            expect(loaded_tag_one.related).to eq([ tag_two ])
+            loaded_tag_one.related.should eq([ tag_two ])
           end
 
           it "sets the inverse side of the relation" do
-            expect(loaded_tag_two.related).to eq([ tag_one ])
+            loaded_tag_two.related.should eq([ tag_one ])
           end
         end
       end
@@ -1723,7 +1688,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
 
         it "returns zero" do
           sandwich.destroy
-          expect(sandwich.meats.count).to eq(0)
+          sandwich.meats.count.should eq(0)
         end
       end
     end
@@ -1735,7 +1700,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns the number of persisted documents" do
-        expect(person.preferences.count).to eq(1)
+        person.preferences.count.should eq(1)
       end
     end
 
@@ -1751,7 +1716,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns the number of persisted documents" do
-        expect(person.preferences.count).to eq(2)
+        person.preferences.count.should eq(2)
       end
     end
 
@@ -1762,7 +1727,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns 0" do
-        expect(person.preferences.count).to eq(0)
+        person.preferences.count.should eq(0)
       end
     end
 
@@ -1775,7 +1740,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the count from the db" do
-          expect(person.reload.preferences.count).to eq(1)
+          person.reload.preferences.count.should eq(1)
         end
       end
 
@@ -1786,7 +1751,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the count from the db" do
-          expect(person.preferences.count).to eq(0)
+          person.preferences.count.should eq(0)
         end
       end
     end
@@ -1800,7 +1765,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the number of persisted documents" do
-          expect(person.houses.count).to eq(1)
+          person.houses.count.should eq(1)
         end
       end
 
@@ -1811,7 +1776,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns 0" do
-          expect(person.preferences.count).to eq(0)
+          person.preferences.count.should eq(0)
         end
       end
     end
@@ -1834,7 +1799,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "does not convert the string key to an object id" do
-            expect(agent.account_ids).to eq([ "testing-again" ])
+            agent.account_ids.should eq([ "testing-again" ])
           end
         end
 
@@ -1862,39 +1827,39 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "sets the foreign key on the relation" do
-            expect(person.preference_ids).to eq([ preference.id ])
+            person.preference_ids.should eq([ preference.id ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(preference.person_ids).to eq([ person.id ])
+            preference.person_ids.should eq([ person.id ])
           end
 
           it "adds the document" do
-            expect(person.preferences).to eq([ preference ])
+            person.preferences.should eq([ preference ])
           end
 
           it "sets the base on the inverse relation" do
-            expect(preference.people).to eq([ person ])
+            preference.people.should eq([ person ])
           end
 
           it "sets the attributes" do
-            expect(preference.name).to eq("Testing")
+            preference.name.should eq("Testing")
           end
 
           it "saves the target" do
-            expect(preference).to be_persisted
+            preference.should be_persisted
           end
 
           it "adds the document to the target" do
-            expect(person.preferences.count).to eq(1)
+            person.preferences.count.should eq(1)
           end
 
           it "does not duplicate documents" do
-            expect(person.reload.preferences.count).to eq(1)
+            person.reload.preferences.count.should eq(1)
           end
 
           it "does not duplicate ids" do
-            expect(person.reload.preference_ids.count).to eq(1)
+            person.reload.preference_ids.count.should eq(1)
           end
         end
       end
@@ -1945,23 +1910,23 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "removes the document from the relation" do
-        expect(person.preferences).to eq([ preference_two ])
+        person.preferences.should eq([ preference_two ])
       end
 
       it "returns the document" do
-        expect(deleted).to eq(preference_one)
+        deleted.should eq(preference_one)
       end
 
       it "removes the document key from the foreign key" do
-        expect(person.preference_ids).to eq([ preference_two.id ])
+        person.preference_ids.should eq([ preference_two.id ])
       end
 
       it "removes the inverse reference" do
-        expect(deleted.reload.people).to be_empty
+        deleted.reload.people.should be_empty
       end
 
       it "removes the base id from the inverse keys" do
-        expect(deleted.reload.person_ids).to be_empty
+        deleted.reload.person_ids.should be_empty
       end
 
       context "and person and preferences are reloaded" do
@@ -1973,11 +1938,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "nullifies the deleted preference" do
-          expect(person.preferences).to eq([ preference_two ])
+          person.preferences.should eq([ preference_two ])
         end
 
         it "retains the ids for one preference" do
-          expect(person.preference_ids).to eq([ preference_two.id ])
+          person.preference_ids.should eq([ preference_two.id ])
         end
       end
     end
@@ -1989,15 +1954,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns nil" do
-        expect(deleted).to be_nil
+        deleted.should be_nil
       end
 
       it "does not modify the relation" do
-        expect(person.preferences).to eq([ preference_one, preference_two ])
+        person.preferences.should eq([ preference_one, preference_two ])
       end
 
       it "does not modify the keys" do
-        expect(person.preference_ids).to eq([ preference_one.id, preference_two.id ])
+        person.preference_ids.should eq([ preference_one.id, preference_two.id ])
       end
     end
 
@@ -2014,7 +1979,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "deletes the document" do
-          expect(event.delete).to be_true
+          event.delete.should be_true
         end
       end
     end
@@ -2040,19 +2005,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "deletes the document from the relation" do
-          expect(tag_one.related).to be_empty
+          tag_one.related.should be_empty
         end
 
         it "deletes the foreign key from the relation" do
-          expect(tag_one.related_ids).to be_empty
+          tag_one.related_ids.should be_empty
         end
 
         it "removes the reference from the inverse" do
-          expect(deleted.related).to be_empty
+          deleted.related.should be_empty
         end
 
         it "removes the foreign keys from the inverse" do
-          expect(deleted.related_ids).to be_empty
+          deleted.related_ids.should be_empty
         end
       end
 
@@ -2069,19 +2034,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "deletes the document from the relation" do
-            expect(reloaded.related).to be_empty
+            reloaded.related.should be_empty
           end
 
           it "deletes the foreign key from the relation" do
-            expect(reloaded.related_ids).to be_empty
+            reloaded.related_ids.should be_empty
           end
 
           it "removes the reference from the inverse" do
-            expect(deleted.related).to be_empty
+            deleted.related.should be_empty
           end
 
           it "removes the foreign keys from the inverse" do
-            expect(deleted.related_ids).to be_empty
+            deleted.related_ids.should be_empty
           end
         end
 
@@ -2096,15 +2061,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "deletes the document from the relation" do
-            expect(reloaded.related).to be_empty
+            reloaded.related.should be_empty
           end
 
           it "deletes the foreign key from the relation" do
-            expect(reloaded.related_ids).to be_empty
+            reloaded.related_ids.should be_empty
           end
 
           it "removes the foreign keys from the inverse" do
-            expect(deleted.related_ids).to be_empty
+            deleted.related_ids.should be_empty
           end
         end
       end
@@ -2133,11 +2098,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "executes the callback" do
-            expect(post.before_remove_called).to be_true
+            post.before_remove_called.should be_true
           end
 
           it "removes the document from the relation" do
-            expect(post.tags).to be_empty
+            post.tags.should be_empty
           end
         end
 
@@ -2151,7 +2116,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             expect {
               post.tags.delete tag
             }.to raise_error
-            expect(post.tags).to eq([ tag ])
+            post.tags.should eq([ tag ])
           end
         end
       end
@@ -2165,11 +2130,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "executes the callback" do
-            expect(post.after_remove_called).to be_true
+            post.after_remove_called.should be_true
           end
 
           it "removes the document from the relation" do
-            expect(post.tags).to be_empty
+            post.tags.should be_empty
           end
         end
 
@@ -2183,7 +2148,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             expect {
               post.tags.delete(tag)
             }.to raise_error
-            expect(post.tags).to be_empty
+            post.tags.should be_empty
           end
         end
       end
@@ -2218,19 +2183,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "removes the correct preferences" do
-            expect(person.preferences.count).to eq(1)
+            person.preferences.count.should eq(1)
           end
 
           it "deletes the documents from the database" do
-            expect(Preference.where(name: "Testing").count).to eq(0)
+            Preference.where(name: "Testing").count.should eq(0)
           end
 
           it "returns the number of documents deleted" do
-            expect(deleted).to eq(1)
+            deleted.should eq(1)
           end
 
           it "removes the ids from the foreign key" do
-            expect(person.preference_ids).to eq([ preference_two.id ])
+            person.preference_ids.should eq([ preference_two.id ])
           end
         end
 
@@ -2248,15 +2213,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "removes the correct preferences" do
-            expect(person.preferences.count).to eq(0)
+            person.preferences.count.should eq(0)
           end
 
           it "deletes the documents from the database" do
-            expect(Preference.count).to eq(0)
+            Preference.count.should eq(0)
           end
 
           it "returns the number of documents deleted" do
-            expect(deleted).to eq(2)
+            deleted.should eq(2)
           end
         end
       end
@@ -2300,7 +2265,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "puts the documents in the identity map" do
-        expect(map).to eq([ preference ])
+        map.should eq([ preference ])
       end
     end
   end
@@ -2308,7 +2273,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
   describe ".embedded?" do
 
     it "returns false" do
-      expect(described_class).to_not be_embedded
+      described_class.should_not be_embedded
     end
   end
 
@@ -2325,7 +2290,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns true" do
-        expect(person.preferences.exists?).to be_true
+        person.preferences.exists?.should be_true
       end
     end
 
@@ -2336,7 +2301,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns false" do
-        expect(person.preferences.exists?).to be_false
+        person.preferences.exists?.should be_false
       end
     end
   end
@@ -2374,7 +2339,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "returns the matching document" do
-            expect(preference).to eq(preference_one)
+            preference.should eq(preference_one)
           end
         end
 
@@ -2421,7 +2386,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "returns nil" do
-              expect(preference).to be_nil
+              preference.should be_nil
             end
           end
         end
@@ -2436,7 +2401,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "returns the matching documents" do
-            expect(preferences).to eq([ preference_one, preference_two ])
+            preferences.should eq([ preference_one, preference_two ])
           end
         end
 
@@ -2485,7 +2450,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
             end
 
             it "returns an empty array" do
-              expect(preferences).to be_empty
+              preferences.should be_empty
             end
           end
         end
@@ -2512,7 +2477,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the document" do
-          expect(found).to eq(preference)
+          found.should eq(preference)
         end
       end
 
@@ -2523,11 +2488,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the new document attributes" do
-          expect(found.name).to eq("Test")
+          found.name.should eq("Test")
         end
 
         it "returns a newly persisted document" do
-          expect(found).to be_persisted
+          found.should be_persisted
         end
       end
     end
@@ -2552,7 +2517,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the document" do
-          expect(found).to eq(preference)
+          found.should eq(preference)
         end
       end
 
@@ -2563,11 +2528,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "sets the new document attributes" do
-          expect(found.name).to eq("Test")
+          found.name.should eq("Test")
         end
 
         it "returns a non persisted document" do
-          expect(found).to_not be_persisted
+          found.should_not be_persisted
         end
       end
     end
@@ -2576,14 +2541,14 @@ describe Mongoid::Relations::Referenced::ManyToMany do
   describe ".foreign_key_suffix" do
 
     it "returns _ids" do
-      expect(described_class.foreign_key_suffix).to eq("_ids")
+      described_class.foreign_key_suffix.should eq("_ids")
     end
   end
 
   describe ".macro" do
 
     it "returns has_and_belongs_to_many" do
-      expect(described_class.macro).to eq(:has_and_belongs_to_many)
+      described_class.macro.should eq(:has_and_belongs_to_many)
     end
   end
 
@@ -2612,7 +2577,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "returns the document with the max value of the supplied field" do
-      expect(max).to eq(preference_two)
+      max.should eq(preference_two)
     end
   end
 
@@ -2639,7 +2604,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "returns the document with the max value of the supplied field" do
-      expect(max).to eq(preference_two)
+      max.should eq(preference_two)
     end
   end
 
@@ -2668,7 +2633,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "applies the criteria to the documents" do
-        expect(preferences).to eq([ preference_one ])
+        preferences.should eq([ preference_one ])
       end
     end
 
@@ -2679,7 +2644,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "does not return unrelated documents" do
-        expect(preferences).to be_empty
+        preferences.should be_empty
       end
     end
 
@@ -2690,7 +2655,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "applies the criteria to the documents" do
-        expect(preferences).to eq([ preference_one ])
+        preferences.should eq([ preference_one ])
       end
     end
 
@@ -2701,7 +2666,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "applies the criteria to the documents" do
-        expect(preferences).to eq([ preference_one ])
+        preferences.should eq([ preference_one ])
       end
     end
 
@@ -2709,13 +2674,9 @@ describe Mongoid::Relations::Referenced::ManyToMany do
 
       describe "#distinct" do
 
-        let(:values) do
-          person.preferences.distinct(:name)
-        end
-
         it "returns the distinct values for the fields" do
-          expect(values).to include("First")
-          expect(values).to include("Second")
+          person.preferences.distinct(:name).should =~
+            [ "First",  "Second"]
         end
 
         context "when the inverse relation is not defined" do
@@ -2725,7 +2686,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
           end
 
           it "returns the distinct values for the fields" do
-            expect(person.houses.distinct(:name)).to eq([ house.name ])
+            person.houses.distinct(:name).should eq([ house.name ])
           end
         end
       end
@@ -2757,7 +2718,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "returns the min value of the supplied field" do
-      expect(min).to eq(preference_one)
+      min.should eq(preference_one)
     end
   end
 
@@ -2784,14 +2745,14 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "returns the min value of the supplied field" do
-      expect(min).to eq(preference_one)
+      min.should eq(preference_one)
     end
   end
 
   describe "#nil?" do
 
     it "returns false" do
-      expect(Person.new.preferences).to_not be_nil
+      Person.new.preferences.should_not be_nil
     end
   end
 
@@ -2815,30 +2776,30 @@ describe Mongoid::Relations::Referenced::ManyToMany do
 
     it "removes the foreign key from the base document" do
       [ preference_one, preference_two ].each do |preference|
-        expect(person.preference_ids).to_not include(preference.id)
+        person.preference_ids.should_not include(preference.id)
       end
     end
 
     it "removes the foreign key from the target documents" do
       [ preference_one, preference_two ].each do |preference|
-        expect(preference.person_ids).to_not include(person.id)
+        preference.person_ids.should_not include(person.id)
       end
     end
 
     it "removes the reference from the base document" do
       [ preference_one, preference_two ].each do |preference|
-        expect(person.preferences).to_not include(preference)
+        person.preferences.should_not include(preference)
       end
     end
 
     it "removes the reference from the target documents" do
       [ preference_one, preference_two ].each do |preference|
-        expect(preference.people).to_not include(person)
+        preference.people.should_not include(person)
       end
     end
 
     it "saves the documents" do
-      expect(preference_one.reload.people).to_not include(person)
+      preference_one.reload.people.should_not include(person)
     end
   end
 
@@ -2857,7 +2818,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(preferences.respond_to?(method)).to be_true
+          preferences.respond_to?(method).should be_true
         end
       end
     end
@@ -2867,7 +2828,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(preferences.respond_to?(method)).to be_true
+          preferences.respond_to?(method).should be_true
         end
       end
     end
@@ -2877,7 +2838,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(preferences.respond_to?(method)).to be_true
+          preferences.respond_to?(method).should be_true
         end
       end
     end
@@ -2886,7 +2847,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
   describe ".stores_foreign_key?" do
 
     it "returns true" do
-      expect(described_class.stores_foreign_key?).to be_true
+      described_class.stores_foreign_key?.should be_true
     end
   end
 
@@ -2901,11 +2862,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "returns the relation criteria" do
-      expect(scoped).to be_a(Mongoid::Criteria)
+      scoped.should be_a(Mongoid::Criteria)
     end
 
     it "returns with an empty selector" do
-      expect(scoped.selector).to eq({ "$and" => [{ "_id" => { "$in" => [] }}]})
+      scoped.selector.should eq({ "$and" => [{ "_id" => { "$in" => [] }}]})
     end
   end
 
@@ -2924,7 +2885,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the number of documents" do
-          expect(person.preferences.send(method)).to eq(1)
+          person.preferences.send(method).should eq(1)
         end
       end
 
@@ -2936,7 +2897,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "returns the total number of documents" do
-          expect(person.preferences.send(method)).to eq(2)
+          person.preferences.send(method).should eq(2)
         end
       end
     end
@@ -2963,7 +2924,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "returns only the associated documents" do
-        expect(unscoped).to eq([ preference_one ])
+        unscoped.should eq([ preference_one ])
       end
     end
 
@@ -2986,11 +2947,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "only returns associated documents" do
-        expect(unscoped).to eq([ house_one ])
+        unscoped.should eq([ house_one ])
       end
 
       it "removes the default scoping options" do
-        expect(unscoped.options).to eq({})
+        unscoped.options.should eq({})
       end
     end
   end
@@ -2998,7 +2959,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
   describe ".valid_options" do
 
     it "returns the valid options" do
-      expect(described_class.valid_options).to eq(
+      described_class.valid_options.should eq(
         [
           :after_add,
           :after_remove,
@@ -3018,7 +2979,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
   describe ".validation_default" do
 
     it "returns true" do
-      expect(described_class.validation_default).to be_true
+      described_class.validation_default.should be_true
     end
   end
 
@@ -3050,7 +3011,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     context "when reloading" do
 
       it "properly sets the references" do
-        expect(person.houses(true)).to eq([ girlfriend_house ])
+        person.houses(true).should eq([ girlfriend_house ])
       end
     end
   end
@@ -3072,15 +3033,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "sets the businesses" do
-        expect(user.businesses).to eq([ business ])
+        user.businesses.should eq([ business ])
       end
 
       it "sets the inverse users" do
-        expect(user.businesses.first.owners.first).to eq(user)
+        user.businesses.first.owners.first.should eq(user)
       end
 
       it "sets the inverse businesses" do
-        expect(business.owners).to eq([ user ])
+        business.owners.should eq([ user ])
       end
     end
 
@@ -3099,15 +3060,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "sets the businesses" do
-        expect(user.businesses).to eq([ business ])
+        user.businesses.should eq([ business ])
       end
 
       it "sets the inverse users" do
-        expect(user.businesses.first.owners.first).to eq(user)
+        user.businesses.first.owners.first.should eq(user)
       end
 
       it "sets the inverse businesses" do
-        expect(business.owners).to eq([ user ])
+        business.owners.should eq([ user ])
       end
 
       context "when reloading" do
@@ -3118,15 +3079,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "persists the businesses" do
-          expect(user.businesses).to eq([ business ])
+          user.businesses.should eq([ business ])
         end
 
         it "persists the inverse users" do
-          expect(user.businesses.first.owners.first).to eq(user)
+          user.businesses.first.owners.first.should eq(user)
         end
 
         it "persists the inverse businesses" do
-          expect(business.owners).to eq([ user ])
+          business.owners.should eq([ user ])
         end
       end
     end
@@ -3146,15 +3107,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "sets the businesses" do
-        expect(user.businesses).to eq([ business ])
+        user.businesses.should eq([ business ])
       end
 
       it "sets the inverse users" do
-        expect(user.businesses.first.owners.first).to eq(user)
+        user.businesses.first.owners.first.should eq(user)
       end
 
       it "sets the inverse businesses" do
-        expect(business.owners).to eq([ user ])
+        business.owners.should eq([ user ])
       end
 
       context "when reloading" do
@@ -3165,15 +3126,15 @@ describe Mongoid::Relations::Referenced::ManyToMany do
         end
 
         it "persists the businesses" do
-          expect(user.businesses).to eq([ business ])
+          user.businesses.should eq([ business ])
         end
 
         it "persists the inverse users" do
-          expect(user.businesses.first.owners.first).to eq(user)
+          user.businesses.first.owners.first.should eq(user)
         end
 
         it "persists the inverse businesses" do
-          expect(business.owners).to eq([ user ])
+          business.owners.should eq([ user ])
         end
       end
     end
@@ -3192,13 +3153,13 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     before do
       2.times do
         person.preferences.each do |preference|
-          expect(preference.person_ids).to eq([ person.id ])
+          preference.person_ids.should eq([ person.id ])
         end
       end
     end
 
     it "does not duplicate foreign keys" do
-      expect(person.preference_ids).to eq([ preference.id ])
+      person.preference_ids.should eq([ preference.id ])
     end
   end
 
@@ -3226,13 +3187,13 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "orders the documents" do
-      expect(person.ordered_preferences(true)).to eq(
+      person.ordered_preferences(true).should eq(
         [preference_two, preference_three, preference_one]
       )
     end
 
     it "chains default criteria with additional" do
-      expect(person.ordered_preferences.order_by(:name.desc).to_a).to eq(
+      person.ordered_preferences.order_by(:name.desc).to_a.should eq(
         [preference_three, preference_two, preference_one]
       )
     end
@@ -3256,11 +3217,11 @@ describe Mongoid::Relations::Referenced::ManyToMany do
     end
 
     it "sets the relation to an empty array" do
-      expect(person.preferences).to be_empty
+      person.preferences.should be_empty
     end
 
     it "removes the foreign key values" do
-      expect(person.preference_ids).to be_empty
+      person.preference_ids.should be_empty
     end
 
     it "does not delete the target from the database" do
@@ -3300,7 +3261,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "reloads the document from the database" do
-        expect(reloaded.first.name).to eq("reloaded")
+        reloaded.first.name.should eq("reloaded")
       end
     end
 
@@ -3315,7 +3276,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "reloads the new document from the database" do
-        expect(reloaded).to eq([ preference_one, preference_two ])
+        reloaded.should eq([ preference_one, preference_two ])
       end
     end
   end
@@ -3337,19 +3298,19 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "persists the first preference" do
-        expect(preference_one).to_not be_nil
+        preference_one.should_not be_nil
       end
 
       it "sets the first inverse" do
-        expect(preference_one.people).to eq([ person ])
+        preference_one.people.should eq([ person ])
       end
 
       it "persists the second preference" do
-        expect(preference_two).to_not be_nil
+        preference_two.should_not be_nil
       end
 
       it "sets the second inverse keys" do
-        expect(preference_two.people).to eq([ person ])
+        preference_two.people.should eq([ person ])
       end
     end
   end
@@ -3385,7 +3346,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "persists the change in id order" do
-        expect(reloaded.preference_ids).to eq(
+        reloaded.preference_ids.should eq(
           [ preference_two.id, preference_one.id ]
         )
       end
@@ -3408,7 +3369,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "also persists the change in id order" do
-        expect(reloaded.preference_ids).to eq(
+        reloaded.preference_ids.should eq(
           [ preference_two.id, preference_one.id, preference_three.id ]
         )
       end
@@ -3434,7 +3395,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "also persists the change in id order" do
-        expect(reloaded.preference_ids).to eq(
+        reloaded.preference_ids.should eq(
           [ preference_three.id, preference_two.id ]
         )
       end
@@ -3466,7 +3427,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "adds both documents" do
-        expect(result).to eq([ preference_one, preference_two ])
+        result.should eq([ preference_one, preference_two ])
       end
     end
   end
@@ -3492,7 +3453,7 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       end
 
       it "sets the new documents on the relation" do
-        expect(person.preferences).to eq([ pref_two ])
+        person.preferences.should eq([ pref_two ])
       end
     end
   end

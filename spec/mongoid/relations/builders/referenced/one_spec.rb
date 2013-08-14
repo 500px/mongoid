@@ -49,7 +49,7 @@ describe Mongoid::Relations::Builders::Referenced::One do
       end
 
       it "sets the document" do
-        expect(documents).to eq(post)
+        documents.should eq(post)
       end
     end
 
@@ -64,7 +64,7 @@ describe Mongoid::Relations::Builders::Referenced::One do
       end
 
       it "returns the object" do
-        expect(document).to eq(object)
+        document.should eq(object)
       end
     end
   end
@@ -78,7 +78,7 @@ describe Mongoid::Relations::Builders::Referenced::One do
     context "when the document is not found" do
 
       it "returns nil" do
-        expect(person.game).to be_nil
+        person.game.should be_nil
       end
     end
 
@@ -98,11 +98,11 @@ describe Mongoid::Relations::Builders::Referenced::One do
       end
 
       it "returns the document" do
-        expect(person.game).to eq(game)
+        person.game.should eq(game)
       end
 
       it "pulls the document from the identity map" do
-        expect(person.game).to equal(game)
+        person.game.should equal(game)
       end
     end
 
@@ -117,7 +117,7 @@ describe Mongoid::Relations::Builders::Referenced::One do
       end
 
       it "returns the document" do
-        expect(person.cat).to eq(cat)
+        person.cat.should eq(cat)
       end
     end
   end

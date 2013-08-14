@@ -33,11 +33,11 @@ describe Mongoid::Contextual::FindAndModify do
         end
 
         it "returns the first matching document" do
-          expect(result["name"]).to eq("Depeche Mode")
+          result["name"].should eq("Depeche Mode")
         end
 
         it "updates the document in the database" do
-          expect(depeche.reload.likes).to eq(1)
+          depeche.reload.likes.should eq(1)
         end
       end
 
@@ -60,11 +60,11 @@ describe Mongoid::Contextual::FindAndModify do
         end
 
         it "returns the first matching document" do
-          expect(result["name"]).to eq("Depeche Mode")
+          result["name"].should eq("Depeche Mode")
         end
 
         it "updates the document in the database" do
-          expect(depeche.reload.created).to eq(date_time)
+          depeche.reload.created.should eq(date_time)
         end
       end
 
@@ -83,11 +83,11 @@ describe Mongoid::Contextual::FindAndModify do
         end
 
         it "returns the first matching document" do
-          expect(result["name"]).to eq("Tool")
+          result["name"].should eq("Tool")
         end
 
         it "updates the document in the database" do
-          expect(tool.reload.likes).to eq(1)
+          tool.reload.likes.should eq(1)
         end
       end
 
@@ -106,15 +106,15 @@ describe Mongoid::Contextual::FindAndModify do
         end
 
         it "returns the first matching document" do
-          expect(result["_id"]).to eq(depeche.id)
+          result["_id"].should eq(depeche.id)
         end
 
         it "limits the returned fields" do
-          expect(result["name"]).to be_nil
+          result["name"].should be_nil
         end
 
         it "updates the document in the database" do
-          expect(depeche.reload.likes).to eq(1)
+          depeche.reload.likes.should eq(1)
         end
       end
 
@@ -133,11 +133,11 @@ describe Mongoid::Contextual::FindAndModify do
         end
 
         it "returns the first matching document" do
-          expect(result["name"]).to eq("Depeche Mode")
+          result["name"].should eq("Depeche Mode")
         end
 
         it "returns the updated document" do
-          expect(result["likes"]).to eq(1)
+          result["likes"].should eq(1)
         end
       end
 
@@ -156,7 +156,7 @@ describe Mongoid::Contextual::FindAndModify do
         end
 
         it "returns the first matching document" do
-          expect(result["name"]).to eq("Depeche Mode")
+          result["name"].should eq("Depeche Mode")
         end
 
         it "deletes the document from the database" do
@@ -193,7 +193,7 @@ describe Mongoid::Contextual::FindAndModify do
             result
           }.to_not change{Band.where(name: "The Mars Volta").count}
 
-          expect(the_mars_volta.reload.likes).to eq(1)
+          the_mars_volta.reload.likes.should eq(1)
         end
       end
     end
@@ -213,7 +213,7 @@ describe Mongoid::Contextual::FindAndModify do
       end
 
       it "returns nil" do
-        expect(result).to be_nil
+        result.should be_nil
       end
     end
   end

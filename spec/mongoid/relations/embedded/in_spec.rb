@@ -25,14 +25,14 @@ describe Mongoid::Relations::Embedded::In do
       context "when the document is a different instance" do
 
         it "returns false" do
-          expect((relation === Person.new)).to be_false
+          (relation === Person.new).should be_false
         end
       end
 
       context "when the document is the same instance" do
 
         it "returns true" do
-          expect((relation === target)).to be_true
+          (relation === target).should be_true
         end
       end
     end
@@ -57,19 +57,19 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the target of the relation" do
-          expect(name.namable).to eq(person)
+          name.namable.should eq(person)
         end
 
         it "sets the base on the inverse relation" do
-          expect(person.name).to eq(name)
+          person.name.should eq(name)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(person.name).to eql(name)
+          person.name.should eql(name)
         end
 
         it "does not save the target" do
-          expect(person).to_not be_persisted
+          person.should_not be_persisted
         end
       end
 
@@ -88,19 +88,19 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the target of the relation" do
-          expect(name.namable).to eq(person)
+          name.namable.should eq(person)
         end
 
         it "sets the base on the inverse relation" do
-          expect(person.name).to eq(name)
+          person.name.should eq(name)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(person.name).to eql(name)
+          person.name.should eql(name)
         end
 
         it "does not save the base" do
-          expect(name).to_not be_persisted
+          name.should_not be_persisted
         end
       end
     end
@@ -122,19 +122,19 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the target of the relation" do
-          expect(address.addressable).to eq(person)
+          address.addressable.should eq(person)
         end
 
         it "appends the base on the inverse relation" do
-          expect(person.addresses).to eq([ address ])
+          person.addresses.should eq([ address ])
         end
 
         it "sets the same instance in the inverse relation" do
-          expect(person.addresses.first).to eql(address)
+          person.addresses.first.should eql(address)
         end
 
         it "does not save the target" do
-          expect(person).to_not be_persisted
+          person.should_not be_persisted
         end
       end
 
@@ -153,15 +153,15 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the target of the relation" do
-          expect(address.addressable).to eq(person)
+          address.addressable.should eq(person)
         end
 
         it "sets the same instance in the inverse relation" do
-          expect(person.addresses.first).to eql(address)
+          person.addresses.first.should eql(address)
         end
 
         it "appends the base on the inverse relation" do
-          expect(person.addresses).to eq([ address ])
+          person.addresses.should eq([ address ])
         end
       end
     end
@@ -187,11 +187,11 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(name.namable).to be_nil
+          name.namable.should be_nil
         end
 
         it "removes the inverse relation" do
-          expect(person.name).to be_nil
+          person.name.should be_nil
         end
       end
 
@@ -210,11 +210,11 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(name.namable).to be_nil
+          name.namable.should be_nil
         end
 
         it "removes the inverse relation" do
-          expect(person.name).to be_nil
+          person.name.should be_nil
         end
       end
 
@@ -234,15 +234,15 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(name.namable).to be_nil
+          name.namable.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(person.name).to be_nil
+          person.name.should be_nil
         end
 
         it "deletes the child document" do
-          expect(name).to be_destroyed
+          name.should be_destroyed
         end
       end
     end
@@ -265,11 +265,11 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(address.addressable).to be_nil
+          address.addressable.should be_nil
         end
 
         it "removes the inverse relation" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
       end
 
@@ -284,7 +284,7 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(address.addressable).to be_nil
+          address.addressable.should be_nil
         end
       end
 
@@ -304,15 +304,15 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(address.addressable).to be_nil
+          address.addressable.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(person.addresses).to be_empty
+          person.addresses.should be_empty
         end
 
         it "deletes the child document" do
-          expect(address).to be_destroyed
+          address.should be_destroyed
         end
       end
 
@@ -336,19 +336,19 @@ describe Mongoid::Relations::Embedded::In do
         end
 
         it "sets the relation to nil" do
-          expect(address_one.addressable).to be_nil
+          address_one.addressable.should be_nil
         end
 
         it "removed the inverse relation" do
-          expect(person.addresses).to eq([ address_two ])
+          person.addresses.should eq([ address_two ])
         end
 
         it "deletes the child document" do
-          expect(address_one).to be_destroyed
+          address_one.should be_destroyed
         end
 
         it "reindexes the children" do
-          expect(address_two._index).to eq(0)
+          address_two._index.should eq(0)
         end
       end
     end
@@ -373,28 +373,28 @@ describe Mongoid::Relations::Embedded::In do
     end
 
     it "returns the embedded one builder" do
-      expect(described_class.builder(base, metadata, target)).to be_a(builder_klass)
+      described_class.builder(base, metadata, target).should be_a(builder_klass)
     end
   end
 
   describe ".embedded?" do
 
     it "returns true" do
-      expect(described_class).to be_embedded
+      described_class.should be_embedded
     end
   end
 
   describe ".foreign_key_suffix" do
 
     it "returns nil" do
-      expect(described_class.foreign_key_suffix).to be_nil
+      described_class.foreign_key_suffix.should be_nil
     end
   end
 
   describe ".macro" do
 
     it "returns embeds_one" do
-      expect(described_class.macro).to eq(:embedded_in)
+      described_class.macro.should eq(:embedded_in)
     end
   end
 
@@ -413,7 +413,8 @@ describe Mongoid::Relations::Embedded::In do
     end
 
     it "returns the single nested builder" do
-      expect(described_class.nested_builder(metadata, attributes, {})).to be_a(nested_builder_klass)
+      described_class.nested_builder(metadata, attributes, {}).should
+        be_a(nested_builder_klass)
     end
   end
 
@@ -436,7 +437,7 @@ describe Mongoid::Relations::Embedded::In do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(document.respond_to?(method)).to be_true
+          document.respond_to?(method).should be_true
         end
       end
     end
@@ -445,7 +446,7 @@ describe Mongoid::Relations::Embedded::In do
   describe ".valid_options" do
 
     it "returns the valid options" do
-      expect(described_class.valid_options).to eq(
+      described_class.valid_options.should eq(
         [ :autobuild, :cyclic, :polymorphic ]
       )
     end
@@ -454,7 +455,7 @@ describe Mongoid::Relations::Embedded::In do
   describe ".validation_default" do
 
     it "returns false" do
-      expect(described_class.validation_default).to be_false
+      described_class.validation_default.should be_false
     end
   end
 
@@ -477,23 +478,23 @@ describe Mongoid::Relations::Embedded::In do
     end
 
     it "saves the child" do
-      expect(Person.last.addresses.last).to eq(address)
+      Person.last.addresses.last.should eq(address)
     end
 
     it "indexes the child" do
-      expect(address._index).to eq(0)
+      address._index.should eq(0)
     end
 
     it "saves the first location with the correct index" do
-      expect(first_location._index).to eq(0)
+      first_location._index.should eq(0)
     end
 
     it "saves the second location with the correct index" do
-      expect(second_location._index).to eq(1)
+      second_location._index.should eq(1)
     end
 
     it "has the locations in the association array" do
-      expect(Person.last.addresses.last.locations).to eq(
+      Person.last.addresses.last.locations.should eq(
         [first_location, second_location]
       )
     end
@@ -514,11 +515,11 @@ describe Mongoid::Relations::Embedded::In do
     end
 
     it "does not save the child" do
-      expect(address).to_not be_persisted
+      address.should_not be_persisted
     end
 
     it "does not save the deeply embedded children" do
-      expect(address.locations.first).to_not be_persisted
+      address.locations.first.should_not be_persisted
     end
   end
 
@@ -546,15 +547,15 @@ describe Mongoid::Relations::Embedded::In do
     end
 
     it "sets the new parent" do
-      expect(name.namable).to eq(person)
+      name.namable.should eq(person)
     end
 
     it "removes the previous parent relation" do
-      expect(person_two.name).to be_nil
+      person_two.name.should be_nil
     end
 
     it "sets the new child relation" do
-      expect(person.name).to eq(name)
+      person.name.should eq(name)
     end
 
     context "when reloading" do
@@ -564,15 +565,15 @@ describe Mongoid::Relations::Embedded::In do
       end
 
       it "sets the new parent" do
-        expect(name.namable).to eq(person)
+        name.namable.should eq(person)
       end
 
       it "removes the previous parent relation" do
-        expect(person_two.name).to be_nil
+        person_two.name.should be_nil
       end
 
       it "sets the new child relation" do
-        expect(person.name).to eq(name)
+        person.name.should eq(name)
       end
     end
   end

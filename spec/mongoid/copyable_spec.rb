@@ -50,7 +50,7 @@ describe Mongoid::Copyable do
         end
 
         it "does not set the id field as the _id" do
-          expect(cloned.id).to_not eq(1234)
+          cloned.id.should_not eq(1234)
         end
       end
 
@@ -76,17 +76,17 @@ describe Mongoid::Copyable do
 
         it "sets the pt_BR version" do
           I18n.locale = 'pt_BR'
-          expect(copy.desc).to eq("descrição")
+          copy.desc.should eq("descrição")
         end
 
         it "sets the english version" do
           I18n.locale = :en
-          expect(copy.desc).to eq("description")
+          copy.desc.should eq("description")
         end
 
         it "sets to nil an nonexistent lang" do
           I18n.locale = :fr
-          expect(copy.desc).to be_nil
+          copy.desc.should be_nil
         end
       end
 
@@ -105,15 +105,15 @@ describe Mongoid::Copyable do
         end
 
         it "marks the fields as dirty" do
-          expect(copy.changes["age"]).to eq([ nil, 100 ])
+          copy.changes["age"].should eq([ nil, 100 ])
         end
 
         it "flags the document as changed" do
-          expect(copy).to be_changed
+          copy.should be_changed
         end
 
         it "copies protected fields" do
-          expect(copy.owner_id).to eq(5)
+          copy.owner_id.should eq(5)
         end
       end
 
@@ -130,71 +130,71 @@ describe Mongoid::Copyable do
           end
 
           it "returns a new document" do
-            expect(copy).to_not be_persisted
+            copy.should_not be_persisted
           end
 
           it "has an id" do
-            expect(copy.id).to_not be_nil
+            copy.id.should_not be_nil
           end
 
           it "flags the document as changed" do
-            expect(copy).to be_changed
+            copy.should be_changed
           end
 
           it "marks fields as dirty" do
-            expect(copy.changes["age"]).to eq([ nil, 100 ])
+            copy.changes["age"].should eq([ nil, 100 ])
           end
 
           it "has a different id from the original" do
-            expect(copy.id).to_not eq(person.id)
+            copy.id.should_not eq(person.id)
           end
 
           it "does not copy the versions" do
-            expect(copy[:versions]).to be_nil
+            copy[:versions].should be_nil
           end
 
           it "resets the document version" do
-            expect(copy.version).to eq(1)
+            copy.version.should eq(1)
           end
 
           it "returns a new instance" do
-            expect(copy).to_not be_eql(person)
+            copy.should_not be_eql(person)
           end
 
           it "copys embeds many documents" do
-            expect(copy.addresses).to eq(person.addresses)
+            copy.addresses.should eq(person.addresses)
           end
 
           it "sets the embedded many documents as new" do
-            expect(copy.addresses.first).to be_new_record
+            copy.addresses.first.should be_new_record
           end
 
           it "creates new embeds many instances" do
-            expect(copy.addresses).to_not equal(person.addresses)
+            copy.addresses.should_not equal(person.addresses)
           end
 
           it "copys embeds one documents" do
-            expect(copy.name).to eq(person.name)
+            copy.name.should eq(person.name)
           end
 
           it "flags the embeds one documents as new" do
-            expect(copy.name).to be_new_record
+            copy.name.should be_new_record
           end
 
           it "creates a new embeds one instance" do
-            expect(copy.name).to_not equal(person.name)
+            copy.name.should_not equal(person.name)
           end
 
           it "does not copy referenced many documents" do
-            expect(copy.posts).to be_empty
+            copy.posts.should be_empty
           end
 
           it "does not copy references one documents" do
-            expect(copy.game).to be_nil
+            copy.game.should be_nil
           end
 
           it "copies localized fields" do
-            expect(copy.desc).to eq("description")
+            copy.desc.should eq("description")
           end
 
           context "when saving the copy" do
@@ -208,15 +208,15 @@ describe Mongoid::Copyable do
             end
 
             it "persists the attributes" do
-              expect(reloaded.title).to eq("Sir")
+              reloaded.title.should eq("Sir")
             end
 
             it "persists the embeds many relation" do
-              expect(reloaded.addresses).to eq(person.addresses)
+              reloaded.addresses.should eq(person.addresses)
             end
 
             it "persists the embeds one relation" do
-              expect(reloaded.name).to eq(person.name)
+              reloaded.name.should eq(person.name)
             end
           end
         end
@@ -239,55 +239,55 @@ describe Mongoid::Copyable do
           end
 
           it "flags the document as changed" do
-            expect(copy).to be_changed
+            copy.should be_changed
           end
 
           it "marks fields as dirty" do
-            expect(copy.changes["age"]).to eq([ nil, 100 ])
+            copy.changes["age"].should eq([ nil, 100 ])
           end
 
           it "returns a new document" do
-            expect(copy).to_not be_persisted
+            copy.should_not be_persisted
           end
 
           it "has an id" do
-            expect(copy.id).to_not be_nil
+            copy.id.should_not be_nil
           end
 
           it "has a different id from the original" do
-            expect(copy.id).to_not eq(person.id)
+            copy.id.should_not eq(person.id)
           end
 
           it "does not copy the versions" do
-            expect(copy[:versions]).to be_nil
+            copy[:versions].should be_nil
           end
 
           it "returns a new instance" do
-            expect(copy).to_not be_eql(person)
+            copy.should_not be_eql(person)
           end
 
           it "copys embeds many documents" do
-            expect(copy.addresses).to eq(person.addresses)
+            copy.addresses.should eq(person.addresses)
           end
 
           it "creates new embeds many instances" do
-            expect(copy.addresses).to_not equal(person.addresses)
+            copy.addresses.should_not equal(person.addresses)
           end
 
           it "copys embeds one documents" do
-            expect(copy.name).to eq(person.name)
+            copy.name.should eq(person.name)
           end
 
           it "creates a new embeds one instance" do
-            expect(copy.name).to_not equal(person.name)
+            copy.name.should_not equal(person.name)
           end
 
           it "does not copy referenced many documents" do
-            expect(copy.posts).to be_empty
+            copy.posts.should be_empty
           end
 
           it "does not copy references one documents" do
-            expect(copy.game).to be_nil
+            copy.game.should be_nil
           end
 
           context "when saving the copy" do
@@ -301,15 +301,15 @@ describe Mongoid::Copyable do
             end
 
             it "persists the attributes" do
-              expect(reloaded.title).to eq("Sir")
+              reloaded.title.should eq("Sir")
             end
 
             it "persists the embeds many relation" do
-              expect(reloaded.addresses).to eq(person.addresses)
+              reloaded.addresses.should eq(person.addresses)
             end
 
             it "persists the embeds one relation" do
-              expect(reloaded.name).to eq(person.name)
+              reloaded.name.should eq(person.name)
             end
           end
         end
@@ -322,47 +322,47 @@ describe Mongoid::Copyable do
         end
 
         it "returns a new document" do
-          expect(copy).to_not be_persisted
+          copy.should_not be_persisted
         end
 
         it "has an id" do
-          expect(copy.id).to_not be_nil
+          copy.id.should_not be_nil
         end
 
         it "has a different id from the original" do
-          expect(copy.id).to_not eq(person.id)
+          copy.id.should_not eq(person.id)
         end
 
         it "returns a new instance" do
-          expect(copy).to_not be_eql(person)
+          copy.should_not be_eql(person)
         end
 
         it "copys embeds many documents" do
-          expect(copy.addresses).to eq(person.addresses)
+          copy.addresses.should eq(person.addresses)
         end
 
         it "creates new embeds many instances" do
-          expect(copy.addresses).to_not equal(person.addresses)
+          copy.addresses.should_not equal(person.addresses)
         end
 
         it "copys embeds one documents" do
-          expect(copy.name).to eq(person.name)
+          copy.name.should eq(person.name)
         end
 
         it "creates a new embeds one instance" do
-          expect(copy.name).to_not equal(person.name)
+          copy.name.should_not equal(person.name)
         end
 
         it "does not copy referenced many documents" do
-          expect(copy.posts).to be_empty
+          copy.posts.should be_empty
         end
 
         it "does not copy references one documents" do
-          expect(copy.game).to be_nil
+          copy.game.should be_nil
         end
 
         it "keeps the original attributes frozen" do
-          expect(person.attributes).to be_frozen
+          person.attributes.should be_frozen
         end
 
         context "when saving the copy" do
@@ -376,15 +376,15 @@ describe Mongoid::Copyable do
           end
 
           it "persists the attributes" do
-            expect(reloaded.title).to eq("Sir")
+            reloaded.title.should eq("Sir")
           end
 
           it "persists the embeds many relation" do
-            expect(reloaded.addresses).to eq(person.addresses)
+            reloaded.addresses.should eq(person.addresses)
           end
 
           it "persists the embeds one relation" do
-            expect(reloaded.name).to eq(person.name)
+            reloaded.name.should eq(person.name)
           end
         end
       end

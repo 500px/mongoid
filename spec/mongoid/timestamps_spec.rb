@@ -18,27 +18,27 @@ describe Mongoid::Timestamps do
     end
 
     it "adds created_at to the document" do
-      expect(fields["created_at"]).to_not be_nil
+      fields["created_at"].should_not be_nil
     end
 
     it "adds updated_at to the document" do
-      expect(fields["updated_at"]).to_not be_nil
+      fields["updated_at"].should_not be_nil
     end
 
     it "forces the created_at timestamps to UTC" do
-      expect(document.created_at).to be_within(10).of(Time.now.utc)
+      document.created_at.should be_within(10).of(Time.now.utc)
     end
 
     it "forces the updated_at timestamps to UTC" do
-      expect(document.updated_at).to be_within(10).of(Time.now.utc)
+      document.updated_at.should be_within(10).of(Time.now.utc)
     end
 
     it "ensures created_at equals updated_at on new records" do
-      expect(document.updated_at).to eq(document.created_at)
+      document.updated_at.should eq(document.created_at)
     end
 
-    pending "includes a record_timestamps class_accessor to ease AR compatibility" do
-      expect(Dokument.new).to respond_to(:record_timestamps)
+    it "includes a record_timestamps class_accessor to ease AR compatibility" do
+      Dokument.should.respond_to? :record_timestamps
     end
   end
 
@@ -82,7 +82,7 @@ describe Mongoid::Timestamps do
     end
 
     it "runs the update callbacks" do
-      expect(document.updated_at).to eq(document.created_at)
+      document.updated_at.should eq(document.created_at)
     end
   end
 
@@ -106,7 +106,7 @@ describe Mongoid::Timestamps do
     end
 
     it "updates the root document updated at" do
-      expect(document.updated_at).to be_within(1).of(Time.now)
+      document.updated_at.should be_within(1).of(Time.now)
     end
   end
 end

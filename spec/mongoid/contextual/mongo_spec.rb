@@ -21,7 +21,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns true" do
-          expect(context.send(method)).to be_true
+          context.send(method).should be_true
         end
       end
 
@@ -36,7 +36,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns false" do
-          expect(context.send(method)).to be_false
+          context.send(method).should be_false
         end
       end
     end
@@ -55,7 +55,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns true" do
-        expect(context).to be_cached
+        context.should be_cached
       end
     end
 
@@ -70,7 +70,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns false" do
-        expect(context).to_not be_cached
+        context.should_not be_cached
       end
     end
   end
@@ -96,7 +96,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the number of documents that match" do
-        expect(context.count).to eq(1)
+        context.count.should eq(1)
       end
     end
 
@@ -111,7 +111,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the count cached value after first call" do
-        2.times { expect(context.count).to eq(1) }
+        2.times { context.count.should eq(1) }
       end
     end
 
@@ -126,7 +126,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the number of documents that match" do
-        expect(count).to eq(1)
+        count.should eq(1)
       end
     end
 
@@ -143,43 +143,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the number of documents that match" do
-        expect(count).to eq(1)
-      end
-
-      context "and a limit true" do
-
-        before do
-          2.times { Band.create(name: "Depeche Mode", likes: 1) }
-        end
-
-        let(:count) do
-          context.count(true) do |doc|
-            doc.likes.nil?
-          end
-        end
-
-        it "returns the number of documents that match" do
-          expect(count).to eq(1)
-        end
-      end
-    end
-
-    context "when provided limit true" do
-
-      before do
-        2.times { Band.create(name: "Depeche Mode") }
-      end
-
-      let(:context) do
-        described_class.new(criteria.limit(2))
-      end
-
-      let(:count) do
-        context.count(true)
-      end
-
-      it "returns the number of documents that match" do
-        expect(count).to eq(2)
+        count.should eq(1)
       end
     end
   end
@@ -211,15 +175,15 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "deletes the matching documents" do
-          expect(Band.find(new_order.id)).to eq(new_order)
+          Band.find(new_order.id).should eq(new_order)
         end
 
         it "deletes the correct number of documents" do
-          expect(Band.count).to eq(1)
+          Band.count.should eq(1)
         end
 
         it "returns the number of documents deleted" do
-          expect(deleted).to eq(1)
+          deleted.should eq(1)
         end
       end
 
@@ -238,7 +202,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "deletes all the documents" do
-          expect(Band.count).to eq(0)
+          Band.count.should eq(0)
         end
       end
     end
@@ -271,15 +235,15 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "destroys the matching documents" do
-          expect(Band.find(new_order.id)).to eq(new_order)
+          Band.find(new_order.id).should eq(new_order)
         end
 
         it "destroys the correct number of documents" do
-          expect(Band.count).to eq(1)
+          Band.count.should eq(1)
         end
 
         it "returns the number of documents destroyed" do
-          expect(destroyed).to eq(1)
+          destroyed.should eq(1)
         end
       end
 
@@ -298,7 +262,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "destroys all the documents" do
-          expect(Band.count).to eq(0)
+          Band.count.should eq(0)
         end
       end
     end
@@ -322,7 +286,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the distinct matching fields" do
-        expect(context.distinct(:name)).to eq([ "Depeche Mode" ])
+        context.distinct(:name).should eq([ "Depeche Mode" ])
       end
     end
 
@@ -337,7 +301,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the distinct field values" do
-        expect(context.distinct(:name)).to eq([ "Depeche Mode", "New Order" ])
+        context.distinct(:name).should eq([ "Depeche Mode", "New Order" ])
       end
     end
 
@@ -352,7 +316,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the distinct field values" do
-        expect(context.distinct(:years)).to eq([ 30, 25 ])
+        context.distinct(:years).should eq([ 30, 25 ])
       end
     end
   end
@@ -375,18 +339,18 @@ describe Mongoid::Contextual::Mongo do
 
       it "yields mongoid documents to the block" do
         context.each do |doc|
-          expect(doc).to be_a(Mongoid::Document)
+          doc.should be_a(Mongoid::Document)
         end
       end
 
       it "iterates over the matching documents" do
         context.each do |doc|
-          expect(doc.name).to eq("Depeche Mode")
+          doc.name.should eq("Depeche Mode")
         end
       end
 
       it "returns self" do
-        expect(context.each{}).to be(context)
+        context.each{}.should be(context)
       end
     end
 
@@ -397,7 +361,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns an enumerator" do
-        expect(enum).to be_a(Enumerator)
+        enum.should be_a(Enumerator)
       end
 
       context "when iterating over the enumerator" do
@@ -406,7 +370,7 @@ describe Mongoid::Contextual::Mongo do
 
           it "yields mongoid documents to the block" do
             enum.each do |doc|
-              expect(doc).to be_a(Mongoid::Document)
+              doc.should be_a(Mongoid::Document)
             end
           end
         end
@@ -414,7 +378,7 @@ describe Mongoid::Contextual::Mongo do
         context "when iterating with next" do
 
           it "yields mongoid documents" do
-            expect(enum.next).to be_a(Mongoid::Document)
+            enum.next.should be_a(Mongoid::Document)
           end
         end
       end
@@ -461,7 +425,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns false" do
-        expect(context).to_not be_exists
+        context.should_not be_exists
       end
     end
 
@@ -476,30 +440,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns true" do
-        expect(context).to be_exists
-      end
-    end
-
-    context "when caching is not enabled" do
-
-      let(:criteria) do
-        Band.where(name: "Depeche Mode")
-      end
-
-      let(:context) do
-        described_class.new(criteria)
-      end
-
-      context "when exists? already called" do
-
-        before do
-          context.exists?
-        end
-
-        it "hits the database again" do
-          context.should_receive(:query).once.and_call_original
-          context.should be_exists
-        end
+        context.should be_exists
       end
     end
 
@@ -521,7 +462,7 @@ describe Mongoid::Contextual::Mongo do
 
         it "does not hit the database" do
           context.should_receive(:query).never
-          expect(context).to be_exists
+          context.should be_exists
         end
       end
 
@@ -535,7 +476,7 @@ describe Mongoid::Contextual::Mongo do
 
           it "does not hit the database" do
             context.should_receive(:query).never
-            expect(context).to be_exists
+            context.should be_exists
           end
         end
       end
@@ -553,7 +494,7 @@ describe Mongoid::Contextual::Mongo do
     end
 
     it "returns the criteria explain path" do
-      expect(context.explain["cursor"]).to eq("BasicCursor")
+      context.explain["cursor"].should eq("BasicCursor")
     end
   end
 
@@ -584,11 +525,11 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the first matching document" do
-          expect(result).to eq(depeche)
+          result.should eq(depeche)
         end
 
         it "updates the document in the database" do
-          expect(depeche.reload.likes).to eq(1)
+          depeche.reload.likes.should eq(1)
         end
       end
 
@@ -607,11 +548,11 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the first matching document" do
-          expect(result).to eq(tool)
+          result.should eq(tool)
         end
 
         it "updates the document in the database" do
-          expect(tool.reload.likes).to eq(1)
+          tool.reload.likes.should eq(1)
         end
       end
 
@@ -630,15 +571,15 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the first matching document" do
-          expect(result).to eq(depeche)
+          result.should eq(depeche)
         end
 
         it "limits the returned fields" do
-          expect(result.name).to be_nil
+          result.name.should be_nil
         end
 
         it "updates the document in the database" do
-          expect(depeche.reload.likes).to eq(1)
+          depeche.reload.likes.should eq(1)
         end
       end
 
@@ -657,11 +598,11 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the first matching document" do
-          expect(result).to eq(depeche)
+          result.should eq(depeche)
         end
 
         it "returns the updated document" do
-          expect(result.likes).to eq(1)
+          result.likes.should eq(1)
         end
       end
 
@@ -680,7 +621,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the first matching document" do
-          expect(result).to eq(depeche)
+          result.should eq(depeche)
         end
 
         it "deletes the document from the database" do
@@ -706,7 +647,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns nil" do
-        expect(result).to be_nil
+        result.should be_nil
       end
     end
   end
@@ -734,7 +675,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the first matching document" do
-          expect(context.send(method)).to eq(depeche_mode)
+          context.send(method).should eq(depeche_mode)
         end
       end
 
@@ -751,15 +692,15 @@ describe Mongoid::Contextual::Mongo do
         context "when there is sort on the context" do
 
           it "follows the main sort" do
-            expect(context.send(method)).to eq(new_order)
+            context.send(method).should eq(new_order)
           end
         end
 
         context "when subsequently calling #last" do
 
           it "returns the correnct document" do
-            expect(context.send(method)).to eq(new_order)
-            expect(context.last).to eq(depeche_mode)
+            context.send(method).should eq(new_order)
+            context.last.should eq(depeche_mode)
           end
         end
       end
@@ -777,15 +718,15 @@ describe Mongoid::Contextual::Mongo do
         context "when there is sort on the context" do
 
           it "follows the main sort" do
-            expect(context.send(method)).to eq(new_order)
+            context.send(method).should eq(new_order)
           end
         end
 
         context "when subsequently calling #last" do
 
           it "returns the correnct document" do
-            expect(context.send(method)).to eq(new_order)
-            expect(context.last).to eq(depeche_mode)
+            context.send(method).should eq(new_order)
+            context.last.should eq(depeche_mode)
           end
         end
       end
@@ -808,18 +749,6 @@ describe Mongoid::Contextual::Mongo do
 
           it "returns the first document without touching the database" do
             context.should_receive(:query).never
-            expect(context.send(method)).to eq(depeche_mode)
-          end
-        end
-
-        context "when first method was called before" do
-
-          before do
-            context.first
-          end
-
-          it "returns the first document without touching the database" do
-            context.should_receive(:query).never
             context.send(method).should eq(depeche_mode)
           end
         end
@@ -838,23 +767,23 @@ describe Mongoid::Contextual::Mongo do
     end
 
     it "sets the criteria" do
-      expect(context.criteria).to eq(criteria)
+      context.criteria.should eq(criteria)
     end
 
     it "sets the klass" do
-      expect(context.klass).to eq(Band)
+      context.klass.should eq(Band)
     end
 
     it "sets the query" do
-      expect(context.query).to be_a(Moped::Query)
+      context.query.should be_a(Moped::Query)
     end
 
     it "sets the query selector" do
-      expect(context.query.selector).to eq({ "name" => "Depeche Mode" })
+      context.query.selector.should eq({ "name" => "Depeche Mode" })
     end
 
     it "sets timeout options" do
-      expect(context.query.operation.flags).to eq([ :no_cursor_timeout ])
+      context.query.operation.flags.should eq([ :no_cursor_timeout ])
     end
   end
 
@@ -879,7 +808,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the last matching document" do
-        expect(context.last).to eq(new_order)
+        context.last.should eq(new_order)
       end
     end
 
@@ -902,7 +831,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "respects default scope" do
-        expect(context.last).to eq(palm)
+        context.last.should eq(palm)
       end
     end
 
@@ -925,8 +854,8 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the correnct document" do
-        expect(context.last).to eq(new_order)
-        expect(context.first).to eq(depeche_mode)
+        context.last.should eq(new_order)
+        context.first.should eq(depeche_mode)
       end
     end
   end
@@ -951,7 +880,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the number of documents that match" do
-          expect(context.send(method)).to eq(2)
+          context.send(method).should eq(2)
         end
 
         context "when calling more than once" do
@@ -961,7 +890,7 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "returns the cached value for subsequent calls" do
-            2.times { expect(context.send(method)).to eq(2) }
+            2.times { context.send(method).should eq(2) }
           end
         end
 
@@ -973,7 +902,7 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "returns the cached value for all calls" do
-            expect(context.send(method)).to eq(2)
+            context.send(method).should eq(2)
           end
 
           context "when the results have been iterated over multiple times" do
@@ -983,7 +912,7 @@ describe Mongoid::Contextual::Mongo do
             end
 
             it "resets the length on each full iteration" do
-              expect(context).to have(2).items
+              context.should have(2).items
             end
           end
         end
@@ -1000,7 +929,7 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "returns the number of documents that match" do
-          expect(context.send(method)).to eq(1)
+          context.send(method).should eq(1)
         end
 
         context "when calling more than once" do
@@ -1010,7 +939,7 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "returns the cached value for subsequent calls" do
-            2.times { expect(context.send(method)).to eq(1) }
+            2.times { context.send(method).should eq(1) }
           end
         end
 
@@ -1022,7 +951,7 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "returns the cached value for all calls" do
-            expect(context.send(method)).to eq(1)
+            context.send(method).should eq(1)
           end
 
           context "when the results have been iterated over multiple times" do
@@ -1032,7 +961,7 @@ describe Mongoid::Contextual::Mongo do
             end
 
             it "resets the length on each full iteration" do
-              expect(context).to have(1).item
+              context.should have(1).item
             end
           end
         end
@@ -1059,7 +988,7 @@ describe Mongoid::Contextual::Mongo do
     end
 
     it "limits the results" do
-      expect(context.limit(1).entries).to eq([ depeche_mode ])
+      context.limit(1).entries.should eq([ depeche_mode ])
     end
   end
 
@@ -1086,14 +1015,14 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "performs mapping" do
-        expect(context.map(:name)).to eq ["Depeche Mode", "New Order"]
+        context.map(:name).should eq ["Depeche Mode", "New Order"]
       end
     end
 
     context "when passed a block" do
 
       it "performs mapping" do
-        expect(context.map(&:name)).to eq ["Depeche Mode", "New Order"]
+        context.map(&:name).should eq ["Depeche Mode", "New Order"]
       end
     end
   end
@@ -1141,52 +1070,52 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the first aggregate result" do
-        expect(results).to include(
+        results.should include(
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         )
       end
 
       it "returns the second aggregate result" do
-        expect(results).to include(
+        results.should include(
           { "_id" => "Tool", "value" => { "likes" => 100 }}
         )
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(2)
+        results.count.should eq(2)
       end
 
       it "contains the entire raw results" do
-        expect(results["results"]).to eq([
+        results["results"].should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }},
           { "_id" => "Tool", "value" => { "likes" => 100 }}
         ])
       end
 
       it "contains the execution time" do
-        expect(results.time).to_not be_nil
+        results.time.should_not be_nil
       end
 
       it "contains the count statistics" do
-        expect(results["counts"]).to eq({
+        results["counts"].should eq({
           "input" => 2, "emit" => 2, "reduce" => 0, "output" => 2
         })
       end
 
       it "contains the input count" do
-        expect(results.input).to eq(2)
+        results.input.should eq(2)
       end
 
       it "contains the emitted count" do
-        expect(results.emitted).to eq(2)
+        results.emitted.should eq(2)
       end
 
       it "contains the reduced count" do
-        expect(results.reduced).to eq(0)
+        results.reduced.should eq(0)
       end
 
       it "contains the output count" do
-        expect(results.output).to eq(2)
+        results.output.should eq(2)
       end
     end
 
@@ -1205,45 +1134,45 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "includes the aggregate result" do
-        expect(results).to include(
+        results.should include(
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         )
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(1)
+        results.count.should eq(1)
       end
 
       it "contains the entire raw results" do
-        expect(results["results"]).to eq([
+        results["results"].should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         ])
       end
 
       it "contains the execution time" do
-        expect(results.time).to_not be_nil
+        results.time.should_not be_nil
       end
 
       it "contains the count statistics" do
-        expect(results["counts"]).to eq({
+        results["counts"].should eq({
           "input" => 1, "emit" => 1, "reduce" => 0, "output" => 1
         })
       end
 
       it "contains the input count" do
-        expect(results.input).to eq(1)
+        results.input.should eq(1)
       end
 
       it "contains the emitted count" do
-        expect(results.emitted).to eq(1)
+        results.emitted.should eq(1)
       end
 
       it "contains the reduced count" do
-        expect(results.reduced).to eq(0)
+        results.reduced.should eq(0)
       end
 
       it "contains the output count" do
-        expect(results.output).to eq(1)
+        results.output.should eq(1)
       end
     end
 
@@ -1267,23 +1196,23 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the first aggregate result" do
-        expect(results).to include(
+        results.should include(
           { "_id" => "Tool", "value" => { "likes" => 100 }}
         )
       end
 
       it "returns the second aggregate result" do
-        expect(results).to include(
+        results.should include(
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         )
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(2)
+        results.count.should eq(2)
       end
 
       it "contains the entire raw results" do
-        expect(results["results"]).to eq([
+        results["results"].should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }},
           { "_id" => "Tool", "value" => { "likes" => 100 }}
         ])
@@ -1305,17 +1234,17 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the first aggregate result" do
-        expect(results).to include(
+        results.should include(
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         )
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(1)
+        results.count.should eq(1)
       end
 
       it "contains the entire raw results" do
-        expect(results["results"]).to eq([
+        results["results"].should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         ])
       end
@@ -1336,11 +1265,11 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(1)
+        results.count.should eq(1)
       end
 
       it "contains the entire results" do
-        expect(results).to eq([
+        results.should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         ])
       end
@@ -1361,11 +1290,11 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(1)
+        results.count.should eq(1)
       end
 
       it "contains the entire results" do
-        expect(results).to eq([
+        results.should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         ])
       end
@@ -1386,11 +1315,11 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(1)
+        results.count.should eq(1)
       end
 
       it "contains the entire results" do
-        expect(results).to eq([
+        results.should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200 }}
         ])
       end
@@ -1440,11 +1369,11 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "returns the correct number of documents" do
-        expect(results.count).to eq(1)
+        results.count.should eq(1)
       end
 
       it "contains the entire results" do
-        expect(results).to eq([
+        results.should eq([
           { "_id" => "Depeche Mode", "value" => { "likes" => 200, "extra" => true }}
         ])
       end
@@ -1470,7 +1399,7 @@ describe Mongoid::Contextual::Mongo do
     end
 
     it "limits the results" do
-      expect(context.skip(1).entries).to eq([ new_order ])
+      context.skip(1).entries.should eq([ new_order ])
     end
   end
 
@@ -1495,11 +1424,11 @@ describe Mongoid::Contextual::Mongo do
     context "when providing a spec" do
 
       it "sorts the results" do
-        expect(context.sort(name: -1).entries).to eq([ new_order, depeche_mode ])
+        context.sort(name: -1).entries.should eq([ new_order, depeche_mode ])
       end
 
       it "returns the context" do
-        expect(context.sort(name: 1)).to eq(context)
+        context.sort(name: 1).should eq(context)
       end
     end
 
@@ -1512,58 +1441,7 @@ describe Mongoid::Contextual::Mongo do
       end
 
       it "sorts the results in memory" do
-        expect(sorted).to eq([ new_order, depeche_mode ])
-      end
-    end
-  end
-
-  describe "#text_search" do
-
-    let(:criteria) do
-      Word.all
-    end
-
-    let(:context) do
-      described_class.new(criteria)
-    end
-
-    before do
-      Word.with(database: "admin").mongo_session.command(setParameter: 1, textSearchEnabled: true)
-      Word.create_indexes
-      Word.with(safe: true).create!(name: "phase", origin: "latin")
-    end
-
-    after(:all) do
-      Word.remove_indexes
-    end
-
-    context "when the search is projecting" do
-
-      let(:search) do
-        context.text_search("phase").project(name: 1)
-      end
-
-      let(:documents) do
-        search.entries
-      end
-
-      it "limits the fields to the projection" do
-        expect(documents.first.origin).to be_nil
-      end
-    end
-
-    context "when the search is not projecting" do
-
-      let(:search) do
-        context.text_search("phase")
-      end
-
-      let(:documents) do
-        search.entries
-      end
-
-      it "returns all fields" do
-        expect(documents.first.origin).to eq("latin")
+        sorted.should eq([ new_order, depeche_mode ])
       end
     end
   end
@@ -1595,11 +1473,11 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "updates only the first matching document" do
-          expect(depeche_mode.reload.name).to eq("Smiths")
+          depeche_mode.reload.name.should eq("Smiths")
         end
 
         it "does not update the last matching document" do
-          expect(new_order.reload.name).to eq("New Order")
+          new_order.reload.name.should eq("New Order")
         end
       end
 
@@ -1612,11 +1490,11 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "updates the first matching document" do
-            expect(depeche_mode.reload.member_count).to eq(1)
+            depeche_mode.reload.member_count.should eq(1)
           end
 
           it "does not update the last matching document" do
-            expect(new_order.reload.member_count).to be_nil
+            new_order.reload.member_count.should be_nil
           end
         end
 
@@ -1627,11 +1505,11 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "updates the first matching document" do
-            expect(depeche_mode.reload.founded).to eq(Date.new(1979, 1, 1))
+            depeche_mode.reload.founded.should eq(Date.new(1979, 1, 1))
           end
 
           it "does not update the last matching document" do
-            expect(new_order.reload.founded).to be_nil
+            new_order.reload.founded.should be_nil
           end
         end
       end
@@ -1648,11 +1526,11 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "updates the first matching document" do
-            expect(depeche_mode.reload.name).to eq("Smiths")
+            depeche_mode.reload.name.should eq("Smiths")
           end
 
           it "does not update the last matching document" do
-            expect(new_order.reload.name).to eq("New Order")
+            new_order.reload.name.should eq("New Order")
           end
         end
 
@@ -1663,11 +1541,11 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "updates the first matching document" do
-            expect(depeche_mode.reload.member_count).to eq(1)
+            depeche_mode.reload.member_count.should eq(1)
           end
 
           it "does not update the last matching document" do
-            expect(new_order.reload.member_count).to be_nil
+            new_order.reload.member_count.should be_nil
           end
         end
       end
@@ -1679,19 +1557,19 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "updates the first matching document's set" do
-          expect(depeche_mode.reload.name).to eq("Smiths")
+          depeche_mode.reload.name.should eq("Smiths")
         end
 
         it "updates the first matching document's updates" do
-          expect(depeche_mode.reload.likes).to eq(100)
+          depeche_mode.reload.likes.should eq(100)
         end
 
         it "does not update the last matching document's set" do
-          expect(new_order.reload.name).to eq("New Order")
+          new_order.reload.name.should eq("New Order")
         end
 
         it "does not update the last matching document's updates" do
-          expect(new_order.reload.likes).to be_nil
+          new_order.reload.likes.should be_nil
         end
       end
     end
@@ -1699,7 +1577,7 @@ describe Mongoid::Contextual::Mongo do
     context "when providing no attributes" do
 
       it "returns false" do
-        expect(context.update).to be_false
+        context.update.should be_false
       end
     end
   end
@@ -1731,15 +1609,15 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "updates the first matching document" do
-          expect(depeche_mode.reload.name).to eq("Smiths")
+          depeche_mode.reload.name.should eq("Smiths")
         end
 
         it "does not clear out other attributes" do
-          expect(depeche_mode.reload.origin).to eq("Essex")
+          depeche_mode.reload.origin.should eq("Essex")
         end
 
         it "updates the last matching document" do
-          expect(new_order.reload.name).to eq("Smiths")
+          new_order.reload.name.should eq("Smiths")
         end
       end
 
@@ -1750,11 +1628,11 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "updates the first matching document" do
-          expect(depeche_mode.reload.member_count).to eq(1)
+          depeche_mode.reload.member_count.should eq(1)
         end
 
         it "updates the last matching document" do
-          expect(new_order.reload.member_count).to eq(1)
+          new_order.reload.member_count.should eq(1)
         end
       end
 
@@ -1765,11 +1643,11 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "updates the first matching document" do
-          expect(depeche_mode.reload.years).to eq(100)
+          depeche_mode.reload.years.should eq(100)
         end
 
         it "updates the last matching document" do
-          expect(new_order.reload.years).to eq(100)
+          new_order.reload.years.should eq(100)
         end
       end
     end
@@ -1785,11 +1663,11 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "updates the first matching document" do
-            expect(depeche_mode.reload.name).to eq("Smiths")
+            depeche_mode.reload.name.should eq("Smiths")
           end
 
           it "updates the last matching document" do
-            expect(new_order.reload.name).to eq("Smiths")
+            new_order.reload.name.should eq("Smiths")
           end
         end
 
@@ -1800,11 +1678,11 @@ describe Mongoid::Contextual::Mongo do
           end
 
           it "updates the first matching document" do
-            expect(depeche_mode.reload.member_count).to eq(1)
+            depeche_mode.reload.member_count.should eq(1)
           end
 
           it "updates the last matching document" do
-            expect(new_order.reload.member_count).to eq(1)
+            new_order.reload.member_count.should eq(1)
           end
         end
       end
@@ -1816,19 +1694,19 @@ describe Mongoid::Contextual::Mongo do
         end
 
         it "updates the first matching document's set" do
-          expect(depeche_mode.reload.name).to eq("Smiths")
+          depeche_mode.reload.name.should eq("Smiths")
         end
 
         it "updates the first matching document's updates" do
-          expect(depeche_mode.reload.likes).to eq(100)
+          depeche_mode.reload.likes.should eq(100)
         end
 
         it "updates the last matching document's set" do
-          expect(new_order.reload.name).to eq("Smiths")
+          new_order.reload.name.should eq("Smiths")
         end
 
         it "updates the last matching document's updates" do
-          expect(new_order.reload.likes).to eq(100)
+          new_order.reload.likes.should eq(100)
         end
       end
     end
@@ -1836,7 +1714,7 @@ describe Mongoid::Contextual::Mongo do
     context "when providing no attributes" do
 
       it "returns false" do
-        expect(context.update_all).to be_false
+        context.update_all.should be_false
       end
     end
   end

@@ -35,7 +35,7 @@ describe Mongoid::Relations::Constraint do
         end
 
         it "returns the object id" do
-          expect(constraint.convert(object)).to eq(object)
+          constraint.convert(object).should eq(object)
         end
       end
 
@@ -46,7 +46,7 @@ describe Mongoid::Relations::Constraint do
         end
 
         it "returns an object id from the string" do
-          expect(constraint.convert(object.to_s)).to eq(object)
+          constraint.convert(object.to_s).should eq(object)
         end
       end
     end
@@ -67,7 +67,7 @@ describe Mongoid::Relations::Constraint do
       end
 
       it "returns the object" do
-        expect(constraint.convert("testing")).to eq("testing")
+        constraint.convert("testing").should eq("testing")
       end
     end
   end

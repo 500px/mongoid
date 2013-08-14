@@ -34,7 +34,7 @@ describe Mongoid::Relations::AutoSave do
         end
 
         it "does not save the relation" do
-          expect(game).to_not be_persisted
+          game.should_not be_persisted
         end
       end
     end
@@ -78,7 +78,7 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it "saves the relation" do
-            expect(drug).to be_persisted
+            drug.should be_persisted
           end
         end
 
@@ -91,7 +91,7 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it "saves the relation" do
-            expect(drug).to be_persisted
+            drug.should be_persisted
           end
         end
 
@@ -108,7 +108,7 @@ describe Mongoid::Relations::AutoSave do
 
           it 'does not load the association' do
             from_db.save
-            expect(from_db.ivar(:drugs)).to be_false
+            from_db.ivar(:drugs).should be_false
           end
         end
       end
@@ -127,7 +127,7 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it "saves the relation" do
-            expect(account).to be_persisted
+            account.should be_persisted
           end
         end
 
@@ -140,7 +140,7 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it "saves the relation" do
-            expect(account).to be_persisted
+            account.should be_persisted
           end
         end
 
@@ -157,7 +157,7 @@ describe Mongoid::Relations::AutoSave do
 
           it 'does not load the association' do
             from_db.save
-            expect(from_db.ivar(:account)).to be_false
+            from_db.ivar(:account).should be_false
           end
         end
       end
@@ -180,7 +180,7 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it "saves the relation" do
-            expect(movie).to be_persisted
+            movie.should be_persisted
           end
         end
 
@@ -193,7 +193,7 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it "saves the relation" do
-            expect(movie).to be_persisted
+            movie.should be_persisted
           end
         end
       end
@@ -233,11 +233,11 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it 'loads the updated association' do
-            expect(from_db.ivar(:drugs)).to be_true
+            from_db.ivar(:drugs).should be_true
           end
 
           it 'doest not load the other association' do
-            expect(from_db.ivar(:account)).to be_false
+            from_db.ivar(:account).should be_false
           end
         end
 
@@ -248,11 +248,11 @@ describe Mongoid::Relations::AutoSave do
           end
 
           it 'doest not load drugs association' do
-            expect(from_db.ivar(:drugs)).to be_false
+            from_db.ivar(:drugs).should be_false
           end
 
           it 'doest not load account association' do
-            expect(from_db.ivar(:account)).to be_false
+            from_db.ivar(:account).should be_false
           end
         end
       end

@@ -37,27 +37,27 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "sets the foreign key on the relation" do
-              expect(post.person_id).to eq(person.id)
+              post.person_id.should eq(person.id)
             end
 
             it "sets the base on the inverse relation" do
-              expect(post.person).to eq(person)
+              post.person.should eq(person)
             end
 
             it "sets the same instance on the inverse relation" do
-              expect(post.person).to eql(person)
+              post.person.should eql(person)
             end
 
             it "does not save the target" do
-              expect(post).to be_new_record
+              post.should be_new_record
             end
 
             it "adds the document to the target" do
-              expect(person.posts.size).to eq(1)
+              person.posts.size.should eq(1)
             end
 
             it "returns the relation" do
-              expect(added).to eq(person.posts)
+              added.should eq(person.posts)
             end
           end
 
@@ -72,23 +72,23 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "sets the foreign key on the relation" do
-              expect(post.person_id).to eq(person.id)
+              post.person_id.should eq(person.id)
             end
 
             it "sets the base on the inverse relation" do
-              expect(post.person).to eq(person)
+              post.person.should eq(person)
             end
 
             it "sets the same instance on the inverse relation" do
-              expect(post.person).to eql(person)
+              post.person.should eql(person)
             end
 
             it "does not save the parent" do
-              expect(person).to be_new_record
+              person.should be_new_record
             end
 
             it "adds the document to the target" do
-              expect(person.posts.size).to eq(1)
+              person.posts.size.should eq(1)
             end
 
             context "when subsequently saving the parent" do
@@ -99,7 +99,7 @@ describe Mongoid::Relations::Referenced::Many do
               end
 
               it "returns the correct count of the relation" do
-                expect(person.posts.count).to eq(1)
+                person.posts.count.should eq(1)
               end
             end
           end
@@ -118,23 +118,23 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "adds the documents to the relation" do
-            expect(person.posts).to eq([ post ])
+            person.posts.should eq([ post ])
           end
 
           it "sets the foreign key on the inverse relation" do
-            expect(post.person_id).to eq(person.id)
+            post.person_id.should eq(person.id)
           end
 
           it "saves the target" do
-            expect(post).to be_persisted
+            post.should be_persisted
           end
 
           it "adds the correct number of documents" do
-            expect(person.posts.size).to eq(1)
+            person.posts.size.should eq(1)
           end
 
           it "persists the link" do
-            expect(person.reload.posts).to eq([ post ])
+            person.reload.posts.should eq([ post ])
           end
         end
 
@@ -153,27 +153,27 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(post.person_id).to eq(person.id)
+            post.person_id.should eq(person.id)
           end
 
           it "sets the base on the inverse relation" do
-            expect(post.person).to eq(person)
+            post.person.should eq(person)
           end
 
           it "sets the same instance on the inverse relation" do
-            expect(post.person).to eql(person)
+            post.person.should eql(person)
           end
 
           it "saves the target" do
-            expect(post).to be_persisted
+            post.should be_persisted
           end
 
           it "adds the document to the target" do
-            expect(person.posts.count).to eq(1)
+            person.posts.count.should eq(1)
           end
 
           it "increments the counter cache" do
-            expect(person.reload.posts_count).to eq(1)
+            person.reload.posts_count.should eq(1)
           end
 
           context "when documents already exist on the relation" do
@@ -187,35 +187,35 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "sets the foreign key on the relation" do
-              expect(post_two.person_id).to eq(person.id)
+              post_two.person_id.should eq(person.id)
             end
 
             it "sets the base on the inverse relation" do
-              expect(post_two.person).to eq(person)
+              post_two.person.should eq(person)
             end
 
             it "sets the same instance on the inverse relation" do
-              expect(post_two.person).to eql(person)
+              post_two.person.should eql(person)
             end
 
             it "saves the target" do
-              expect(post_two).to be_persisted
+              post_two.should be_persisted
             end
 
             it "adds the document to the target" do
-              expect(person.posts.count).to eq(2)
+              person.posts.count.should eq(2)
             end
 
             it "increments the counter cache" do
-              expect(person.reload.posts_count).to eq(2)
+              person.reload.posts_count.should eq(2)
             end
 
             it "contains the initial document in the target" do
-              expect(person.posts).to include(post)
+              person.posts.should include(post)
             end
 
             it "contains the added document in the target" do
-              expect(person.posts).to include(post_two)
+              person.posts.should include(post_two)
             end
           end
         end
@@ -238,7 +238,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "adds the document to the relation" do
-            expect(person.posts).to eq([ post ])
+            person.posts.should eq([ post ])
           end
         end
 
@@ -279,19 +279,23 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(rating.ratable_id).to eq(movie.id)
+            rating.ratable_id.should eq(movie.id)
+          end
+
+          it "does not set the inverse field on the relation" do
+            rating.ratable_field.should be_nil
           end
 
           it "sets the base on the inverse relation" do
-            expect(rating.ratable).to eq(movie)
+            rating.ratable.should eq(movie)
           end
 
           it "does not save the target" do
-            expect(rating).to be_new_record
+            rating.should be_new_record
           end
 
           it "adds the document to the target" do
-            expect(movie.ratings.size).to eq(1)
+            movie.ratings.size.should eq(1)
           end
         end
 
@@ -310,19 +314,23 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(rating.ratable_id).to eq(movie.id)
+            rating.ratable_id.should eq(movie.id)
+          end
+
+          it "does not set the inverse field on the relation" do
+            rating.ratable_field.should be_nil
           end
 
           it "sets the base on the inverse relation" do
-            expect(rating.ratable).to eq(movie)
+            rating.ratable.should eq(movie)
           end
 
           it "saves the target" do
-            expect(rating).to be_persisted
+            rating.should be_persisted
           end
 
           it "adds the document to the target" do
-            expect(movie.ratings.count).to eq(1)
+            movie.ratings.count.should eq(1)
           end
         end
       end
@@ -348,19 +356,19 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the target of the relation" do
-          expect(person.posts.target).to eq([ post ])
+          person.posts.target.should eq([ post ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(post.person).to eq(person)
+          post.person.should eq(person)
         end
 
         it "does not save the target" do
-          expect(post).to_not be_persisted
+          post.should_not be_persisted
         end
       end
 
@@ -379,19 +387,19 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the target of the relation" do
-          expect(person.posts.target).to eq([ post ])
+          person.posts.target.should eq([ post ])
         end
 
         it "sets the foreign key of the relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(post.person).to eq(person)
+          post.person.should eq(person)
         end
 
         it "saves the target" do
-          expect(post).to be_persisted
+          post.should be_persisted
         end
 
         context "when replacing the relation with the same documents" do
@@ -403,11 +411,11 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "keeps the relation intact" do
-              expect(person.posts).to eq([ post ])
+              person.posts.should eq([ post ])
             end
 
             it "does not delete the relation" do
-              expect(person.reload.posts).to eq([ post ])
+              person.reload.posts.should eq([ post ])
             end
           end
 
@@ -422,11 +430,11 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "keeps the relation intact" do
-              expect(from_db.posts).to eq([ post ])
+              from_db.posts.should eq([ post ])
             end
 
             it "does not delete the relation" do
-              expect(from_db.reload.posts).to eq([ post ])
+              from_db.reload.posts.should eq([ post ])
             end
           end
         end
@@ -444,19 +452,19 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "keeps the relation intact" do
-              expect(person.posts.size).to eq(2)
+              person.posts.size.should eq(2)
             end
 
             it "keeps the first post" do
-              expect(person.posts).to include(post)
+              person.posts.should include(post)
             end
 
             it "keeps the second post" do
-              expect(person.posts).to include(new_post)
+              person.posts.should include(new_post)
             end
 
             it "does not delete the relation" do
-              expect(person.reload.posts).to eq([ post, new_post ])
+              person.reload.posts.should eq([ post, new_post ])
             end
           end
 
@@ -471,11 +479,11 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "keeps the relation intact" do
-              expect(from_db.posts).to eq([ post, new_post ])
+              from_db.posts.should eq([ post, new_post ])
             end
 
             it "does not delete the relation" do
-              expect(from_db.reload.posts).to eq([ post, new_post ])
+              from_db.reload.posts.should eq([ post, new_post ])
             end
           end
         end
@@ -493,11 +501,11 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "keeps the relation intact" do
-              expect(person.posts).to eq([ new_post ])
+              person.posts.should eq([ new_post ])
             end
 
             it "does not delete the relation" do
-              expect(person.reload.posts).to eq([ new_post ])
+              person.reload.posts.should eq([ new_post ])
             end
           end
 
@@ -512,11 +520,11 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "keeps the relation intact" do
-              expect(from_db.posts).to eq([ new_post ])
+              from_db.posts.should eq([ new_post ])
             end
 
             it "does not delete the relation" do
-              expect(from_db.reload.posts).to eq([ new_post ])
+              from_db.reload.posts.should eq([ new_post ])
             end
           end
         end
@@ -540,19 +548,19 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the target of the relation" do
-          expect(movie.ratings.target).to eq([ rating ])
+          movie.ratings.target.should eq([ rating ])
         end
 
         it "sets the foreign key on the relation" do
-          expect(rating.ratable_id).to eq(movie.id)
+          rating.ratable_id.should eq(movie.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(rating.ratable).to eq(movie)
+          rating.ratable.should eq(movie)
         end
 
         it "does not save the target" do
-          expect(rating).to_not be_persisted
+          rating.should_not be_persisted
         end
       end
 
@@ -571,19 +579,19 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the target of the relation" do
-          expect(movie.ratings.target).to eq([ rating ])
+          movie.ratings.target.should eq([ rating ])
         end
 
         it "sets the foreign key of the relation" do
-          expect(rating.ratable_id).to eq(movie.id)
+          rating.ratable_id.should eq(movie.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(rating.ratable).to eq(movie)
+          rating.ratable.should eq(movie)
         end
 
         it "saves the target" do
-          expect(rating).to be_persisted
+          rating.should be_persisted
         end
       end
     end
@@ -608,11 +616,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "removes all the children" do
-          expect(person.posts).to be_empty
+          person.posts.should be_empty
         end
 
         it "persists the changes" do
-          expect(person.posts(true)).to be_empty
+          person.posts(true).should be_empty
         end
       end
     end
@@ -638,15 +646,15 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the relation to an empty array" do
-          expect(person.posts).to be_empty
+          person.posts.should be_empty
         end
 
         it "removed the inverse relation" do
-          expect(post.person).to be_nil
+          post.person.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(post.person_id).to be_nil
+          post.person_id.should be_nil
         end
       end
 
@@ -668,19 +676,19 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the relation to empty" do
-            expect(person.posts).to be_empty
+            person.posts.should be_empty
           end
 
           it "removed the inverse relation" do
-            expect(post.person).to be_nil
+            post.person.should be_nil
           end
 
           it "removes the foreign key value" do
-            expect(post.person_id).to be_nil
+            post.person_id.should be_nil
           end
 
           it "deletes the target from the database" do
-            expect(post).to be_destroyed
+            post.should be_destroyed
           end
         end
 
@@ -696,19 +704,19 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the relation to empty" do
-            expect(person.drugs).to be_empty
+            person.drugs.should be_empty
           end
 
           it "removed the inverse relation" do
-            expect(drug.person).to be_nil
+            drug.person.should be_nil
           end
 
           it "removes the foreign key value" do
-            expect(drug.person_id).to be_nil
+            drug.person_id.should be_nil
           end
 
           it "nullifies the relation" do
-            expect(drug).to_not be_destroyed
+            drug.should_not be_destroyed
           end
         end
       end
@@ -732,15 +740,15 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the relation to an empty array" do
-          expect(movie.ratings).to be_empty
+          movie.ratings.should be_empty
         end
 
         it "removed the inverse relation" do
-          expect(rating.ratable).to be_nil
+          rating.ratable.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(rating.ratable_id).to be_nil
+          rating.ratable_id.should be_nil
         end
       end
 
@@ -760,21 +768,21 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the relation to empty" do
-          expect(movie.ratings).to be_empty
+          movie.ratings.should be_empty
         end
 
         it "removed the inverse relation" do
-          expect(rating.ratable).to be_nil
+          rating.ratable.should be_nil
         end
 
         it "removes the foreign key value" do
-          expect(rating.ratable_id).to be_nil
+          rating.ratable_id.should be_nil
         end
 
         context "when dependent is nullify" do
 
           it "does not delete the target from the database" do
-            expect(rating).to_not be_destroyed
+            rating.should_not be_destroyed
           end
         end
       end
@@ -800,7 +808,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "calls setter with documents find by given ids" do
-      expect(person.posts).to eq([ post_one, post_two ])
+      person.posts.should eq([ post_one, post_two ])
     end
   end
 
@@ -815,7 +823,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns ids of documents that are in the relation" do
-      expect(person.post_ids).to eq(posts.map(&:id))
+      person.post_ids.should eq(posts.map(&:id))
     end
   end
 
@@ -836,31 +844,31 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(post.person_id).to eq(person.id)
+            post.person_id.should eq(person.id)
           end
 
           it "sets the base on the inverse relation" do
-            expect(post.person).to eq(person)
+            post.person.should eq(person)
           end
 
           it "sets the attributes" do
-            expect(post.title).to eq("$$$")
+            post.title.should eq("$$$")
           end
 
           it "sets the post processed defaults" do
-            expect(post.person_title).to eq(person.title)
+            post.person_title.should eq(person.title)
           end
 
           it "does not save the target" do
-            expect(post).to be_new_record
+            post.should be_new_record
           end
 
           it "adds the document to the target" do
-            expect(person.posts.size).to eq(1)
+            person.posts.size.should eq(1)
           end
 
           it "does not perform validation" do
-            expect(post.errors).to be_empty
+            post.errors.should be_empty
           end
         end
 
@@ -875,23 +883,23 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(post.person_id).to eq(person.id)
+            post.person_id.should eq(person.id)
           end
 
           it "sets the base on the inverse relation" do
-            expect(post.person).to eq(person)
+            post.person.should eq(person)
           end
 
           it "sets the attributes" do
-            expect(post.text).to eq("Testing")
+            post.text.should eq("Testing")
           end
 
           it "does not save the target" do
-            expect(post).to be_new_record
+            post.should be_new_record
           end
 
           it "adds the document to the target" do
-            expect(person.posts.size).to eq(1)
+            person.posts.size.should eq(1)
           end
         end
       end
@@ -909,27 +917,27 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(rating.ratable_id).to eq(movie.id)
+            rating.ratable_id.should eq(movie.id)
           end
 
           it "sets the base on the inverse relation" do
-            expect(rating.ratable).to eq(movie)
+            rating.ratable.should eq(movie)
           end
 
           it "sets the attributes" do
-            expect(rating.value).to eq(3)
+            rating.value.should eq(3)
           end
 
           it "does not save the target" do
-            expect(rating).to be_new_record
+            rating.should be_new_record
           end
 
           it "adds the document to the target" do
-            expect(movie.ratings.size).to eq(1)
+            movie.ratings.size.should eq(1)
           end
 
           it "does not perform validation" do
-            expect(rating.errors).to be_empty
+            rating.errors.should be_empty
           end
         end
 
@@ -944,23 +952,23 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(rating.ratable_id).to eq(movie.id)
+            rating.ratable_id.should eq(movie.id)
           end
 
           it "sets the base on the inverse relation" do
-            expect(rating.ratable).to eq(movie)
+            rating.ratable.should eq(movie)
           end
 
           it "sets the attributes" do
-            expect(rating.value).to eq(4)
+            rating.value.should eq(4)
           end
 
           it "does not save the target" do
-            expect(rating).to be_new_record
+            rating.should be_new_record
           end
 
           it "adds the document to the target" do
-            expect(movie.ratings.size).to eq(1)
+            movie.ratings.size.should eq(1)
           end
         end
       end
@@ -982,9 +990,8 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns the embedded in builder" do
-      expect(
-        described_class.builder(nil, metadata, document)
-      ).to be_a_kind_of(builder_klass)
+      described_class.builder(nil, metadata, document).should
+        be_a_kind_of(builder_klass)
     end
   end
 
@@ -1009,19 +1016,19 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "clears out the relation" do
-            expect(person.posts).to be_empty
+            person.posts.should be_empty
           end
 
           it "marks the documents as deleted" do
-            expect(post).to be_destroyed
+            post.should be_destroyed
           end
 
           it "deletes the documents from the db" do
-            expect(person.reload.posts).to be_empty
+            person.reload.posts.should be_empty
           end
 
           it "returns the relation" do
-            expect(relation).to be_empty
+            relation.should be_empty
           end
         end
 
@@ -1036,7 +1043,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "clears out the relation" do
-            expect(person.posts).to be_empty
+            person.posts.should be_empty
           end
         end
       end
@@ -1056,7 +1063,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "clears out the relation" do
-          expect(person.posts).to be_empty
+          person.posts.should be_empty
         end
       end
     end
@@ -1080,19 +1087,19 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "clears out the relation" do
-            expect(movie.ratings).to be_empty
+            movie.ratings.should be_empty
           end
 
           it "handles the proper dependent strategy" do
-            expect(rating).to_not be_destroyed
+            rating.should_not be_destroyed
           end
 
           it "deletes the documents from the db" do
-            expect(movie.reload.ratings).to be_empty
+            movie.reload.ratings.should be_empty
           end
 
           it "returns the relation" do
-            expect(relation).to be_empty
+            relation.should be_empty
           end
         end
 
@@ -1107,7 +1114,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "clears out the relation" do
-            expect(movie.ratings).to be_empty
+            movie.ratings.should be_empty
           end
         end
       end
@@ -1127,7 +1134,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "clears out the relation" do
-          expect(movie.ratings).to be_empty
+          movie.ratings.should be_empty
         end
       end
     end
@@ -1152,23 +1159,23 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the foreign key on the relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(post.person).to eq(person)
+          post.person.should eq(person)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(post.person).to eql(person)
+          post.person.should eql(person)
         end
 
         it "does not save the target" do
-          expect(post).to be_new_record
+          post.should be_new_record
         end
 
         it "adds the document to the target" do
-          expect(person.posts.size).to eq(1)
+          person.posts.size.should eq(1)
         end
       end
 
@@ -1185,23 +1192,23 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "adds the documents to the relation" do
-          expect(person.posts).to eq([ post ])
+          person.posts.should eq([ post ])
         end
 
         it "sets the foreign key on the inverse relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "saves the target" do
-          expect(post).to be_persisted
+          post.should be_persisted
         end
 
         it "adds the correct number of documents" do
-          expect(person.posts.size).to eq(1)
+          person.posts.size.should eq(1)
         end
 
         it "persists the link" do
-          expect(person.reload.posts).to eq([ post ])
+          person.reload.posts.should eq([ post ])
         end
       end
 
@@ -1224,23 +1231,23 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the foreign key on the relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(post.person).to eq(person)
+          post.person.should eq(person)
         end
 
         it "sets the same instance on the inverse relation" do
-          expect(post.person).to eql(person)
+          post.person.should eql(person)
         end
 
         it "saves the target" do
-          expect(post).to be_persisted
+          post.should be_persisted
         end
 
         it "adds the document to the target" do
-          expect(person.posts.count).to eq(2)
+          person.posts.count.should eq(2)
         end
 
         context "when documents already exist on the relation" do
@@ -1254,31 +1261,31 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the foreign key on the relation" do
-            expect(post_two.person_id).to eq(person.id)
+            post_two.person_id.should eq(person.id)
           end
 
           it "sets the base on the inverse relation" do
-            expect(post_two.person).to eq(person)
+            post_two.person.should eq(person)
           end
 
           it "sets the same instance on the inverse relation" do
-            expect(post_two.person).to eql(person)
+            post_two.person.should eql(person)
           end
 
           it "saves the target" do
-            expect(post_two).to be_persisted
+            post_two.should be_persisted
           end
 
           it "adds the document to the target" do
-            expect(person.posts.count).to eq(3)
+            person.posts.count.should eq(3)
           end
 
           it "contains the initial document in the target" do
-            expect(person.posts).to include(post)
+            person.posts.should include(post)
           end
 
           it "contains the added document in the target" do
-            expect(person.posts).to include(post_two)
+            person.posts.should include(post_two)
           end
         end
       end
@@ -1302,19 +1309,19 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "sets the foreign key on the relation" do
-        expect(rating.ratable_id).to eq(movie.id)
+        rating.ratable_id.should eq(movie.id)
       end
 
       it "sets the base on the inverse relation" do
-        expect(rating.ratable).to eq(movie)
+        rating.ratable.should eq(movie)
       end
 
       it "does not save the target" do
-        expect(rating).to be_new_record
+        rating.should be_new_record
       end
 
       it "adds the document to the target" do
-        expect(movie.ratings.size).to eq(1)
+        movie.ratings.size.should eq(1)
       end
     end
 
@@ -1333,19 +1340,19 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "sets the foreign key on the relation" do
-        expect(rating.ratable_id).to eq(movie.id)
+        rating.ratable_id.should eq(movie.id)
       end
 
       it "sets the base on the inverse relation" do
-        expect(rating.ratable).to eq(movie)
+        rating.ratable.should eq(movie)
       end
 
       it "saves the target" do
-        expect(rating).to be_persisted
+        rating.should be_persisted
       end
 
       it "adds the document to the target" do
-        expect(movie.ratings.count).to eq(1)
+        movie.ratings.count.should eq(1)
       end
     end
   end
@@ -1363,7 +1370,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "returns the number of persisted documents" do
-        expect(movie.ratings.count).to eq(1)
+        movie.ratings.count.should eq(1)
       end
     end
 
@@ -1374,7 +1381,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "returns 0" do
-        expect(movie.ratings.count).to eq(0)
+        movie.ratings.count.should eq(0)
       end
     end
 
@@ -1387,7 +1394,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the count from the db" do
-          expect(movie.ratings.count).to eq(1)
+          movie.ratings.count.should eq(1)
         end
       end
 
@@ -1398,7 +1405,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the count from the db" do
-          expect(movie.ratings.count).to eq(0)
+          movie.ratings.count.should eq(0)
         end
       end
     end
@@ -1436,7 +1443,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "creates the document" do
-            expect(person.posts).to eq([ post ])
+            person.posts.should eq([ post ])
           end
         end
 
@@ -1473,27 +1480,27 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the foreign key on the relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(post.person).to eq(person)
+          post.person.should eq(person)
         end
 
         it "sets the attributes" do
-          expect(post.text).to eq("Testing")
+          post.text.should eq("Testing")
         end
 
         it "saves the target" do
-          expect(post).to_not be_a_new_record
+          post.should_not be_a_new_record
         end
 
         it "calls the passed block" do
-          expect(post.content).to eq("The Content")
+          post.content.should eq("The Content")
         end
 
         it "adds the document to the target" do
-          expect(person.posts.count).to eq(1)
+          person.posts.count.should eq(1)
         end
       end
     end
@@ -1526,23 +1533,23 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the foreign key on the relation" do
-          expect(rating.ratable_id).to eq(movie.id)
+          rating.ratable_id.should eq(movie.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(rating.ratable).to eq(movie)
+          rating.ratable.should eq(movie)
         end
 
         it "sets the attributes" do
-          expect(rating.value).to eq(3)
+          rating.value.should eq(3)
         end
 
         it "saves the target" do
-          expect(rating).to_not be_new_record
+          rating.should_not be_new_record
         end
 
         it "adds the document to the target" do
-          expect(movie.ratings.count).to eq(1)
+          movie.ratings.count.should eq(1)
         end
       end
     end
@@ -1558,7 +1565,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it 'saves pk value on fk field' do
-        expect(drug.person_id).to eq('arthurnn')
+        drug.person_id.should eq('arthurnn')
       end
     end
   end
@@ -1593,23 +1600,23 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the foreign key on the relation" do
-          expect(post.person_id).to eq(person.id)
+          post.person_id.should eq(person.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(post.person).to eq(person)
+          post.person.should eq(person)
         end
 
         it "sets the attributes" do
-          expect(post.title).to eq("Testing")
+          post.title.should eq("Testing")
         end
 
         it "saves the target" do
-          expect(post).to_not be_a_new_record
+          post.should_not be_a_new_record
         end
 
         it "adds the document to the target" do
-          expect(person.posts.count).to eq(1)
+          person.posts.count.should eq(1)
         end
 
         context "when validation fails" do
@@ -1651,23 +1658,23 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the foreign key on the relation" do
-          expect(rating.ratable_id).to eq(movie.id)
+          rating.ratable_id.should eq(movie.id)
         end
 
         it "sets the base on the inverse relation" do
-          expect(rating.ratable).to eq(movie)
+          rating.ratable.should eq(movie)
         end
 
         it "sets the attributes" do
-          expect(rating.value).to eq(4)
+          rating.value.should eq(4)
         end
 
         it "saves the target" do
-          expect(rating).to_not be_new_record
+          rating.should_not be_new_record
         end
 
         it "adds the document to the target" do
-          expect(movie.ratings.count).to eq(1)
+          movie.ratings.count.should eq(1)
         end
 
         context "when validation fails" do
@@ -1699,10 +1706,11 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "includes the type in the criteria" do
-        expect(criteria.selector).to eq(
+        criteria.selector.should eq(
           {
             "ratable_id"    => id,
-            "ratable_type"  => "Movie"
+            "ratable_type"  => "Movie",
+            "ratable_field" => { "$in" => [ :ratings, nil ] }
           }
         )
       end
@@ -1719,7 +1727,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "does not include the type in the criteria" do
-        expect(criteria.selector).to eq({ "person_id" => id })
+        criteria.selector.should eq({ "person_id" => id })
       end
     end
   end
@@ -1753,7 +1761,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "does not cascade" do
-            expect(deleted.changes.keys).to eq([ "person_id" ])
+            deleted.changes.keys.should eq([ "person_id" ])
           end
         end
 
@@ -1768,15 +1776,15 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the document" do
-            expect(deleted).to eq(drug)
+            deleted.should eq(drug)
           end
 
           it "deletes the foreign key" do
-            expect(drug.person_id).to be_nil
+            drug.person_id.should be_nil
           end
 
           it "removes the document from the relation" do
-            expect(person.drugs).to_not include(drug)
+            person.drugs.should_not include(drug)
           end
         end
 
@@ -1791,15 +1799,15 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the document" do
-            expect(deleted).to eq(drug)
+            deleted.should eq(drug)
           end
 
           it "deletes the foreign key" do
-            expect(drug.person_id).to be_nil
+            drug.person_id.should be_nil
           end
 
           it "removes the document from the relation" do
-            expect(person.drugs).to_not include(drug)
+            person.drugs.should_not include(drug)
           end
         end
       end
@@ -1817,15 +1825,15 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the document" do
-            expect(deleted).to eq(post)
+            deleted.should eq(post)
           end
 
           it "deletes the document" do
-            expect(post).to be_destroyed
+            post.should be_destroyed
           end
 
           it "removes the document from the relation" do
-            expect(person.posts).to_not include(post)
+            person.posts.should_not include(post)
           end
         end
 
@@ -1840,15 +1848,15 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the document" do
-            expect(deleted).to eq(post)
+            deleted.should eq(post)
           end
 
           it "deletes the document" do
-            expect(post).to be_destroyed
+            post.should be_destroyed
           end
 
           it "removes the document from the relation" do
-            expect(person.posts).to_not include(post)
+            person.posts.should_not include(post)
           end
         end
       end
@@ -1865,11 +1873,11 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "returns nil" do
-        expect(deleted).to be_nil
+        deleted.should be_nil
       end
 
       it "does not delete the document" do
-        expect(post).to be_persisted
+        post.should be_persisted
       end
     end
   end
@@ -1892,18 +1900,18 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "removes the correct posts" do
-            person.posts.send(method, { title: "Testing" })
-            expect(person.posts.count).to eq(1)
-            expect(person.reload.posts_count).to eq(1) if method == :destroy_all
+            person.posts.send(method, conditions: { title: "Testing" })
+            person.posts.count.should eq(1)
+            person.reload.posts_count.should eq(1) if method == :destroy_all
           end
 
           it "deletes the documents from the database" do
-            person.posts.send(method, { title: "Testing" })
-            expect(Post.where(title: "Testing").count).to eq(0)
+            person.posts.send(method, conditions: {title: "Testing" })
+            Post.where(title: "Testing").count.should eq(0)
           end
 
           it "returns the number of documents deleted" do
-            expect(person.posts.send(method, { title: "Testing" })).to eq(1)
+            person.posts.send(method, conditions: { title: "Testing" }).should eq(1)
           end
         end
 
@@ -1920,16 +1928,16 @@ describe Mongoid::Relations::Referenced::Many do
 
           it "removes the correct posts" do
             person.posts.send(method)
-            expect(person.posts.count).to eq(0)
+            person.posts.count.should eq(0)
           end
 
           it "deletes the documents from the database" do
             person.posts.send(method)
-            expect(Post.where(title: "Testing").count).to eq(0)
+            Post.where(title: "Testing").count.should eq(0)
           end
 
           it "returns the number of documents deleted" do
-            expect(person.posts.send(method)).to eq(2)
+            person.posts.send(method).should eq(2)
           end
         end
       end
@@ -1948,17 +1956,17 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "removes the correct ratings" do
-            movie.ratings.send(method, { value: 1 })
-            expect(movie.ratings.count).to eq(1)
+            movie.ratings.send(method, conditions: { value: 1 })
+            movie.ratings.count.should eq(1)
           end
 
           it "deletes the documents from the database" do
-            movie.ratings.send(method, { value: 1 })
-            expect(Rating.where(value: 1).count).to eq(0)
+            movie.ratings.send(method, conditions: { value: 1 })
+            Rating.where(value: 1).count.should eq(0)
           end
 
           it "returns the number of documents deleted" do
-            expect(movie.ratings.send(method, { value: 1 })).to eq(1)
+            movie.ratings.send(method, conditions: { value: 1 }).should eq(1)
           end
         end
 
@@ -1975,16 +1983,16 @@ describe Mongoid::Relations::Referenced::Many do
 
           it "removes the correct ratings" do
             movie.ratings.send(method)
-            expect(movie.ratings.count).to eq(0)
+            movie.ratings.count.should eq(0)
           end
 
           it "deletes the documents from the database" do
             movie.ratings.send(method)
-            expect(Rating.where(value: 1).count).to eq(0)
+            Rating.where(value: 1).count.should eq(0)
           end
 
           it "returns the number of documents deleted" do
-            expect(movie.ratings.send(method)).to eq(2)
+            movie.ratings.send(method).should eq(2)
           end
         end
       end
@@ -2026,7 +2034,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "puts the documents in the identity map" do
-          expect(map).to eq({ post.id => post })
+          map.should eq({ post.id => post })
         end
       end
 
@@ -2049,7 +2057,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "puts an empty array in the identity map" do
-          expect(map).to be_empty
+          map.should be_empty
         end
       end
 
@@ -2084,11 +2092,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "puts the found documents in the identity map" do
-          expect(map_one).to eq({ post.id => post })
+          map_one.should eq({ post.id => post })
         end
 
         it "puts an empty array for parents with no docs" do
-          expect(map_two).to be_empty
+          map_two.should be_empty
         end
       end
     end
@@ -2124,7 +2132,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "puts the documents in the identity map" do
-        expect(map).to eq({ movie_rating.id => movie_rating })
+        map.should eq({ movie_rating.id => movie_rating })
       end
     end
   end
@@ -2132,7 +2140,7 @@ describe Mongoid::Relations::Referenced::Many do
   describe ".embedded?" do
 
     it "returns false" do
-      expect(described_class).to_not be_embedded
+      described_class.should_not be_embedded
     end
   end
 
@@ -2149,7 +2157,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "returns true" do
-        expect(person.posts.exists?).to be_true
+        person.posts.exists?.should be_true
       end
     end
 
@@ -2160,7 +2168,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "returns false" do
-        expect(person.posts.exists?).to be_false
+        person.posts.exists?.should be_false
       end
     end
   end
@@ -2225,7 +2233,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the matching document" do
-            expect(post).to eq(post_one)
+            post.should eq(post_one)
           end
         end
 
@@ -2272,7 +2280,7 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "returns nil" do
-              expect(post).to be_nil
+              post.should be_nil
             end
           end
         end
@@ -2287,7 +2295,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the matching documents" do
-            expect(posts).to eq([ post_one, post_two ])
+            posts.should eq([ post_one, post_two ])
           end
         end
 
@@ -2321,7 +2329,7 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "returns an empty array" do
-              expect(posts).to be_empty
+              posts.should be_empty
             end
           end
         end
@@ -2351,7 +2359,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the matching document" do
-            expect(rating).to eq(rating_one)
+            rating.should eq(rating_one)
           end
         end
 
@@ -2385,7 +2393,7 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "returns nil" do
-              expect(rating).to be_nil
+              rating.should be_nil
             end
           end
         end
@@ -2400,7 +2408,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "returns the matching documents" do
-            expect(ratings).to eq([ rating_one, rating_two ])
+            ratings.should eq([ rating_one, rating_two ])
           end
         end
 
@@ -2434,7 +2442,7 @@ describe Mongoid::Relations::Referenced::Many do
             end
 
             it "returns an empty array" do
-              expect(ratings).to be_empty
+              ratings.should be_empty
             end
           end
         end
@@ -2461,11 +2469,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the document" do
-          expect(found).to eq(post)
+          found.should eq(post)
         end
 
         it "keeps the document in the relation" do
-          expect(found.person).to eq(person)
+          found.person.should eq(person)
         end
       end
 
@@ -2480,19 +2488,19 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the new document attributes" do
-            expect(found.title).to eq("Test")
+            found.title.should eq("Test")
           end
 
           it "returns a newly persisted document" do
-            expect(found).to be_persisted
+            found.should be_persisted
           end
 
           it "calls the passed block" do
-            expect(found.content).to eq("The Content")
+            found.content.should eq("The Content")
           end
 
           it "keeps the document in the relation" do
-            expect(found.person).to eq(person)
+            found.person.should eq(person)
           end
         end
 
@@ -2503,15 +2511,15 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "sets the new document attributes" do
-            expect(found.title).to eq("Test")
+            found.title.should eq("Test")
           end
 
           it "returns a newly persisted document" do
-            expect(found).to be_persisted
+            found.should be_persisted
           end
 
           it "keeps the document in the relation" do
-            expect(found.person).to eq(person)
+            found.person.should eq(person)
           end
         end
       end
@@ -2534,11 +2542,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the document" do
-          expect(found).to eq(rating)
+          found.should eq(rating)
         end
 
         it "keeps the document in the relation" do
-          expect(found.ratable).to eq(movie)
+          found.ratable.should eq(movie)
         end
       end
 
@@ -2549,15 +2557,15 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the new document attributes" do
-          expect(found.value).to eq(3)
+          found.value.should eq(3)
         end
 
         it "returns a newly persisted document" do
-          expect(found).to be_persisted
+          found.should be_persisted
         end
 
         it "keeps the document in the relation" do
-          expect(found.ratable).to eq(movie)
+          found.ratable.should eq(movie)
         end
       end
     end
@@ -2582,7 +2590,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the document" do
-          expect(found).to eq(post)
+          found.should eq(post)
         end
       end
 
@@ -2595,15 +2603,15 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the new document attributes" do
-          expect(found.title).to eq("Test")
+          found.title.should eq("Test")
         end
 
         it "returns a non persisted document" do
-          expect(found).to_not be_persisted
+          found.should_not be_persisted
         end
 
         it "calls the passed block" do
-          expect(found.content).to eq("The Content")
+          found.content.should eq("The Content")
         end
       end
     end
@@ -2625,7 +2633,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the document" do
-          expect(found).to eq(rating)
+          found.should eq(rating)
         end
       end
 
@@ -2636,11 +2644,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "sets the new document attributes" do
-          expect(found.value).to eq(3)
+          found.value.should eq(3)
         end
 
         it "returns a non persisted document" do
-          expect(found).to_not be_persisted
+          found.should_not be_persisted
         end
       end
     end
@@ -2649,7 +2657,7 @@ describe Mongoid::Relations::Referenced::Many do
   describe ".foreign_key_suffix" do
 
     it "returns _id" do
-      expect(described_class.foreign_key_suffix).to eq("_id")
+      described_class.foreign_key_suffix.should eq("_id")
     end
   end
 
@@ -2675,7 +2683,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "does not raise an error" do
-        expect(post.roles).to be_empty
+        post.roles.should be_empty
       end
     end
   end
@@ -2683,7 +2691,7 @@ describe Mongoid::Relations::Referenced::Many do
   describe ".macro" do
 
     it "returns has_many" do
-      expect(described_class.macro).to eq(:has_many)
+      described_class.macro.should eq(:has_many)
     end
   end
 
@@ -2712,7 +2720,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns the document with the max value of the supplied field" do
-      expect(max).to eq(post_two)
+      max.should eq(post_two)
     end
   end
 
@@ -2739,7 +2747,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns the document with the max value of the supplied field" do
-      expect(max).to eq(post_two)
+      max.should eq(post_two)
     end
   end
 
@@ -2764,7 +2772,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "applies the criteria to the documents" do
-        expect(posts).to eq([ post_one ])
+        posts.should eq([ post_one ])
       end
     end
 
@@ -2775,7 +2783,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "applies the criteria to the documents" do
-        expect(posts).to eq([ post_one ])
+        posts.should eq([ post_one ])
       end
     end
 
@@ -2786,7 +2794,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "applies the criteria to the documents" do
-        expect(posts).to eq([ post_one ])
+        posts.should eq([ post_one ])
       end
     end
 
@@ -2794,13 +2802,8 @@ describe Mongoid::Relations::Referenced::Many do
 
       describe "#distinct" do
 
-        let(:values) do
-          person.posts.distinct(:title)
-        end
-
         it "returns the distinct values for the fields" do
-          expect(values).to include("First")
-          expect(values).to include("Second")
+          person.posts.distinct(:title).should =~ [ "First",  "Second"]
         end
       end
     end
@@ -2831,7 +2834,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns the min value of the supplied field" do
-      expect(min).to eq(post_one)
+      min.should eq(post_one)
     end
   end
 
@@ -2858,7 +2861,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns the min value of the supplied field" do
-      expect(min).to eq(post_one)
+      min.should eq(post_one)
     end
   end
 
@@ -2887,16 +2890,16 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "loads the targets before nullifying" do
-        expect(from_db.posts).to be_empty
+        from_db.posts.should be_empty
       end
 
       it "persists the base nullifications" do
-        expect(Person.first.posts).to be_empty
+        Person.first.posts.should be_empty
       end
 
       it "persists the inverse nullifications" do
         Post.all.each do |post|
-          expect(post.person).to be_nil
+          post.person.should be_nil
         end
       end
     end
@@ -2921,18 +2924,18 @@ describe Mongoid::Relations::Referenced::Many do
 
       it "removes all the foreign keys from the target" do
         [ post_one, post_two ].each do |post|
-          expect(post.person_id).to be_nil
+          post.person_id.should be_nil
         end
       end
 
       it "removes all the references from the target" do
         [ post_one, post_two ].each do |post|
-          expect(post.person).to be_nil
+          post.person.should be_nil
         end
       end
 
       it "saves the documents" do
-        expect(post_one.reload.person).to be_nil
+        post_one.reload.person.should be_nil
       end
 
       context "when adding a nullified document back to the relation" do
@@ -2942,7 +2945,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "persists the relation" do
-          expect(person.posts(true)).to eq([ post_one ])
+          person.posts(true).should eq([ post_one ])
         end
       end
     end
@@ -2967,13 +2970,13 @@ describe Mongoid::Relations::Referenced::Many do
 
       it "removes all the foreign keys from the target" do
         [ rating_one, rating_two ].each do |rating|
-          expect(rating.ratable_id).to be_nil
+          rating.ratable_id.should be_nil
         end
       end
 
       it "removes all the references from the target" do
         [ rating_one, rating_two ].each do |rating|
-          expect(rating.ratable).to be_nil
+          rating.ratable.should be_nil
         end
       end
     end
@@ -2994,7 +2997,7 @@ describe Mongoid::Relations::Referenced::Many do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(posts.respond_to?(method)).to be_true
+          posts.respond_to?(method).should be_true
         end
       end
     end
@@ -3004,7 +3007,7 @@ describe Mongoid::Relations::Referenced::Many do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(posts.respond_to?(method)).to be_true
+          posts.respond_to?(method).should be_true
         end
       end
     end
@@ -3014,7 +3017,7 @@ describe Mongoid::Relations::Referenced::Many do
       context "when checking #{method}" do
 
         it "returns true" do
-          expect(posts.respond_to?(method)).to be_true
+          posts.respond_to?(method).should be_true
         end
       end
     end
@@ -3023,7 +3026,7 @@ describe Mongoid::Relations::Referenced::Many do
   describe ".stores_foreign_key?" do
 
     it "returns false" do
-      expect(described_class.stores_foreign_key?).to be_false
+      described_class.stores_foreign_key?.should be_false
     end
   end
 
@@ -3038,11 +3041,11 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "returns the relation criteria" do
-      expect(scoped).to be_a(Mongoid::Criteria)
+      scoped.should be_a(Mongoid::Criteria)
     end
 
     it "returns with an empty selector" do
-      expect(scoped.selector).to eq({ "person_id" => person.id })
+      scoped.selector.should eq({ "person_id" => person.id })
     end
   end
 
@@ -3061,7 +3064,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns 1" do
-          expect(movie.ratings.send(method)).to eq(1)
+          movie.ratings.send(method).should eq(1)
         end
       end
 
@@ -3073,7 +3076,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "returns the total number of documents" do
-          expect(movie.ratings.send(method)).to eq(2)
+          movie.ratings.send(method).should eq(2)
         end
       end
     end
@@ -3100,7 +3103,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "returns only the associated documents" do
-        expect(unscoped).to eq([ post_one ])
+        unscoped.should eq([ post_one ])
       end
     end
 
@@ -3123,11 +3126,11 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "only returns associated documents" do
-        expect(unscoped).to eq([ acolyte_one ])
+        unscoped.should eq([ acolyte_one ])
       end
 
       it "removes the default scoping options" do
-        expect(unscoped.options).to eq({})
+        unscoped.options.should eq({})
       end
     end
   end
@@ -3135,7 +3138,7 @@ describe Mongoid::Relations::Referenced::Many do
   describe ".valid_options" do
 
     it "returns the valid options" do
-      expect(described_class.valid_options).to eq(
+      described_class.valid_options.should eq(
         [
           :after_add,
           :after_remove,
@@ -3155,7 +3158,7 @@ describe Mongoid::Relations::Referenced::Many do
   describe ".validation_default" do
 
     it "returns true" do
-      expect(described_class.validation_default).to be_true
+      described_class.validation_default.should be_true
     end
   end
 
@@ -3183,13 +3186,13 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "order documents" do
-      expect(person.ordered_posts(true)).to eq(
+      person.ordered_posts(true).should eq(
         [post_two, post_three, post_one]
       )
     end
 
     it "chaining order criterias" do
-      expect(person.ordered_posts.order_by(:title.desc).to_a).to eq(
+      person.ordered_posts.order_by(:title.desc).to_a.should eq(
         [post_three, post_two, post_one]
       )
     end
@@ -3225,7 +3228,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "reloads the document from the database" do
-        expect(reloaded.first.title).to eq("reloaded")
+        reloaded.first.title.should eq("reloaded")
       end
     end
 
@@ -3240,11 +3243,11 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "reloads the first document from the database" do
-        expect(reloaded).to include(post_one)
+        reloaded.should include(post_one)
       end
 
       it "reloads the new document from the database" do
-        expect(reloaded).to include(post_two)
+        reloaded.should include(post_two)
       end
     end
   end
@@ -3258,7 +3261,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "allows creation of the document" do
-      expect(jar.id).to eq(1)
+      jar.id.should eq(1)
     end
   end
 
@@ -3287,7 +3290,7 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "adds both documents" do
-        expect(result).to eq([ post_one, post_two ])
+        result.should eq([ post_one, post_two ])
       end
     end
   end
@@ -3309,15 +3312,15 @@ describe Mongoid::Relations::Referenced::Many do
       end
 
       it "it executes method callbacks" do
-        expect(artist.before_add_referenced_called).to be_true
+        artist.before_add_referenced_called.should be_true
       end
 
       it "it executes proc callbacks" do
-        expect(album.before_add_called).to be_true
+        album.before_add_called.should be_true
       end
 
       it "adds the document to the relation" do
-        expect(artist.albums).to eq([ album ])
+        artist.albums.should eq([ album ])
       end
     end
 
@@ -3331,7 +3334,7 @@ describe Mongoid::Relations::Referenced::Many do
         expect {
           artist.albums << album
         }.to raise_error
-        expect(artist.albums).to be_empty
+        artist.albums.should be_empty
       end
     end
   end
@@ -3348,7 +3351,7 @@ describe Mongoid::Relations::Referenced::Many do
 
     it "executes the callback" do
       artist.albums << album
-      expect(artist.after_add_referenced_called).to be_true
+      artist.after_add_referenced_called.should be_true
     end
 
     context "when execution raises errors" do
@@ -3361,7 +3364,7 @@ describe Mongoid::Relations::Referenced::Many do
         expect {
           artist.albums << album
         }.to raise_error
-        expect(artist.albums).to eq([ album ])
+        artist.albums.should eq([ album ])
       end
     end
   end
@@ -3389,11 +3392,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "executes the callback" do
-          expect(artist.before_remove_referenced_called).to be_true
+          artist.before_remove_referenced_called.should be_true
         end
 
         it "removes the document from the relation" do
-          expect(artist.albums).to be_empty
+          artist.albums.should be_empty
         end
       end
 
@@ -3404,11 +3407,11 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "executes the callback" do
-          expect(artist.before_remove_referenced_called).to be_true
+          artist.before_remove_referenced_called.should be_true
         end
 
         it "clears the relation" do
-          expect(artist.albums).to be_empty
+          artist.albums.should be_empty
         end
       end
 
@@ -3427,7 +3430,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "does not remove the document from the relation" do
-            expect(artist.albums).to eq([ album ])
+            artist.albums.should eq([ album ])
           end
         end
 
@@ -3440,7 +3443,7 @@ describe Mongoid::Relations::Referenced::Many do
           end
 
           it "does not clear the relation" do
-            expect(artist.albums).to eq([ album ])
+            artist.albums.should eq([ album ])
           end
         end
       end
@@ -3470,7 +3473,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "executes the callback" do
-          expect(artist.after_remove_referenced_called).to be_true
+          artist.after_remove_referenced_called.should be_true
         end
       end
 
@@ -3482,7 +3485,7 @@ describe Mongoid::Relations::Referenced::Many do
 
         it "executes the callback" do
           artist.albums.clear
-          expect(artist.after_remove_referenced_called).to be_true
+          artist.after_remove_referenced_called.should be_true
         end
       end
     end
@@ -3502,7 +3505,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "removes the documents from the relation" do
-          expect(artist.albums).to be_empty
+          artist.albums.should be_empty
         end
       end
 
@@ -3515,7 +3518,7 @@ describe Mongoid::Relations::Referenced::Many do
         end
 
         it "removes the documents from the relation" do
-          expect(artist.albums).to be_empty
+          artist.albums.should be_empty
         end
       end
     end
@@ -3540,7 +3543,7 @@ describe Mongoid::Relations::Referenced::Many do
     end
 
     it "does not drop the ordering" do
-      expect(criteria).to eq([ post_two, post_one ])
+      criteria.should eq([ post_two, post_one ])
     end
   end
 end

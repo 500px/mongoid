@@ -19,11 +19,11 @@ describe Mongoid::Reloadable do
 
       it "reloads the object attributes from the db" do
         person.reload
-        expect(person.age).to eq(35)
+        person.age.should eq(35)
       end
 
       it "reload should return self" do
-        expect(person.reload).to eq(from_db)
+        person.reload.should eq(from_db)
       end
     end
 
@@ -42,11 +42,11 @@ describe Mongoid::Reloadable do
 
       it "reloads the object attributes from the db" do
         account.reload
-        expect(account.number).to eq("1001")
+        account.number.should eq("1001")
       end
 
       it "reload should return self" do
-        expect(account.reload).to eq(from_db)
+        account.reload.should eq(from_db)
       end
     end
 
@@ -62,7 +62,7 @@ describe Mongoid::Reloadable do
       end
 
       it "runs the callback" do
-        expect(book.chapters).to eq(5)
+        book.chapters.should eq(5)
       end
     end
 
@@ -78,11 +78,11 @@ describe Mongoid::Reloadable do
       end
 
       it "resets the dirty modifications" do
-        expect(person.changes).to be_empty
+        person.changes.should be_empty
       end
 
       it "resets attributes_before_type_cast" do
-        expect(person.attributes_before_type_cast).to be_empty
+        person.attributes_before_type_cast.should be_empty
       end
     end
 
@@ -123,15 +123,15 @@ describe Mongoid::Reloadable do
           end
 
           it "reloads the embedded document attributes" do
-            expect(reloaded.number).to eq(3)
+            reloaded.number.should eq(3)
           end
 
           it "reloads the reference on the parent" do
-            expect(person.addresses.first).to eq(reloaded)
+            person.addresses.first.should eq(reloaded)
           end
 
           it "retains the relation to the parent" do
-            expect(reloaded.addressable).to eq(person)
+            reloaded.addressable.should eq(person)
           end
         end
 
@@ -151,15 +151,15 @@ describe Mongoid::Reloadable do
           end
 
           it "reloads the embedded document attributes" do
-            expect(reloaded.last_name).to eq("Vicious")
+            reloaded.last_name.should eq("Vicious")
           end
 
           it "reloads the reference on the parent" do
-            expect(person.name).to eq(reloaded)
+            person.name.should eq(reloaded)
           end
 
           it "retains the relation to the parent" do
-            expect(reloaded.namable).to eq(person)
+            reloaded.namable.should eq(person)
           end
         end
       end
@@ -184,15 +184,15 @@ describe Mongoid::Reloadable do
         end
 
         it "reloads the embedded document attributes" do
-          expect(reloaded.name).to eq("work")
+          reloaded.name.should eq("work")
         end
 
         it "reloads the reference on the parent" do
-          expect(address.locations.first).to eq(reloaded)
+          address.locations.first.should eq(reloaded)
         end
 
         it "reloads the reference on the root" do
-          expect(person.addresses.first.locations.first).to eq(reloaded)
+          person.addresses.first.locations.first.should eq(reloaded)
         end
       end
     end
@@ -214,7 +214,7 @@ describe Mongoid::Reloadable do
       end
 
       it "reloads the association" do
-        expect(person.addresses).to be_empty
+        person.addresses.should be_empty
       end
     end
 
@@ -237,7 +237,7 @@ describe Mongoid::Reloadable do
         end
 
         it "reloads the association" do
-          expect(person.game.score).to eq(75)
+          person.game.score.should eq(75)
         end
       end
 
@@ -256,7 +256,7 @@ describe Mongoid::Reloadable do
           end
 
           it "reloads the association" do
-            expect(game.person.title).to eq("Mam")
+            game.person.title.should eq("Mam")
           end
         end
 
@@ -287,14 +287,14 @@ describe Mongoid::Reloadable do
             context "when reloading the base" do
 
               it "reloads the correct type of document" do
-                expect(game.reload.person).to be_a(Doktor)
+                game.reload.person.should be_a(Doktor)
               end
             end
 
             context "when reloading the association" do
 
               it "reloads the correct type of document" do
-                expect(game.person(true)).to be_a(Doktor)
+                game.person(true).should be_a(Doktor)
               end
             end
           end
